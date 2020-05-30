@@ -1,9 +1,14 @@
+@import '~antd/dist/antd.css';
+
+* {
+  font-family: 'Oswald', sans-serif;
+}
+
 h1{
   font-weight:bold;
   text-decoration: underline;
   font-size:40px
 }
-
 #title{
   text-align: center
 }
@@ -14,6 +19,12 @@ header{
 
 .headers{
   text-decoration: underline;
+  font-size:25px
+}
+
+
+.link:hover{
+  color:pink
 }
 
 #choix{
@@ -23,4 +34,62 @@ header{
 .site-card-wrapper {
   background: #ececec;
   padding: 30px;
+}
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected.customclass {
+  background-color: pink; /*Overriden property*/
+}
+
+.Login-page{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height:100vh;
+  background-image: url('/images/flat01.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+
+  }
+
+.Login-input{
+margin: 15px;
+width: 400px;
+}
+
+.Sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 15px;
+  border-radius: 5%;
+  border-color: white;
+ margin: 40px;
+}
+
+.Sign .Login-input{
+width: 250px;
+}
+
+.Map{
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 15px;
+    border-radius: 5%;
+    border-color: white;
+   margin: 40px;
+  
+
+}
+.Card{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
 }

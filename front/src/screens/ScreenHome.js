@@ -2,22 +2,15 @@ import React from 'react';
 import '../App.css';
 import { Row, Col, Card} from 'antd';
 import 'antd/dist/antd.css';
+import Nav from './Nav'
 
 
 function ScreenHome() {
-
+  const { Meta } = Card;
 
   return (
    <div>
-<header>
-   
-      <Row align="middle"> 
-      <Col span={4}><h1>Masques.org</h1></Col> 
-       <Col span={1}><h3 class="headers">Accueil</h3></Col>
-       <Col span={1}><h3 class="headers">Fabricants</h3></Col>
-       <Col offset={14} span={2} ><h3 class="headers">Sign In/ Sign Up</h3></Col> 
-       </Row>
-</header>
+ <Nav/>
 
 <body>
 
@@ -25,42 +18,106 @@ function ScreenHome() {
 
 <h3 id="choix">Entreprises | Collectivités | Grand Public</h3>
 
-<div>
-  <Row justify="space-around">  
-<Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 400 }}>
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>
-    <Card title="Default size card" extra={<a href="#">More</a>} style={{ width:400 }}>
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>
-    <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 400 }}>
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>
-    <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 400 }}>
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>
-    <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 400 }}>
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>
-    <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 400 }}>
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>
-   
-    </Row>
+<div className="card">
+<div  style={{display:'flex',justifyContent:'center'}}>
+                      <Card
+                        style={{  
+                          width: 300, 
+                          margin:'15px', 
+                          display:'flex',
+                          flexDirection: 'column',
+                          justifyContent:'space-between' }}
+                        cover={
+                        <img
+                            alt="article"
+                            src='./assets/Mask-6.jpg'
+                        />
+                         }
+                         >
+                         <Meta title="Masque" description="photo" />           
+                      </Card>
+                      <Card
+                        style={{  
+                          width: 300, 
+                          margin:'15px', 
+                          display:'flex',
+                          flexDirection: 'column',
+                          justifyContent:'space-between' }}
+                        cover={
+                        <img
+                            alt="article"
+                            src='./assets/Mask-6.jpg'
+                        />
+                         }
+                         >
+                         <Meta title="Masque" description="photo" />           
+                      </Card>
+                      <Card
+                        style={{  
+                          width: 300, 
+                          margin:'15px', 
+                          display:'flex',
+                          flexDirection: 'column',
+                          justifyContent:'space-between' }}
+                        cover={
+                        <img
+                            alt="article"
+                            src='./assets/Mask-6.jpg'
+                        />
+                         }
+                         >
+                         <Meta title="Masque" description="photo" />           
+                      </Card>
+                      <Card
+                        style={{  
+                          width: 300, 
+                          margin:'15px', 
+                          display:'flex',
+                          flexDirection: 'column',
+                          justifyContent:'space-between' }}
+                        cover={
+                        <img
+                            alt="article"
+                            src='./assets/Mask-6.jpg'
+                        />
+                         }
+                         >
+                         <Meta title="Masque" description="photo" />           
+                      </Card>
+                      <Card
+                        style={{  
+                          width: 300, 
+                          margin:'15px', 
+                          display:'flex',
+                          flexDirection: 'column',
+                          justifyContent:'space-between' }}
+                        cover={
+                        <img
+                            alt="article"
+                            src='./assets/Mask-6.jpg'
+                        />
+                         }
+                         >
+                         <Meta title="Masque" description="photo" />           
+                      </Card>
+                      <Card
+                        style={{  
+                          width: 300, 
+                          margin:'15px', 
+                          display:'flex',
+                          flexDirection: 'column',
+                          justifyContent:'space-between' }}
+                        cover={
+                        <img
+                            alt="article"
+                            src='./assets/Mask-6.jpg'
+                        />
+                         }
+                         >
+                         <Meta title="Masque" description="photo" />           
+                      </Card>
   </div>
-
+</div>
 </body>
 </div>
   );

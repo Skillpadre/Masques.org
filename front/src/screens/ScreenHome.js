@@ -18,8 +18,29 @@ function ScreenHome() {
 
 <h3 id="choix">Entreprises | Collectivités | Grand Public</h3>
 
-<div className="card">
-<div  style={{display:'flex',justifyContent:'center'}}>
+<div className="Home" >
+<Row gutter= {[8, 4]}>
+
+  <Col span={8}>
+                      <Card
+                        style={{  
+                          width: 400, 
+                          margin:'15px', 
+                          display:'flex',
+                          flexDirection: 'column',
+                          justifyContent:'space-between' }}
+                        cover={
+                        <img
+                            alt="article"
+                            src='./Mask-6.jpg'
+                        />
+                         }
+                         >
+                         <Meta title="Masque" description="photo" />           
+                      </Card>
+                      </Col>
+
+                      <Col span={8}>
                       <Card
                         style={{  
                           width: 300, 
@@ -36,6 +57,27 @@ function ScreenHome() {
                          >
                          <Meta title="Masque" description="photo" />           
                       </Card>
+                      </Col>  
+
+                      <Col span={8}>
+                      <Card
+                        style={{  
+                          width: 300, 
+                          margin:'15px', 
+                          display:'flex',
+                          flexDirection: 'column',
+                          justifyContent:'space-between' }}
+                        cover={
+                        <img
+                            alt="article"
+                            src='./assets/Mask-6.jpg'
+                        />
+                         }
+                         >
+                         <Meta title="Masque" description="photo" /> 
+                      </Card>
+                      </Col> 
+                      <Col span={8}>
                       <Card
                         style={{  
                           width: 300, 
@@ -52,6 +94,9 @@ function ScreenHome() {
                          >
                          <Meta title="Masque" description="photo" />           
                       </Card>
+                      </Col>
+
+                      <Col span={8}>
                       <Card
                         style={{  
                           width: 300, 
@@ -68,6 +113,9 @@ function ScreenHome() {
                          >
                          <Meta title="Masque" description="photo" />           
                       </Card>
+                      </Col>  
+
+                      <Col span={8}>
                       <Card
                         style={{  
                           width: 300, 
@@ -82,41 +130,10 @@ function ScreenHome() {
                         />
                          }
                          >
-                         <Meta title="Masque" description="photo" />           
+                         <Meta title="Masque" description="photo" /> 
                       </Card>
-                      <Card
-                        style={{  
-                          width: 300, 
-                          margin:'15px', 
-                          display:'flex',
-                          flexDirection: 'column',
-                          justifyContent:'space-between' }}
-                        cover={
-                        <img
-                            alt="article"
-                            src='./assets/Mask-6.jpg'
-                        />
-                         }
-                         >
-                         <Meta title="Masque" description="photo" />           
-                      </Card>
-                      <Card
-                        style={{  
-                          width: 300, 
-                          margin:'15px', 
-                          display:'flex',
-                          flexDirection: 'column',
-                          justifyContent:'space-between' }}
-                        cover={
-                        <img
-                            alt="article"
-                            src='./assets/Mask-6.jpg'
-                        />
-                         }
-                         >
-                         <Meta title="Masque" description="photo" />           
-                      </Card>
-  </div>
+                      </Col>            
+            </Row>  
 </div>
 </body>
 </div>

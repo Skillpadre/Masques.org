@@ -24,8 +24,7 @@ function ScreenLogin() {
 
                   <Input.Password className="Login-input" placeholder="Password" />
             
-
-            <Button style={{width:'80px', backgroundColor:'purple'}} type="primary" >Sign-in</Button>
+                  <Button style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" >Sign-in</Button>
 
           </div>
 
@@ -42,7 +41,7 @@ function ScreenLogin() {
                   <Input.Password className="Login-input" placeholder="password"   />
             
 
-            <Button style={{width:'80px', backgroundColor:'purple'}} type="primary" >Sign-up</Button>
+            <Button style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" >Sign-up</Button>
 
           </div>
 

@@ -13,7 +13,7 @@ function ScreenMap() {
 <body>
     <div className="Map">
 
-    <Button style={{backgroundColor:"purple"}}>Chercher les fabricants autour de moi</Button>
+    <Button style={{backgroundColor:"purple", fontColor:"white", marginBottom:"10px"}}>Chercher les fabricants autour de moi</Button>
 
     <iframe
   width="600"

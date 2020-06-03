@@ -8,6 +8,7 @@ import ScreenMap from './screens/ScreenMap';
 import ScreenConfirm from './screens/ScreenConfirm';
 import ScreenDashboard from './screens/ScreenDashboard';
 import ScreenBasket from './screens/ScreenBasket';
+import ScreenFabricant from './screens/ScreenFabricant';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route component={ScreenConfirm} path="/screenconfirm"/>
         <Route component={ScreenDashboard} path="/screendashboard"/>
         <Route component={ScreenBasket} path="/screenbasket"/>
+        <Route component={ScreenFabricant} path="/screenfabricant"/>
       </Switch>
     </Router>
   );

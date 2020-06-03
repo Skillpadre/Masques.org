@@ -3,16 +3,15 @@ import '../App.css';
 
 import { Layout, Menu, Avatar, Card, Form, Select, Input, Button} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.css';
 const { Content, Footer } = Layout;
 const { Option } = Select;
 
 
 function ScreenFabricant (){
 
+
     return(
 
-            
 
     <Layout style={{height: 'auto'}}className="layout">
         

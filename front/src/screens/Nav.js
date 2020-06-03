@@ -1,7 +1,6 @@
 import React from 'react';
 import '../App.css';
 import { Row, Col, Card, Menu} from 'antd';
-import 'antd/dist/antd.css';
 import { Redirect, Link } from 'react-router-dom';
 import {Icon} from '@ant-design/compatible'
 

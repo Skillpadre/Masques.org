@@ -7,6 +7,7 @@ import ScreenLogin from './screens/ScreenLogin';
 import ScreenMap from './screens/ScreenMap';
 import ScreenConfirm from './screens/ScreenConfirm';
 import ScreenDashboard from './screens/ScreenDashboard';
+import ScreenBasket from './screens/ScreenBasket';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route component={ScreenMap} path="/screenmap"/>
         <Route component={ScreenConfirm} path="/screenconfirm"/>
         <Route component={ScreenDashboard} path="/screendashboard"/>
+        <Route component={ScreenBasket} path="/screenbasket"/>
       </Switch>
     </Router>
   );

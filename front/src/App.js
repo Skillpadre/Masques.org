@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import ScreenHome from './screens/ScreenHome';
 import ScreenLogin from './screens/ScreenLogin';
 import ScreenMap from './screens/ScreenMap';
+import ScreenDashboard from './screens/ScreenDashboard';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route component={ScreenHome} path="/" exact />
         <Route component={ScreenLogin} path="/screenlogin"/>
         <Route component={ScreenMap} path="/screenmap"/>
+        <Route component={ScreenDashboard} path="/screendashboard"/>
       </Switch>
     </Router>
   );

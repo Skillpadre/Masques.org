@@ -89,8 +89,43 @@ width: 250px;
   border-color: white;
    margin: 40px;
   
+}
+
+.Dashboard-page{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  height:100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  }
+
+#dashboard-box{
+  border: 1px solid black ;
+  width: auto;
+  height: auto;
+  margin:15px;
+}
+
+#retrait{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  margin:15px;
 
 }
+
+#total{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 /* .Card{
   display: flex;
   flex-wrap: wrap;

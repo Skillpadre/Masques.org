@@ -2,6 +2,7 @@ import React from 'react';
 import '../App.css';
 import { Row, Col, Card, Input, Button} from 'antd';
 import 'antd/dist/antd.css';
+import { Redirect, Link } from 'react-router-dom';
 import Nav from './Nav'
 
 
@@ -24,7 +25,7 @@ function ScreenLogin() {
 
                   <Input.Password className="Login-input" placeholder="Password" />
             
-                  <Button style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" >Sign-in</Button>
+                  <Button style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" ><Link to='/screendashboard'>Sign-ip</Link></Button>
 
           </div>
 
@@ -41,7 +42,7 @@ function ScreenLogin() {
                   <Input.Password className="Login-input" placeholder="password"   />
             
 
-            <Button style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" >Sign-up</Button>
+            <Button style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" ><Link to='/screendashboard'>Sign-up</Link></Button>
 
           </div>
 

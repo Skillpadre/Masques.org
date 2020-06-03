@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../App.css';
 import { Row, Col, Card, Input, Button} from 'antd';
 import 'antd/dist/antd.css';
@@ -8,47 +8,94 @@ import Nav from './Nav'
 
 function ScreenLogin() {
 
+  // State SIGN UP
+  const [singUpUsername, setSingUpUsername] = useState('');
+  const [singUpEmail, setSingUpEmail] = useState('');
+  const [singUpPassword, setSingUpPassword] = useState('');
+  const [singUpPasswordConfirm, setSingUpPasswordConfirm] = useState('')
+  const [listErrorSignup, setErrorSignup] = useState([]);
+
+  // State SIGN IN
+  const [singInEmail, setSingInEmail] = useState('');
+  const [singInPassword, setSingInPassword] = useState('');
+  const [listErrorSignin, setErrorSignin] = useState([]);
+
+  const [userExist, setUserExist] = useState(false);
+
+  // Au click sur Sign-up
+ let handleSubmitSingUp = async () => {
+
+    if(singUpPassword === singUpPasswordConfirm){
+      let data = await fetch('/users/signup', {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: `username=${singUpUsername}&email=${singUpEmail}&password=${singUpPassword}`
+      });
+      let response = await data.json();
+
+      // On test la réponse du back
+      if(response.result){      // Si on a bien un user
+        console.log(response.user.token);// add token
+        setUserExist(true);
+      } else {                  // Si pas de user
+        setErrorSignup(response.error)
+      }
+
+    } else {
+      setErrorSignup(['Les mots de passe doivent être identiques'])
+    }
+  }
+
+  // Liste des error de sign up à afficher
+  let tabErrorSignup = listErrorSignup.map((error, i)=>{
+    return(<p key={i}>{error}</p>)
+  });
+
+
+  // Au click sur Sign-in
+  let handleSubmitSingIn = async () => {
+
+  }
+
+ 
 
   return (
-   <div>
- <Nav/>
+    <div>
+      <Nav/>
 
+      <div className="Login-page" >
+        {/* SIGN-IN */}
+        <div className="Sign">
+          <h1>Se connecter</h1>
 
-<div className="Login-page" >
+          <Input className="Login-input" placeholder="Email" onChange={e => setSingInEmail(e.target.value)} value={singInEmail} />
 
-          {/* SIGN-IN */}
+          <Input.Password className="Login-input" placeholder="Password" onChange={e => setSingInPassword(e.target.value)} value={singInPassword} />
 
-          <div className="Sign">
-            <h1>Se connecter</h1>
+          <Button onClick={()=> handleSubmitSingIn()} style={{ width: '80px', backgroundColor: 'purple', borderColor: 'black' }} type="primary" >Sign-in</Button>
+
+        </div>
+
+        {/* SIGN-UP */}
+
+        <div className="Sign">
+          <h1>S'inscrire</h1>
+
+          {tabErrorSignup}
+
+          <Input className="Login-input" placeholder="username" onChange={e => setSingUpUsername(e.target.value)} value={singUpUsername} />
                   
-                  <Input className="Login-input" placeholder="Email" />
+          <Input className="Login-input" placeholder="email" onChange={e => setSingUpEmail(e.target.value)} value={singUpEmail}/>
 
-                  <Input.Password className="Login-input" placeholder="Password" />
-            
-                  <Button style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" ><Link to='/screendashboard'>Sign-ip</Link></Button>
+          <Input.Password className="Login-input" placeholder="password" onChange={e => setSingUpPassword(e.target.value)} value={singUpPassword} />
+          <Input.Password className="Login-input" placeholder="confirm password" onChange={e => setSingUpPasswordConfirm(e.target.value)} value={singUpPasswordConfirm} />
 
-          </div>
+          <Button onClick={()=> handleSubmitSingUp()} style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" >Sign-up</Button>
 
-          {/* SIGN-UP */}
-
-          <div className="Sign">
-            <h1>S'inscrire</h1>
-
-        <Input className="Login-input" placeholder="Email"   />
-                  
-                  <Input className="Login-input" placeholder="Name"
-                  />
-
-                  <Input.Password className="Login-input" placeholder="password"   />
-            
-
-            <Button style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" ><Link to='/screendashboard'>Sign-up</Link></Button>
-
-          </div>
+        </div>
 
       </div>
-
-</div>
+    </div>
   )}
 
 export default ScreenLogin

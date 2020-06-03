@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const locationSchema = mongoose.Schema({
+const locationSchema = new mongoose.Schema({
     latitude: Number,
     longitude: Number
 });
@@ -26,4 +26,4 @@ const userSchema = new mongoose.Schema({
 
 const userModel = new mongoose.model('users', userSchema);
 
-module.export = userModel;
+module.exports = userModel;

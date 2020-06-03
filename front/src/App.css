@@ -1,38 +1,99 @@
-.App {
-  text-align: center;
+@import '~antd/dist/antd.css';
+
+* {
+  font-family: 'Oswald', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+a:hover{
+  color:pink
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+h1{
+  font-weight:bold;
+  text-decoration: underline;
+  font-size:40px
+}
+#title{
+  text-align: center
+}
+
+header{
+  border-bottom: 1px solid black;
+}
+
+.headers{
+  text-decoration: underline;
+  font-size:25px
+}
+
+#choix{
+  text-align: center
+}
+
+.site-card-wrapper {
+  background: #ececec;
+  padding: 30px;
+}
+
+.ant-menu-item-active {
+  background-color: pink; /*Overriden property*/
+}
+
+.Home{
+  justify-content: center;
+  height:100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+}
+
+.Login-page{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height:100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   }
+
+.Login-input{
+margin: 15px;
+width: 400px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Sign {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding-bottom: 15px;
+  border-radius: 5%;
+  border-color: white;
+  margin: 40px;
 }
 
-.App-link {
-  color: #61dafb;
+.Sign .Login-input{
+width: 250px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Map{
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 15px;
+  border-radius: 5%;
+  border-color: white;
+   margin: 40px;
+  
+
 }
+/* .Card{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+} */

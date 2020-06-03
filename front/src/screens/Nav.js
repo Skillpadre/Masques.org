@@ -1,8 +1,8 @@
 import React from 'react';
 import '../App.css';
-import { Row, Col, Card, Menu} from 'antd';
-import { Redirect, Link } from 'react-router-dom';
-import {Icon} from '@ant-design/compatible'
+import {Menu} from 'antd';
+import 'antd/dist/antd.css';
+import { Link } from 'react-router-dom';
 
 
 
@@ -11,40 +11,23 @@ function Nav() {
 
   return (
  
-<header>
-   
-      <Row align="middle"> 
-      <Col offset={2} span={4}><h1>Masques.org</h1></Col>
-      
-<Menu mode="horizontal">
+    <Menu className='Menu' theme="dark" style={{backgroundColor: '#1e272e'}} mode="horizontal" defaultSelectedKeys={['2']}>
 
-<Menu.Item key="mail">
-<Col span={4}>
-  <Icon type="home" />
-  
-  <Link to='/' className="customclass">Accueil</Link> 
-  </Col>
-</Menu.Item>
+        <Menu.Item className='logo' key="1">
+            <Link to='/' className="customclass">Masques.org</Link>
+        </Menu.Item>
+        <Menu.Item key="2" className="menuItem">
+            <Link to='/' className="customclass">Accueil</Link> 
+        </Menu.Item>
+        <Menu.Item key="3">
+            <Link to='/screenmap' className="customclass" >Fabricants</Link>
+        </Menu.Item>
+        <Menu.Item key="4" style={{float: 'right'}}>
+            <Link to='/screenlogin' className="customclass" >S'inscrire / Se connecter</Link>
+        </Menu.Item>
 
+    </Menu>
 
-<Menu.Item key="fab">
-<Col span={4}>
-<Link to='/screenmap' className="customclass" >Fabricants</Link>
-</Col>
-</Menu.Item>
-
-
-<Menu.Item key="sign" className="customclass">
-  
-  <Col  span={4}>
-  <Icon type="login" />
-  <Link to='/screenlogin'> Sign In/ Sign Up</Link>
-  </Col>
-</Menu.Item>
-</Menu>
-
-  </Row>
-</header>
   );
 }
 

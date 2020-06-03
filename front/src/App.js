@@ -9,6 +9,7 @@ import ScreenConfirm from './screens/ScreenConfirm';
 import ScreenDashboard from './screens/ScreenDashboard';
 import ScreenBasket from './screens/ScreenBasket';
 import ScreenFabricant from './screens/ScreenFabricant';
+import ScreenProfil from './screens/ScreenProfil';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route component={ScreenDashboard} path="/screendashboard"/>
         <Route component={ScreenBasket} path="/screenbasket"/>
         <Route component={ScreenFabricant} path="/screenfabricant"/>
+        <Route component={ScreenProfil} path="/screenprofil"/>
       </Switch>
     </Router>
   );

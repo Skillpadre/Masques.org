@@ -43,7 +43,7 @@ function ScreenBasket() {
         <div>
             <Nav />
 
-            <div className="Dashboard-page">
+            <div className="Basket-page">
                 <Row>
                     <Col span={8}>
                         <h1>Dashboard</h1>

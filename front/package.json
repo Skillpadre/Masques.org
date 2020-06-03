@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "add": "^2.0.6",
     "antd": "^4.2.5",
+    "craco-less": "^1.17.0",
     "nodemon": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

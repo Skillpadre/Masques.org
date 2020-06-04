@@ -4,9 +4,10 @@ import { Row, Col, Card, Input, Button} from 'antd';
 import 'antd/dist/antd.css';
 import { Redirect, Link } from 'react-router-dom';
 import Nav from './Nav'
+import {connect} from 'react-redux'
 
 
-function ScreenLogin() {
+function ScreenLogin(props) {
 
   // State SIGN UP
   const [singUpUsername, setSingUpUsername] = useState('');
@@ -35,7 +36,8 @@ function ScreenLogin() {
 
       // On test la réponse du back
       if(response.result){      // Si on a bien un user
-        console.log(response.user.token);// add token reducer
+        console.log(response.user.token);
+        props.addToken(response.user.token);// add token reducer
         setUserExist(true);
       } else {                  // Si pas de user
         setErrorSignup(response.error)
@@ -65,7 +67,8 @@ function ScreenLogin() {
 
     // On test la réponse du back
     if(response.result){      // Si on a bien un user
-      console.log(response.user.token);// add token reducer
+      console.log(response.user.token);
+      props.addToken(response.user.token);// add token reducer
       setUserExist(true);
     } else {                  // Si pas de user
       setErrorSignin(response.error)
@@ -119,6 +122,16 @@ function ScreenLogin() {
 
       </div>
     </div>
-  )}
+  )
+}
 
-export default ScreenLogin
+function mapDispatchToProps(dispatch){
+  return {
+    addToken: function(token){
+      dispatch( {type: 'addToken', token: token} )
+    }
+  }
+}
+
+
+export default connect(null, mapDispatchToProps)(ScreenLogin);

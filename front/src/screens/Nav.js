@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import '../App.css';
-import {Menu} from 'antd';
+import {Menu, Avatar} from 'antd';
+import {ShoppingFilled, UserOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
@@ -33,15 +34,17 @@ function Nav(props) {
         
         let itemCompte = 
             <Menu.Item key="5" style={{float: 'right'}}>
-                {/* icone     */}
+
+                <Avatar style={{marginRight: 10}} size={30} icon={<UserOutlined />} />
                 <Link to='/dashboard' className="customclass" >Mon Compte</Link>
-        
-             </Menu.Item>
+             
+            </Menu.Item>
 
         let itemPanier = 
             <Menu.Item key="6" style={{float: 'right'}}>
-                {/* icone     */}
-                <Link to='/basket' className="customclass" >panier</Link>
+                
+                <ShoppingFilled style={{fontSize:20}}/>
+                <Link to='/basket' className="customclass" >Panier</Link>
 
             </Menu.Item>
 

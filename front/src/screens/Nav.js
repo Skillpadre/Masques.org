@@ -1,13 +1,46 @@
 import React from 'react';
 import '../App.css';
-import {Menu} from 'antd';
+import {Menu, Row} from 'antd';
 import 'antd/dist/antd.css';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux'
 
 
 
-function Nav() {
+function Nav(props) {
 
+    let items;
+
+    if(props.token){
+        let itemLogout = 
+            <Menu.Item key="4" style={{float: 'right'}}>
+
+                    <Link onClick={()=>props.deleteToken()} to='/' className="customclass" >Logout</Link>
+                
+            </Menu.Item>
+        
+        let itemCompte = 
+            <Menu.Item key="4" style={{float: 'right'}}>
+                {/* icone     */}
+                <Link to='/screendashboard' className="customclass" >Mon Compte</Link>
+        
+             </Menu.Item>
+
+        let itemPanier = 
+            <Menu.Item key="4" style={{float: 'right'}}>
+                {/* icone     */}
+                <Link to='/screenbasket' className="customclass" >panier</Link>
+
+            </Menu.Item>
+
+        items=[itemLogout, itemCompte, itemPanier];
+            
+    } else {
+        items = 
+            <Menu.Item key="4" style={{float: 'right'}}>
+                <Link to='/screenlogin' className="customclass" >S'inscrire / Se connecter</Link>
+            </Menu.Item>
+    }
 
   return (
  
@@ -22,13 +55,22 @@ function Nav() {
         <Menu.Item key="3">
             <Link to='/screenmap' className="customclass" >Fabricants</Link>
         </Menu.Item>
-        <Menu.Item key="4" style={{float: 'right'}}>
-            <Link to='/screenlogin' className="customclass" >S'inscrire / Se connecter</Link>
-        </Menu.Item>
+        
+        {items}
 
     </Menu>
 
   );
 }
 
-export default Nav;
+function mapStateToProps(state){
+    return { token: state.userToken}
+}
+function mapDispatchToProps(dispatch){
+    return {
+        deleteToken: function(){
+            dispatch({type: 'deleteToken'})
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

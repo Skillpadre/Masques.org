@@ -1,12 +1,40 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '../App.css';
-import { Row, Form, Input, Button, Checkbox } from 'antd';
+import { Row, Form, Input, Button, Checkbox, List, Skeleton, Avatar } from 'antd';
 import 'antd/dist/antd.css';
 import { Redirect, Link } from 'react-router-dom';
 import Nav from './Nav'
+import {connect} from 'react-redux'
 
 
-function ScreenProfil() {
+function ScreenProfil(props) {
+
+    const [info, setInfo] = useState([]);
+
+    useEffect(() => {
+        // On charge les info pour les afficher
+        async function loadInfo() {
+            const rawResponse = await fetch(`/users/loadinfo/:${props.token}`);
+            const response = await rawResponse.json();
+            console.log(response);
+        }
+        loadInfo();
+    }, []);
+
+    const data = [
+        {
+          title: 'Ant Design Title 1',
+        },
+        {
+          title: 'Ant Design Title 2',
+        },
+        {
+          title: 'Ant Design Title 3',
+        },
+        {
+          title: 'Ant Design Title 4',
+        },
+      ];
 
     const tailLayout = {
         wrapperCol: {
@@ -14,6 +42,20 @@ function ScreenProfil() {
             span: 16,
         },
     };
+
+    const onFinish = async values => {
+        console.log('Success:', values);
+
+        await fetch('/users/update-info/' + props.token, {
+            method: 'POST',
+            headers: {'Content-Type':'application/Json'},
+            body: JSON.stringify(values)
+        });
+      };
+    
+      const onFinishFailed = errorInfo => {
+        console.log('Failed:', errorInfo);
+      };
 
     return (
         <div>
@@ -29,12 +71,33 @@ function ScreenProfil() {
                 <Row>
                     <div id="profil-box">
 
+<List
+    itemLayout="horizontal"
+    dataSource={data}
+    renderItem={item => (
+      <List.Item>
+        <List.Item.Meta
+          title={<a href="https://ant.design">{item.title}</a>}
+          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+        />
+      </List.Item>
+    )}
+/>
+                
+                    </div>
+
+                    <div id="profil-box">
+
                         <h2>Infos personnelles</h2>
 
-                        <Form>
+                        <Form
+                            initialValues={{ remember: true }}
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                        >
                             <Form.Item
                                 label="Prénom"
-                                name="prénom"
+                                name="prenom"
                             >
                                 <Input />
                             </Form.Item>
@@ -54,20 +117,33 @@ function ScreenProfil() {
                             </Form.Item>
 
                             <Form.Item
-                                label="Téléphone"
-                                name="téléphone"
+                                label="code postal"
+                                name="zipcode"
                             >
                                 <Input />
                             </Form.Item>
 
                             <Form.Item
-                                label="Mail"
-                                name="mail"
+                                label="Ville"
+                                name="city"
                             >
                                 <Input />
                             </Form.Item>
 
+                            <Form.Item
+                                label="Téléphone"
+                                name="telephone"
+                            >
+                                <Input />
+                            </Form.Item>
 
+                            <Row>  
+                                <Form.Item {...tailLayout}>
+                                    <Button type="primary" htmlType="submit">
+                                        Sign-up
+                                    </Button>
+                                </Form.Item>
+                            </Row>
                         </Form>
                     </div>
 
@@ -112,4 +188,12 @@ function ScreenProfil() {
     )
 }
 
-export default ScreenProfil
+function mapStateToProps(state) {
+    return { token: state.userToken }
+}
+  
+
+export default connect(
+    mapStateToProps,
+    null
+   )(ScreenProfil);

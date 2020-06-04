@@ -38,6 +38,8 @@ function ScreenLogin(props) {
       if(response.result){      // Si on a bien un user
         console.log(response.user.token);
         props.addToken(response.user.token);// add token reducer
+        localStorage.setItem('user', JSON.stringify(response.user));
+        console.log(response.user)
         setUserExist(true);
       } else {                  // Si pas de user
         setErrorSignup(response.error)
@@ -69,6 +71,9 @@ function ScreenLogin(props) {
     if(response.result){      // Si on a bien un user
       console.log(response.user.token);
       props.addToken(response.user.token);// add token reducer
+      localStorage.setItem('email', singInEmail);
+      localStorage.setItem('password', singInPassword);
+      localStorage.setItem('token', response.user.token);
       setUserExist(true);
     } else {                  // Si pas de user
       setErrorSignin(response.error)

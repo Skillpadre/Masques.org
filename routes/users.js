@@ -25,9 +25,15 @@ router.post('/signup', async function(req, res) {
     result = false;
     error.push('Email déjà utilisé');
   }
+
+  // Test si le username n'est pas déjà use
+  let isUsernameUsed = await userModel.findOne({username: req.body.username})
+  if(isUsernameUsed){
+    result = false;
+    error.push("Nom d'utilisateur déjà utilisé");
+  }
   
   // On test si les champs sont remplis
-  
   if (req.body.email === '' || req.body.password === '' || req.body.username === '') {
     result = false;
     error.push('Champs vides');
@@ -49,5 +55,34 @@ router.post('/signup', async function(req, res) {
 
   res.json({ result, error, user })
 });
+
+
+// Route SIGN IN
+router.post('/signin', async function(req, res){
+  let result = false;
+  let error = [];
+
+  if (req.body.email === '' || req.body.password === '') {
+    error.push('Vérifiez les champs de saisie');
+  }
+
+  let user = await userModel.findOne({email: req.body.email})
+  if (user) {
+    let hash = SHA256(req.body.password + user.salt).toString(encBase64);
+
+    if(hash === user.password)
+      result = true;
+    else {
+      error.push("MDP invalide")
+      user = null;
+    }
+
+  } else {
+    error.push("Ce compte n'existe pas");
+  }
+
+  res.json({ result, error, user });
+});
+
 
 module.exports = router;

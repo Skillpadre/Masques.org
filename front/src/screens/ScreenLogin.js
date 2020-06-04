@@ -81,7 +81,7 @@ function ScreenLogin(props) {
   });
  
   if(userExist)
-    return <Redirect to='/ScreenHome' />
+    return <Redirect to='/' />
 
   return (
     <div>
@@ -98,7 +98,7 @@ function ScreenLogin(props) {
 
           <Input.Password required className="Login-input" placeholder="Password" onChange={e => setSingInPassword(e.target.value)} value={singInPassword} />
 
-          <Button onClick={()=> handleSubmitSingIn()} style={{ width: '80px', backgroundColor: 'purple', borderColor: 'black' }} type="primary" >Sign-in</Button>
+          <Button onClick={()=> handleSubmitSingIn()} style={{backgroundColor : '#E23D70', width: 100, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Sign-in</Button>
 
         </div>
 
@@ -116,7 +116,7 @@ function ScreenLogin(props) {
           <Input.Password required minLength="8" maxLength="24" className="Login-input" placeholder="password" onChange={e => setSingUpPassword(e.target.value)} value={singUpPassword} />
           <Input.Password required className="Login-input" placeholder="confirm password" onChange={e => setSingUpPasswordConfirm(e.target.value)} value={singUpPasswordConfirm} />
 
-          <Button onClick={()=> handleSubmitSingUp()} style={{width:'80px', backgroundColor:'purple', borderColor:'black'}} type="primary" >Sign-up</Button>
+          <Button onClick={()=> handleSubmitSingUp()} style={{backgroundColor : '#E23D70', width: 100, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Sign-up</Button>
 
         </div>
 

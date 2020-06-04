@@ -8,7 +8,8 @@ h1{
   font-size:40px
 }
 #title{
-  text-align: center
+  text-align: center;
+  font-weight: 700;
 }
 
 header{
@@ -34,11 +35,9 @@ header{
 }
 
 .Home{
-  justify-content: center;
-  height:100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; 
+  display : flex;
+  align-items: center;
+  text-align: center;
 }
 
 .Login-page{

@@ -1,148 +1,138 @@
 import React from 'react';
 import '../App.css';
-import { Row, Col, Card } from 'antd';
+import { Layout, Row, Col, Card } from 'antd';
 import 'antd/dist/antd.css';
 import Nav from './Nav'
 
+const { Content, Footer } = Layout;
 
 function ScreenHome() {
-  const { Meta } = Card;
+
 
   return (
-    <div>
+    <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+
       <Nav />
 
-      <body>
+      <Content style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20}}>
 
         <h1 id="title">Masques personnalisés</h1>
 
         <h3 id="choix">Entreprises | Collectivités | Grand Public</h3>
 
-        <div className="Home" >
-          <Row gutter={[8, 4]}>
+        <Row style={{marginTop: 50}}> 
 
-            <Col span={8}>
+            <Col md={{span :8}} sm={{span: 12}}>
               <Card
+                hoverable
                 style={{
                   width: 400,
-                  margin: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  margin: '25px',
                 }}
                 cover={
                   <img
                     alt="article"
-                    src='./Mask-6.jpg'
+                    src='../assets/images/masque1.jpg'
                   />
                 }
               >
-                <Meta title="Masque" description="photo" />
               </Card>
             </Col>
 
-            <Col span={8}>
+            <Col md={{span :8}} sm={{span: 12}}>
               <Card
+                hoverable
                 style={{
-                  width: 300,
-                  margin: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  width: 400,
+                  margin: '25px',
                 }}
                 cover={
                   <img
                     alt="article"
-                    src='./assets/Mask-6.jpg'
+                    src='../assets/images/masque2.jpg'
                   />
                 }
               >
-                <Meta title="Masque" description="photo" />
+                
               </Card>
             </Col>
 
-            <Col span={8}>
+            <Col md={{span :8}} sm={{span: 12}}>
               <Card
+                hoverable
                 style={{
-                  width: 300,
-                  margin: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  width: 400,
+                  margin: '25px'
                 }}
                 cover={
                   <img
                     alt="article"
-                    src='./assets/Mask-6.jpg'
+                    src='../assets/images/masque3.jpg'
                   />
                 }
               >
-                <Meta title="Masque" description="photo" />
               </Card>
+              
             </Col>
-            <Col span={8}>
+
+            <Col md={{span :8}} sm={{span: 12}}>
               <Card
+                hoverable
                 style={{
-                  width: 300,
-                  margin: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  width: 400,
+                  margin: '25px',
                 }}
                 cover={
                   <img
                     alt="article"
-                    src='./assets/Mask-6.jpg'
+                    src='../assets/images/masque4.jpg'
                   />
                 }
               >
-                <Meta title="Masque" description="photo" />
+               
               </Card>
             </Col>
 
-            <Col span={8}>
+            <Col md={{span :8}} sm={{span: 12}}>
               <Card
+                hoverable
                 style={{
-                  width: 300,
-                  margin: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  width: 400,
+                  margin: '25px',
                 }}
                 cover={
                   <img
                     alt="article"
-                    src='./assets/Mask-6.jpg'
+                    src='../assets/images/masque5.jpg'
                   />
                 }
               >
-                <Meta title="Masque" description="photo" />
+              
               </Card>
             </Col>
 
-            <Col span={8}>
+            <Col md={{span :8}} sm={{span: 12}}>
               <Card
+                hoverable
                 style={{
-                  width: 300,
-                  margin: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  width: 400,
+                  margin: '25px',
                 }}
                 cover={
                   <img
                     alt="article"
-                    src='./assets/Mask-6.jpg'
+                    src='../assets/images/masque6.jpg'
                   />
                 }
               >
-                <Meta title="Masque" description="photo" />
+               
               </Card>
             </Col>
           </Row>
-        </div>
-      </body>
-    </div>
+
+      </Content>
+      <Footer style={{ textAlign: 'center'}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+    </Layout>
   );
 }
 

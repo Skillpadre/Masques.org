@@ -22,14 +22,14 @@ function Nav(props) {
         let itemCompte = 
             <Menu.Item key="5" style={{float: 'right'}}>
                 {/* icone     */}
-                <Link to='/screendashboard' className="customclass" >Mon Compte</Link>
+                <Link to='/dashboard' className="customclass" >Mon Compte</Link>
         
              </Menu.Item>
 
         let itemPanier = 
             <Menu.Item key="6" style={{float: 'right'}}>
                 {/* icone     */}
-                <Link to='/screenbasket' className="customclass" >panier</Link>
+                <Link to='/basket' className="customclass" >panier</Link>
 
             </Menu.Item>
 
@@ -38,7 +38,7 @@ function Nav(props) {
     } else {
         items = 
             <Menu.Item key="4" style={{float: 'right'}}>
-                <Link to='/screenlogin' className="customclass" >S'inscrire / Se connecter</Link>
+                <Link to='/login' className="customclass" >S'inscrire / Se connecter</Link>
             </Menu.Item>
     }
 
@@ -53,7 +53,7 @@ function Nav(props) {
             <Link to='/' className="customclass">Accueil</Link> 
         </Menu.Item>
         <Menu.Item key="3">
-            <Link to='/screenmap' className="customclass" >Fabricants</Link>
+            <Link to='/map' className="customclass" >Fabricants</Link>
         </Menu.Item>
         
         {items}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../App.css';
 import Nav from './Nav'
 
@@ -82,7 +83,7 @@ function ScreenFabricant (){
 
                     </Form>
 
-                    <Button style={{backgroundColor : '#E23D70', width: 90, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Valider</Button>
+                    <Link to= '/screenbasket'><Button style={{backgroundColor : '#E23D70', width: 90, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Valider</Button></Link>
 
 
                 </div>

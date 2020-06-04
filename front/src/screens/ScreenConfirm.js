@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../App.css';
 import Nav from './Nav'
 
@@ -30,7 +31,7 @@ function LayoutDesign (){
                 <p style={{fontWeight : 700, marginTop: 30}}>Votre commande à bien été prise en compte !</p>
                 <p>Merci pour votre confiance.</p>
 
-                <Button style={{backgroundColor : '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Retour à l'accueil</Button>
+                <Link to='/'><Button style={{backgroundColor : '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Retour à l'accueil</Button></Link>
 
             </div>
 

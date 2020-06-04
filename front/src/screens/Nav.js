@@ -14,7 +14,7 @@ function Nav() {
     <Menu className='Menu' theme="dark" style={{backgroundColor: '#1e272e'}} mode="horizontal" defaultSelectedKeys={['2']}>
 
         <Menu.Item className='logo' key="1">
-            <Link to='/' className="customclass">Masques.org</Link>
+            <Link to='/' className="customclass" style={{fontSize: 20}}>Masques.org</Link>
         </Menu.Item>
         <Menu.Item key="2" className="menuItem">
             <Link to='/' className="customclass">Accueil</Link> 

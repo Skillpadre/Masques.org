@@ -22,6 +22,7 @@ function ScreenFabricant (){
         <Content style={{ padding: '0 50px'}}>
     
             {/* ----------------CONTENU---------------- */}
+            
         <div /* direction='vertical' */ align='center'style={{display:'flex', flexDirection: 'column', width: '100%'}}>
             {/* Profil fabricant */}
             

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../App.css';
-import {Menu, Row} from 'antd';
+import {Menu} from 'antd';
 import 'antd/dist/antd.css';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
@@ -8,14 +8,26 @@ import {connect} from 'react-redux'
 
 
 function Nav(props) {
+    
+    //Récupération du token dans localStorage
+    var userData=localStorage.getItem('token', (err, value) => {  
+        console.log('value = ' + value)       
+    })
+
+
+    useEffect(() => {
+        /* Prends en compte tous les changeent de userData --> localStorage*/
+    }, [userData])
+
 
     let items;
 
-    if(props.token){
+    if(userData){
+
         let itemLogout = 
             <Menu.Item key="4" style={{float: 'right'}}>
 
-                    <Link onClick={()=>props.deleteToken()} to='/' className="customclass" >Logout</Link>
+                    <Link onClick={()=>{props.deleteToken(); localStorage.clear()}} to='/' className="customclass" >Logout</Link>
                 
             </Menu.Item>
         

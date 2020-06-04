@@ -84,7 +84,7 @@ function ScreenFabricant (){
                             <Input placeholder= 'Entrez la quantité souhaitée'/>
                         </Form.Item>
 
-                        <Link to= '/screenbasket'><Button style={{backgroundColor : '#E23D70', width: 90, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Valider</Button></Link>
+                        <Link to= '/basket'><Button style={{backgroundColor : '#E23D70', width: 90, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Valider</Button></Link>
 
                     </Form>
 

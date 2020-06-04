@@ -6,6 +6,7 @@ export default function(userToken= null, action){
     } else if (action.type === 'deleteToken') {
         let token = null
         return token;
+
     } else {
         return userToken;
     }

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../App.css';
-import {Menu, Row} from 'antd';
+import {Menu, Avatar} from 'antd';
+import {ShoppingFilled, UserOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
@@ -8,28 +9,42 @@ import {connect} from 'react-redux'
 
 
 function Nav(props) {
+    
+    //Récupération du token dans localStorage
+    var userData=localStorage.getItem('token', (err, value) => {  
+        console.log('value = ' + value)       
+    })
+
+
+    useEffect(() => {
+        /* Prends en compte tous les changeent de userData --> localStorage*/
+    }, [userData])
+
 
     let items;
 
-    if(props.token){
+    if(userData){
+
         let itemLogout = 
             <Menu.Item key="4" style={{float: 'right'}}>
 
-                    <Link onClick={()=>props.deleteToken()} to='/' className="customclass" >Logout</Link>
+                    <Link onClick={()=>{props.deleteToken(); localStorage.clear()}} to='/' className="customclass" >Logout</Link>
                 
             </Menu.Item>
         
         let itemCompte = 
-            <Menu.Item key="4" style={{float: 'right'}}>
-                {/* icone     */}
-                <Link to='/screendashboard' className="customclass" >Mon Compte</Link>
-        
-             </Menu.Item>
+            <Menu.Item key="5" style={{float: 'right'}}>
+
+                <Avatar style={{marginRight: 10}} size={30} icon={<UserOutlined />} />
+                <Link to='/dashboard' className="customclass" >Mon Compte</Link>
+             
+            </Menu.Item>
 
         let itemPanier = 
-            <Menu.Item key="4" style={{float: 'right'}}>
-                {/* icone     */}
-                <Link to='/screenbasket' className="customclass" >panier</Link>
+            <Menu.Item key="6" style={{float: 'right'}}>
+                
+                <ShoppingFilled style={{fontSize:20}}/>
+                <Link to='/basket' className="customclass" >Panier</Link>
 
             </Menu.Item>
 
@@ -38,7 +53,7 @@ function Nav(props) {
     } else {
         items = 
             <Menu.Item key="4" style={{float: 'right'}}>
-                <Link to='/screenlogin' className="customclass" >S'inscrire / Se connecter</Link>
+                <Link to='/login' className="customclass" >S'inscrire / Se connecter</Link>
             </Menu.Item>
     }
 
@@ -53,7 +68,7 @@ function Nav(props) {
             <Link to='/' className="customclass">Accueil</Link> 
         </Menu.Item>
         <Menu.Item key="3">
-            <Link to='/screenmap' className="customclass" >Fabricants</Link>
+            <Link to='/map' className="customclass" >Fabricants</Link>
         </Menu.Item>
         
         {items}

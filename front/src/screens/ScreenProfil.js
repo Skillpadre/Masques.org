@@ -104,7 +104,7 @@ function ScreenProfil() {
                 <Row><Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
                         Valider mes changements
-        </Button>
+                    </Button>
                 </Form.Item></Row>
             </div>
 

@@ -20,14 +20,14 @@ function Nav(props) {
             </Menu.Item>
         
         let itemCompte = 
-            <Menu.Item key="4" style={{float: 'right'}}>
+            <Menu.Item key="5" style={{float: 'right'}}>
                 {/* icone     */}
                 <Link to='/screendashboard' className="customclass" >Mon Compte</Link>
         
              </Menu.Item>
 
         let itemPanier = 
-            <Menu.Item key="4" style={{float: 'right'}}>
+            <Menu.Item key="6" style={{float: 'right'}}>
                 {/* icone     */}
                 <Link to='/screenbasket' className="customclass" >panier</Link>
 

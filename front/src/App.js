@@ -23,13 +23,13 @@ function App() {
       <Router>
         <Switch>
           <Route component={ScreenHome} path="/" exact />
-          <Route component={ScreenLogin} path="/screenlogin"/>
-          <Route component={ScreenMap} path="/screenmap"/>
-          <Route component={ScreenConfirm} path="/screenconfirm"/>
-          <Route component={ScreenDashboard} path="/screendashboard"/>
-          <Route component={ScreenBasket} path="/screenbasket"/>
-          <Route component={ScreenFabricant} path="/screenfabricant"/>
-          <Route component={ScreenProfil} path="/screenprofil"/>
+          <Route component={ScreenLogin} path="/login"/>
+          <Route component={ScreenMap} path="/map"/>
+          <Route component={ScreenConfirm} path="/confirm"/>
+          <Route component={ScreenDashboard} path="/dashboard"/>
+          <Route component={ScreenBasket} path="/basket"/>
+          <Route component={ScreenFabricant} path="/fabricant"/>
+          <Route component={ScreenProfil} path="/profil"/>
         </Switch>
       </Router>
     </Provider>

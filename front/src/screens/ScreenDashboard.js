@@ -35,7 +35,7 @@ function ScreenDashboard() {
             <h2>Bienvenue John !</h2>
           </Col>
           <Col offset={4} span={6}>
-            <Button><Link to='/screenmap'>Passer une commande</Link></Button>
+            <Button><Link to='/map'>Passer une commande</Link></Button>
           </Col>
 
         </Row>

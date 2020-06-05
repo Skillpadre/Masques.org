@@ -38,6 +38,8 @@ function ScreenDashboard() {
             <Button style={{marginTop:20, width: 150, backgroundColor : '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}><Link to='/map'>Passer une commande</Link></Button>
             
             <Button style={{marginTop:20, width: 150, backgroundColor : '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}><Link to='/profil'>Modifier mes infos</Link></Button>
+           
+            <Button style={{marginTop:20, width: 150, backgroundColor : '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}><Link to='/mask'>Créer un nouvel article</Link></Button>
           </Col>
 
         </Row>

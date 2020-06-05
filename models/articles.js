@@ -7,7 +7,8 @@ const articleSchema = new mongoose.Schema({
     stock: Number,
     color: String,
     img: String,
-    quality: String
+    quality: String,
+    user: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
 });
 
 const articleModel = new mongoose.model('articles', articleSchema);

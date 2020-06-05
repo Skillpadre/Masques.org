@@ -3,8 +3,8 @@ var router = express.Router();
 let uid2 = require("uid2");
 let SHA256 = require("crypto-js/sha256");
 let encBase64 = require("crypto-js/enc-base64");
-
 let userModel = require('../models/user');
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -116,4 +116,8 @@ router.get('/loadinfo/:token', async function(req, res){
   console.log(user);
   res.json({user});
 });
+
+
+
+
 module.exports = router;

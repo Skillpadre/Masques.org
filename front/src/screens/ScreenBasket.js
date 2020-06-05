@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import '../App.css';
+
 import { Row, Col, Card, Button, Layout, List, Avatar, Divider, Radio, Input } from 'antd';
 import { Redirect, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
+
+import {connect} from 'react-redux'
+
+import StripeCheckout from 'react-stripe-checkout';
+
 import Nav from './Nav'
 
 const { Content, Footer } = Layout;
 
 
-function ScreenBasket() {
+function ScreenBasket(props) {
 
     const data = [
         {
@@ -38,7 +44,7 @@ function ScreenBasket() {
         setRadioValue(e.target.value);
     };
 
-    console.log(radioValue)
+
 
     return (
 
@@ -95,7 +101,22 @@ function ScreenBasket() {
         </Radio>
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
-                            <Button style={{marginTop:20, width: 100, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type='primary'>Paiement</Button>
+                        
+                            {/* Stripe */}
+                            <StripeCheckout
+                                amount="500" //TO DO --> Dynamiser
+                                billingAddress
+                                description="Masques personnalisés"
+                                /* image="https://yourdomain.tld/images/logo.svg" */
+                                locale="auto"
+                                name="Masques.org"
+                                stripeKey="pk_test_coUidDoFWymEAbFlak3JlqPf00PqNkwObW"//TO DO --> Changer
+                                token={props.token}
+                                zipCode
+                                label="Payer avec Stripe 💳"
+                                panelLabel="Acheter pour {{amount}}"
+                            />
+                                                
                         </div>
                     </Col>
                 </Row>
@@ -108,4 +129,11 @@ function ScreenBasket() {
     );
 }
 
-export default ScreenBasket;
+
+function mapStateToProps(state){
+    return { token: state.userToken}
+}
+
+
+export default connect(mapStateToProps, null)(ScreenBasket)
+

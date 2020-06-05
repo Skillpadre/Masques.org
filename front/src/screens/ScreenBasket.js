@@ -5,6 +5,8 @@ import { Redirect, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import Nav from './Nav'
 
+const { Content, Footer } = Layout;
+
 
 function ScreenBasket() {
 
@@ -40,20 +42,22 @@ function ScreenBasket() {
 
     return (
 
-        <div>
+        <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
             <Nav />
 
-            <div className="Basket-page">
+            <Content style={{ padding: '0 50px', marginTop: 20}} className="Basket-page">
+                
                 <Row>
-                    <Col span={8}>
-                        <h1>Dashboard</h1>
+                    <Col md={{span: 11}} sm={{span: 24}}>
+                        <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue John !</h2>
                     </Col>
-                    <Col span={6}>
-                        <h2>Bienvenue John !</h2>
+                    <Col md={{span: 13}} sm={{span: 12}} xs={{span: 24}}> 
+                        <h1 style={{fontWeight: 700, fontSize: 40}}>Panier</h1>
                     </Col>
                 </Row>
-                <Row>
-                    <Col span={10}>
+
+                <Row style={{marginTop: 40}} align='middle'>
+                    <Col md={{span: 12}} sm={{span: 24}}>
                         <h2>Produits en attente</h2>
                         <div id="dashboard-box">
 
@@ -77,7 +81,8 @@ function ScreenBasket() {
 
                         </div>
                     </Col>
-                    <Col span={10}>
+
+                    <Col md={{span: 12}} sm={{span: 24}}>
 
                         <div id="retrait">
                             <h2>Moyen de retrait</h2>
@@ -90,15 +95,16 @@ function ScreenBasket() {
         </Radio>
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
-                            <Button>Paiement</Button>
+                            <Button style={{marginTop:20, width: 100, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type='primary'>Paiement</Button>
                         </div>
                     </Col>
                 </Row>
 
 
 
-            </div>
-        </div>
+            </Content>
+            <Footer style={{ textAlign: 'center'}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+        </Layout>
     );
 }
 

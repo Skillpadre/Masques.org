@@ -84,5 +84,36 @@ router.post('/signin', async function(req, res){
   res.json({ result, error, user });
 });
 
+// Route Changement info perso
+router.post('/updateinfo/:token', async function(req, res){
+  let user = await userModel.findOne({token: req.params.token});
 
+  if(req.body.prenom)
+    user.firstName = req.body.prenom;
+
+  if(req.body.nom)
+    user.lastName = req.body.nom;
+  
+  if(req.body.telephone)
+    user.tel = req.body.telephone;
+
+  if(req.body.adresse)
+    user.address = req.body.adresse;
+
+  if(req.body.zipcode)
+    user.zip_code = req.body.zipcode;
+
+  if(req.body.city)
+    user.city = req.body.city;
+
+  user = await user.save();
+  res.json({user});
+});
+
+
+router.get('/loadinfo/:token', async function(req, res){
+  let user = await userModel.findOne({token: req.params.token});
+  console.log(user);
+  res.json({user});
+});
 module.exports = router;

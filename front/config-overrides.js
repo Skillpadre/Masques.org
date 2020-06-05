@@ -12,6 +12,7 @@ module.exports = override(
       '@primary-color': '#E23D70', 
       '@menu-dark-highlight-color': '#E23D70',  /*:hover Nav*/  
       '@menu-dark-item-active-bg' : '#1e272e', /*active color item menu*/ 
+      '@menu-dark-color': '#ffff'
     }
   }),
 );

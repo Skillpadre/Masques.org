@@ -83,6 +83,12 @@ width: 250px;
 }
 
 #profil-box{
+  width: 100%;
+  height: auto;
+  margin:15px;
+}
+
+#params-crea{
   width: auto;
   height: auto;
   margin:15px;
@@ -104,12 +110,6 @@ width: 250px;
 .Dashboard-page{
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: left;
-  height:100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   }
 
 #dashboard-box{
@@ -122,13 +122,24 @@ width: 250px;
 .Basket-page{
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: left;
+  /* align-items: left; */
+  /* justify-content: left; */
   height:100vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   }
+
+  .Mask-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height:100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
 
 #retrait{
   display: flex;

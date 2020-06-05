@@ -10,6 +10,7 @@ import ScreenDashboard from './screens/ScreenDashboard';
 import ScreenBasket from './screens/ScreenBasket';
 import ScreenFabricant from './screens/ScreenFabricant';
 import ScreenProfil from './screens/ScreenProfil';
+import ScreenMask from './screens/ScreenMask';
 
 import userToken from './reducer/user';
 import { Provider } from 'react-redux';
@@ -30,6 +31,7 @@ function App() {
           <Route component={ScreenBasket} path="/basket"/>
           <Route component={ScreenFabricant} path="/fabricant"/>
           <Route component={ScreenProfil} path="/profil"/>
+          <Route component={ScreenMask} path="/mask"/>
         </Switch>
       </Router>
     </Provider>

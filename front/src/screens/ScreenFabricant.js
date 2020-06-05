@@ -19,28 +19,30 @@ function ScreenFabricant (){
         
         <Nav/>
     
-        <Content style={{ padding: '0 50px', display: 'flex',flexDirection: 'column', alignItems: 'center'}} >
+        
     
             {/* ----------------CONTENU---------------- */}
         
-            <Row style={{display: 'flex', flexDirection: 'row', marginTop: 25}}>
+            <Row style={{display: 'flex', justify: 'start', marginTop: 25}}>
             {/* Profil fabricant */}
-            
+            <Col offset={1} md={{span : 2}} sm={{span : 4}}>
                 <Avatar size={64} icon={<UserOutlined />} />
+            </Col>
+            <Col md={{span : 10}} sm={{span : 16}}>
                 <div style={{marginLeft: 20, color: '#1E272E'}}>
                     
                     <h3 style={{fontWeight: 700, fontSize: 25}}>Shawn Williamson</h3>
                     <p style={{width : 400}}>Dolor eu nostrud magna ut dolore ad non mollit occaecat. Adipisicing ullamco et tempor nostrud. Occaecat occaecat non magna consectetur quis adipisicing sunt culpa.</p>
                 
                 </div>
-
+                </Col>
             </Row>
             {/* images +  choix masques */}
-            <Row style={{marginTop: 30}}>
+            <Row style={{marginTop: 30, display : 'flex', justify:'space-around'}}>
         
 
-                <Col md={{span : 12}} sm={{span : 24}}>
-                    <Card style={{ width: 300}}
+                <Col md={{span : 12}} sm={{span : 24}} style={{justify:'center'}}>
+                    <Card style={{width:'auto'}}
                         hoverable
                         cover={<img alt="example" src='../assets/typeMasque1.jpg' />}
                     >
@@ -91,7 +93,7 @@ function ScreenFabricant (){
                 </Col> 
 
             </Row>       
-        </Content>
+       
         <Footer style={{ textAlign: 'center', marginTop: 30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
     </Layout>
 

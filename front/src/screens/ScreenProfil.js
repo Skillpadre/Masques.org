@@ -9,32 +9,30 @@ import {connect} from 'react-redux'
 
 function ScreenProfil(props) {
 
-    const [info, setInfo] = useState([]);
+    const [infoLN, setInfoLN] = useState();
+    const [infoFN, setInfoFN] = useState();
+    const [infoAddress, setInfoAddress] = useState();
+    const [infoZip, setInfoZip] = useState();
+    const [infoCity, setInfoCity] = useState();
+    const [infoTel, setInfoTel] = useState();
 
     useEffect(() => {
         // On charge les info pour les afficher
         async function loadInfo() {
-            const rawResponse = await fetch(`/users/loadinfo/:${props.token}`);
+            const rawResponse = await fetch(`/users/loadinfo/${props.token}`);
             const response = await rawResponse.json();
             console.log(response);
+            console.log(response.user)
+
+            setInfoLN(response.user.lastName);
+            setInfoFN(response.user.firstName);
+            setInfoAddress(response.user.address);
+            setInfoZip(response.user.zip_code);
+            setInfoCity(response.user.city);
+            setInfoTel(response.user.tel);
         }
         loadInfo();
     }, []);
-
-    const data = [
-        {
-          title: 'Ant Design Title 1',
-        },
-        {
-          title: 'Ant Design Title 2',
-        },
-        {
-          title: 'Ant Design Title 3',
-        },
-        {
-          title: 'Ant Design Title 4',
-        },
-      ];
 
     const tailLayout = {
         wrapperCol: {
@@ -43,19 +41,28 @@ function ScreenProfil(props) {
         },
     };
 
-    const onFinish = async values => {
-        console.log('Success:', values);
+    const handleClickChangement = async () => {
+        console.log('Success:');
+        let values = {nom : infoLN, prenom: infoFN, telephone: infoTel, adresse: infoAddress, zipcode: infoZip, city: infoCity};
 
-        await fetch('/users/update-info/' + props.token, {
+        const data = await fetch('/users/update-info/' + props.token, {
             method: 'POST',
             headers: {'Content-Type':'application/Json'},
             body: JSON.stringify(values)
         });
+
+        const response = await data.json();
+
+        setInfoLN(response.user.lastName);
+        setInfoFN(response.user.firstName);
+        setInfoAddress(response.user.address);
+        setInfoZip(response.user.zip_code);
+        setInfoCity(response.user.city);
+        setInfoTel(response.user.tel);
+            
       };
     
-      const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-      };
+ 
 
     return (
         <div>
@@ -69,85 +76,43 @@ function ScreenProfil(props) {
 
 
                 <Row>
-                    <div id="profil-box">
+                    {/* <div id="profil-box">
 
 <List
     itemLayout="horizontal"
-    dataSource={data}
+    dataSource={info}
     renderItem={item => (
       <List.Item>
         <List.Item.Meta
-          title={<a href="https://ant.design">{item.title}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          title={item.title}
+          description={item.value}
         />
       </List.Item>
     )}
 />
                 
-                    </div>
+                    </div> */}
 
                     <div id="profil-box">
 
-                        <h2>Infos personnelles</h2>
+                        {/* <h2>Infos personnelles</h2> */}
 
-                        <Form
-                            initialValues={{ remember: true }}
-                            onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
-                        >
-                            <Form.Item
-                                label="Prénom"
-                                name="prenom"
-                            >
-                                <Input />
-                            </Form.Item>
+                        <Input onChange={e => setInfoFN(e.target.value)} value={infoFN} placeholder='Votre prénom' />
+                        <Input onChange={e => setInfoLN(e.target.value)} value={infoLN} placeholder='Votre nom' />
+                        <Input onChange={e => setInfoAddress(e.target.value)} value={infoAddress} placeholder='Votre addresse' />
+                        <Input onChange={e => setInfoZip(e.target.value)} value={infoZip} placeholder='Votre code postal' />
+                        <Input onChange={e => setInfoCity(e.target.value)} value={infoCity} placeholder='Votre ville' />
+                        <Input onChange={e => setInfoTel(e.target.value)} value={infoTel} placeholder='Votre numéro de téléphone' />
 
-                            <Form.Item
-                                label="Nom"
-                                name="nom"
-                            >
-                                <Input />
-                            </Form.Item>
 
-                            <Form.Item
-                                label="Adresse"
-                                name="adresse"
-                            >
-                                <Input />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="code postal"
-                                name="zipcode"
-                            >
-                                <Input />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Ville"
-                                name="city"
-                            >
-                                <Input />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Téléphone"
-                                name="telephone"
-                            >
-                                <Input />
-                            </Form.Item>
-
-                            <Row>  
-                                <Form.Item {...tailLayout}>
-                                    <Button type="primary" htmlType="submit">
-                                        Sign-up
-                                    </Button>
-                                </Form.Item>
-                            </Row>
-                        </Form>
+                        <Row>  
+                            <Button style={{marginTop: 25}} type="primary" onClick={() => handleClickChangement()}>
+                                Valider mes changement
+                            </Button>
+                        </Row>
                     </div>
 
-                    <div id="profil-box">
+                    {/* <div id="profil-box">
 
                         <h2>Infos de connexion</h2>
                         <Form>
@@ -174,14 +139,14 @@ function ScreenProfil(props) {
 
                         </Form>
 
-                    </div>
+                    </div> */}
                 </Row>
 
-                <Row><Form.Item {...tailLayout}>
+                {/* <Row><Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
                         Valider mes changements
-                    </Button>
-                </Form.Item></Row>
+        </Button>
+                </Form.Item></Row> */}
             </div>
 
         </div>

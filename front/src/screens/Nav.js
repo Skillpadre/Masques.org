@@ -11,13 +11,14 @@ import {connect} from 'react-redux'
 function Nav(props) {
     
     //Récupération du token dans localStorage
-    var userData=localStorage.getItem('token', (err, value) => {  
+    var userData = localStorage.getItem('token', (err, value) => {
         console.log('value = ' + value)       
     })
 
 
-    useEffect(() => {
-        /* Prends en compte tous les changeent de userData --> localStorage*/
+    useEffect(() => {        
+        props.addToken(userData);  
+        /* Prends en compte tous les changement de userData --> localStorage */
     }, [userData])
 
 
@@ -83,6 +84,9 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
     return {
+        addToken: function(token){
+            dispatch( {type: 'addToken', token: token} )
+          },
         deleteToken: function(){
             dispatch({type: 'deleteToken'})
         }

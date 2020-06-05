@@ -17,7 +17,7 @@ function Nav(props) {
 
 
     useEffect(() => {
-        /* Prends en compte tous les changeent de userData --> localStorage*/
+        /* Prends en compte tous les changement de userData --> localStorage */
     }, [userData])
 
 

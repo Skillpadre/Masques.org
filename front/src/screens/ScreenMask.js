@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
-import { Row, Form, Input, Button, Checkbox, Col, Slider, InputNumber } from 'antd';
+import { Row, Form, Input, Button, Checkbox, Col, Slider, InputNumber, Modal } from 'antd';
 import 'antd/dist/antd.css';
 import { Redirect, Link } from 'react-router-dom';
 import Nav from './Nav'
@@ -15,6 +15,7 @@ function ScreenMasks() {
     const [couleur, setCouleur] = useState('')
     const [image, setImage] = useState('')
     const [qualité, setQualité] = useState('')
+    const [isVisible, setIsVisible] = useState(false)
 
     const { TextArea } = Input
 
@@ -44,20 +45,29 @@ function ScreenMasks() {
             body: `modèle=${modèle}&description=${description}&price=${inputPrice}&stock=${inputStock}&couleur=${couleur}&image=${image}&qualité=${qualité}`
         });
         let response = await data.json();
-
+        setModèle('')
     }
 
     // Fonction pour clear les fields après validation - Work in progress
 
-    // let clearFields = () => {
-    //     setModèle('');
-    //         setDescription('');
-    //         setInputPrice(1);
-    //         setInputStock(1);
-    //         setCouleur('');
-    //         setImage('');
-    //         setQualité('')
-    // }
+    let clearFields = (e) => {
+         setModèle('');
+        setDescription('');
+          setInputPrice(1);
+          setInputStock(1);
+             setCouleur('');
+             setImage('');
+             setQualité('')
+     }
+
+ let   showModal = () => {
+       setIsVisible(true)
+      };
+
+    let  handleOk = () => {
+             setIsVisible(false)
+        }
+
 
     return (
         <div>
@@ -71,25 +81,29 @@ function ScreenMasks() {
 
 
                 <Row>
-                    <div id="params-crea">
 
                         <h2>Paramètres de la création</h2>
-
+                 </Row>
+                         
                         <Form id="form-articles" style={{ size: 'large' }}>
+                <Row>
+                    <Col span={24}>
                             <Form.Item
                                 label="Modèle"
                                 name="modèle"
                             >
                                 <Input onChange={e => setModèle(e.target.value)} value={modèle} />
                             </Form.Item>
-
+                            </Col>
+                </Row>
+                <Row>
                             <Form.Item
                                 label="Description"
                                 name="description"
                             >
                                 <TextArea rows={6} onChange={e => setDescription(e.target.value)} value={description} />
                             </Form.Item>
-
+                            </Row>
                             <Row>
 
                                 <Col span={12}>
@@ -140,37 +154,49 @@ function ScreenMasks() {
                                     />
                                 </Col>
                             </Row>
-
+            <Row>
                             <Form.Item
                                 label="Couleur"
                                 name="couleur"
                             >
                                 <Input onChange={e => setCouleur(e.target.value)} value={couleur} />
                             </Form.Item>
-
+            </Row>
+            <Row>
                             <Form.Item
                                 label="Image"
                                 name="Image"
                             >
                                 <Input onChange={e => setImage(e.target.value)} value={image} />
                             </Form.Item>
-
+            </Row>
+            <Row>
                             <Form.Item
                                 label="Qualité"
                                 name="Qualité"
                             >
                                 <Input onChange={e => setQualité(e.target.value)} value={qualité} />
                             </Form.Item>
-
+                            </Row>
                         </Form>
-                    </div>
-                </Row>
+       
 
                 <Row><Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" onClick={() => handleNewOrder()}>
+                    <Button type="primary" htmlType="submit" onClick={(e) => {handleNewOrder(); clearFields(e); showModal()}}>
+                        <Link to="/mask">
                         Valider la création
-        </Button>
+                        </Link>
+                       
+                    </Button>
                 </Form.Item></Row>
+
+                <Modal
+          title="Validation"
+          visible={isVisible}
+          onOk={handleOk}
+        >
+          <p>Article mis en ligne !</p>
+        </Modal>
             </div>
 
         </div>

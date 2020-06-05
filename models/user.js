@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     tel: String,
     avatar: String,
     location: locationSchema,
-    orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'commandes'}],
+    orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'orders'}],
     articles: [{type: mongoose.Schema.Types.ObjectId, ref: 'articles'}],
 });
 

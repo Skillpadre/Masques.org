@@ -85,7 +85,7 @@ router.post('/signin', async function(req, res){
 });
 
 // Route Changement info perso
-router.post('/updateinfo/:token', async function(req, res){
+router.post('/update-info/:token', async function(req, res){
   let user = await userModel.findOne({token: req.params.token});
 
   if(req.body.prenom)

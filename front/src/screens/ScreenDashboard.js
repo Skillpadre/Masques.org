@@ -25,7 +25,7 @@ function ScreenDashboard() {
     },
   ];
   return (
-    <Layout className="layout" style={{height: '100vh', backgroundColor: 'white'}}>
+    <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
       <Nav />
 
       <Content style={{ padding: '0 50px' }} className="Dashboard-page">

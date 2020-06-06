@@ -106,10 +106,10 @@ function ScreenBasket(props) {
                             <StripeCheckout
                                 amount="500" //TO DO --> Dynamiser
                                 billingAddress
-                                description="Masques personnalisés"
-                                /* image="https://yourdomain.tld/images/logo.svg" */
-                                locale="auto"
                                 name="Masques.org"
+                                description="Masques personnalisés"
+                                /* image= '../images/logo.png'  */
+                                locale="auto"
                                 stripeKey="pk_test_coUidDoFWymEAbFlak3JlqPf00PqNkwObW"//TO DO --> Changer
                                 token={props.token}
                                 zipCode
@@ -124,7 +124,9 @@ function ScreenBasket(props) {
 
 
             </Content>
+        
             <Footer style={{ textAlign: 'center'}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+           
         </Layout>
     );
 }

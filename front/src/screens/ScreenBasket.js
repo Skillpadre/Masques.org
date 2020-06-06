@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import '../App.css';
 
 import { Row, Col, Card, Button, Layout, List, Avatar, Divider, Radio, Input } from 'antd';
-import { Redirect, Link } from 'react-router-dom';
+import {CloseCircleOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import {connect} from 'react-redux'
@@ -16,18 +17,33 @@ const { Content, Footer } = Layout;
 
 function ScreenBasket(props) {
 
+    const [infoUsername, setInfoUsername] = useState();
+
+    useEffect(() => {
+        async function loadUser() {
+          const rawResponse = await fetch(`/users/loadinfo/${props.token}`);
+          const response = await rawResponse.json();
+    
+          setInfoUsername(response.user.username)
+
+        }
+        loadUser();
+      }, []);
+
+    
+
     const data = [
         {
-            title: 'Ant Design Title 1',
+            title: 'Modèle 1',
         },
         {
-            title: 'Ant Design Title 2',
+            title: 'Modèle 2',
         },
         {
-            title: 'Ant Design Title 3',
+            title: 'Modèle 3',
         },
         {
-            title: 'Ant Design Title 4',
+            title: 'Modèle 4',
         },
     ];
 
@@ -55,7 +71,7 @@ function ScreenBasket(props) {
                 
                 <Row>
                     <Col md={{span: 11}} sm={{span: 24}}>
-                        <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue John !</h2>
+                        <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue {infoUsername} !</h2>
                     </Col>
                     <Col md={{span: 13}} sm={{span: 12}} xs={{span: 24}}> 
                         <h1 style={{fontWeight: 700, fontSize: 40}}>Panier</h1>
@@ -68,6 +84,7 @@ function ScreenBasket(props) {
                         <div id="dashboard-box">
 
                             <List
+                                style={{margin: "0 20px"}}
                                 itemLayout="horizontal"
                                 dataSource={data}
                                 renderItem={item => (
@@ -75,14 +92,17 @@ function ScreenBasket(props) {
                                         <List.Item.Meta
                                             avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                             title={<a href="https://ant.design">{item.title}</a>}
-                                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                            description="Masque personnalisé de couleur noir avec logo et inscription"
+                                            
+                                            
                                         />
+                                        <CloseCircleOutlined/>
                                     </List.Item>
                                 )}
                             />
                             <Divider />
                             <div id="total">
-                                <p >TOTAL : 1000€</p>
+                                <p style={{fontSize: 18, fontWeight: 700}}>TOTAL : 1000€</p>
                             </div>
 
                         </div>

@@ -12,9 +12,9 @@ const { Content, Footer } = Layout;
 function ScreenDashboard(props) {
 
     const [infoUsername, setInfoUsername] = useState();
-    const [infoLN, setInfoLN] = useState();
-    const [infoFN, setInfoFN] = useState();
-    const [infoAddress, setInfoAddress] = useState();
+    const [infoLN, setInfoLN] = useState(); //Last Name
+    const [infoFN, setInfoFN] = useState(); //First Name
+    const [infoAddress, setInfoAddress] = useState(); 
     const [infoZip, setInfoZip] = useState();
     const [infoCity, setInfoCity] = useState();
     const [infoTel, setInfoTel] = useState();
@@ -50,16 +50,16 @@ function ScreenDashboard(props) {
 
   const data = [
     {
-      title: 'Ant Design Title 1',
+      title: 'Commande n° 1',
     },
     {
-      title: 'Ant Design Title 2',
+      title: 'Commande n° 2',
     },
     {
-      title: 'Ant Design Title 3',
+      title: 'Commande n° 3',
     },
     {
-      title: 'Ant Design Title 4',
+      title: 'Commande n° 4',
     },
   ];
 
@@ -139,7 +139,7 @@ function ScreenDashboard(props) {
         </Row>
 
       </Content>
-      <Footer style={{ textAlign: 'center'}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+      <Footer style={{ textAlign: 'center', marginTop: 30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
     </Layout>
   );
 }

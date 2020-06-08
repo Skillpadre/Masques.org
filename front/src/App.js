@@ -29,7 +29,7 @@ function App() {
           <Route component={ScreenConfirm} path="/confirm"/>
           <Route component={ScreenDashboard} path="/dashboard"/>
           <Route component={ScreenBasket} path="/basket"/>
-          <Route component={ScreenFabricant} path="/fabricant"/>
+          <Route component={ScreenFabricant} path="/fabricant/:id"/>
           <Route component={ScreenProfil} path="/profil"/>
           <Route component={ScreenMask} path="/mask"/>
         </Switch>

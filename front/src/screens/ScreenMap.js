@@ -23,13 +23,12 @@ function ScreenMap() {
     loadData()
   }, []);
 
-var sendIdToBack = (id) => {
-
-    console.log(id)
-
-
-
-}
+// var sendIdToBack = async (id) => {
+  
+//     var rawResponse = await fetch(`/articleId/${id}`);
+//     var response = await rawResponse.json();
+//     console.log(response)
+// }
 
   const data = [
     {
@@ -61,7 +60,7 @@ var sendIdToBack = (id) => {
           <Card.Meta description={item.price + " €"}>
 
           </Card.Meta>
-        <Button onClick={() => sendIdToBack(item._id)}><Link to="/fabricant">Choisir cet article</Link></Button>
+        <Button><Link to={`/fabricant/${item._id}`}>Choisir cet article</Link></Button>
         </Card>
       </List.Item>
     )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import Nav from './Nav'
@@ -9,7 +9,18 @@ const { Content, Footer } = Layout;
 const { Option } = Select;
 
 
-function ScreenFabricant (){
+function ScreenFabricant (props){
+
+const [articleId, setArticleId] = useState('')
+
+useEffect(() => {
+    var data = async() => {
+    var rawResponse = await fetch(`/articleId/${props.match.params.id}`);
+    var response = await rawResponse.json();
+      setArticleId(response)
+    }
+    data()
+  }, []);
 
 
     return(

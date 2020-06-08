@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import { Link } from 'react-router-dom';
 import '../App.css';
+
 import {Menu, Avatar} from 'antd';
 import {ShoppingFilled, UserOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import { Link } from 'react-router-dom';
+
 import {connect} from 'react-redux'
 
 
@@ -11,20 +13,20 @@ import {connect} from 'react-redux'
 function Nav(props) {
     
     //Récupération du token dans localStorage
-    var userData = localStorage.getItem('token', (err, value) => {
+    var userToken = localStorage.getItem('token', (err, value) => {
         console.log('value = ' + value)       
     })
 
 
     useEffect(() => {        
-        props.addToken(userData);  
+        props.addToken(userToken);  
         /* Prends en compte tous les changement de userData --> localStorage */
-    }, [userData])
+    }, [userToken])
 
 
     let items;
 
-    if(userData){
+    if(userToken){
 
         let itemLogout = 
             <Menu.Item key="4" style={{float: 'right'}}>

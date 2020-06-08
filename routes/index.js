@@ -25,9 +25,22 @@ router.post('/articles', async function (req, res, next) {
   });
   articles = await newArticles.save();
 
-
-
   res.json({ articles });
+});
+
+
+
+router.get('/article-list', async function(req, res, next) {
+
+  var article = await articleModel.find()
+
+  res.json({article})
+});
+
+router.get('/articleId/:id', async function(req, res){
+  let articleId = await articleModel.findById(req.params.id);
+  console.log(articleId);
+  res.json(articleId);
 });
 
 module.exports = router;

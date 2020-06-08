@@ -19,23 +19,41 @@ function ScreenDashboard(props) {
     const [infoCity, setInfoCity] = useState();
     const [infoTel, setInfoTel] = useState();
 
+    var userToken;
+
   useEffect(() => {
     async function loadUser() {
-      const rawResponse = await fetch(`/users/loadinfo/${props.token}`);
+
+       //Récupération du token dans localStorage
+        userToken = localStorage.getItem('token', (err, value) => {    
+      })
+
+      if(userToken){
+
+      const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
       const response = await rawResponse.json();
 
-      setInfoUsername(response.user.username)
-      setInfoLN(response.user.lastName);
-      setInfoFN(response.user.firstName);
-      setInfoAddress(response.user.address);
-      setInfoZip(response.user.zip_code);
-      setInfoCity(response.user.city);
-      setInfoTel(response.user.tel);
+      console.log(response.user)
 
+      if (response.user){ 
 
+        setInfoUsername(response.user.username)
+        setInfoLN(response.user.lastName);
+        setInfoFN(response.user.firstName);
+        setInfoAddress(response.user.address);
+        setInfoZip(response.user.zip_code);
+        setInfoCity(response.user.city);
+        setInfoTel(response.user.tel);
+
+      }
+
+      }else{
+        return <Redirect to='/' />
+      }  
+     
     }
     loadUser();
-  }, []);
+  }, [userToken]);
 
 
   let afficherNom = infoFN + ' ' + infoLN;
@@ -63,10 +81,10 @@ function ScreenDashboard(props) {
     },
   ];
 
-  if(!props.token){
+  /* if(!infoUsername){
     return <Redirect to='/' />
-  }
-
+  } */
+ 
   return (
     <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
       <Nav />

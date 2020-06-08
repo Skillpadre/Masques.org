@@ -182,7 +182,7 @@ function ScreenMasks() {
        
 
                 <Row><Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" onClick={(e) => {handleNewOrder(); clearFields(e); showModal()}}>
+                    <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" htmlType="submit" onClick={(e) => {handleNewOrder(); clearFields(e); showModal()}}>
                         <Link to="/mask">
                         Valider la création
                         </Link>

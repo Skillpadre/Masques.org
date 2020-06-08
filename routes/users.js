@@ -113,7 +113,6 @@ router.post('/update-info/:token', async function(req, res){
 
 router.get('/loadinfo/:token', async function(req, res){
   let user = await userModel.findOne({token: req.params.token});
-  console.log(user);
   res.json({user});
 });
 

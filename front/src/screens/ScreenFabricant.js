@@ -6,6 +6,7 @@ import Nav from './Nav'
 import { Row, Col, Layout, Avatar, Card, Form, Select, Input, Button} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 const { Content, Footer } = Layout;
+
 const { Option } = Select;
 
 
@@ -22,6 +23,16 @@ useEffect(() => {
     data()
   }, []);
 
+    const [article, setArticle] = useState();
+    const [color, setColor] = useState('noir');
+
+    useEffect(() => {
+        
+    }, []);
+
+    const onChangeColor = value => {
+            setColor(value)
+      };
 
     return(
 
@@ -53,9 +64,9 @@ useEffect(() => {
         
 
                 <Col md={{span : 12}} sm={{span : 24}} style={{justify:'center'}}>
-                    <Card style={{width:'auto'}}
-                        hoverable
-                        cover={<img alt="example" src='../assets/typeMasque1.jpg' />}
+                    <Card style={{width: 'auto'}}
+                        
+                        cover={<img alt="example" src={`../assets/masques/masque-${color}.png`} />}
                     >
                     </Card>
 
@@ -65,6 +76,7 @@ useEffect(() => {
                     <Form style={{textAlign:'left'}}>
                         <Form.Item style={{width: 400}}name="Modèle" label="Modèle" rules={[{ required: true }]}>
                         <Select
+                        
                             placeholder="Choisissez votre modèle"
                             allowClear
                         >
@@ -74,14 +86,15 @@ useEffect(() => {
                         </Select>
                         </Form.Item>
 
-                        <Form.Item style={{width: 400}}name="Couleur" label="Couleur" rules={[{ required: true }]}>
+                        <Form.Item style={{width: 400}} name="Couleur" label="Couleur" rules={[{ required: true }]}>
                         <Select
+                            onChange={onChangeColor}
                             placeholder="Choisissez votre couleur"
                             allowClear
                         >
-                            <Option value="male">Couleur 1</Option>
-                            <Option value="female">Couleur 2</Option>
-                            <Option value="other">Couleur 3</Option>
+                            <Option value="noir">noir</Option>
+                            <Option value="rouge">rouge</Option>
+                            <Option value="bleu">bleu</Option>
                         </Select>
                         </Form.Item>
 

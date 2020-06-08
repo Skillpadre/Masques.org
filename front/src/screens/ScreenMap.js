@@ -23,13 +23,6 @@ function ScreenMap() {
     loadData()
   }, []);
 
-// var sendIdToBack = async (id) => {
-  
-//     var rawResponse = await fetch(`/articleId/${id}`);
-//     var response = await rawResponse.json();
-//     console.log(response)
-// }
-
   const data = [
     {
       title: 'Ant Design Title 1',

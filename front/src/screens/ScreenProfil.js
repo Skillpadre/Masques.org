@@ -16,6 +16,8 @@ function ScreenProfil(props) {
     const [infoCity, setInfoCity] = useState();
     const [infoTel, setInfoTel] = useState();
 
+    const [changementOk, setChangementOk] = useState();
+
     useEffect(() => {
         // On charge les info pour les afficher
         async function loadInfo() {
@@ -41,8 +43,9 @@ function ScreenProfil(props) {
         },
     };
 
+    
+
     const handleClickChangement = async () => {
-        console.log('Success:');
         let values = {nom : infoLN, prenom: infoFN, telephone: infoTel, adresse: infoAddress, zipcode: infoZip, city: infoCity};
 
         const data = await fetch('/users/update-info/' + props.token, {
@@ -59,10 +62,15 @@ function ScreenProfil(props) {
         setInfoZip(response.user.zip_code);
         setInfoCity(response.user.city);
         setInfoTel(response.user.tel);
-            
-      };
+
+        setChangementOk(<p>Vos changement on bien été pris en compte</p>)
+
+    };
     
  
+    if(!props.token){
+        return <Redirect to='/' />
+    }
 
     return (
         <div>
@@ -92,8 +100,9 @@ function ScreenProfil(props) {
 />
                 
                     </div> */}
-
+                    
                     <div id="profil-box">
+                        {changementOk}
 
                         {/* <h2>Infos personnelles</h2> */}
 

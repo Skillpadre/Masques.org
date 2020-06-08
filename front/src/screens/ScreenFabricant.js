@@ -13,24 +13,23 @@ const { Option } = Select;
 function ScreenFabricant (props){
 
 const [articleId, setArticleId] = useState('')
+const [article, setArticle] = useState();
+const [color, setColor] = useState('noir');
 
 useEffect(() => {
     var data = async() => {
     var rawResponse = await fetch(`/articleId/${props.match.params.id}`);
     var response = await rawResponse.json();
       setArticleId(response)
+      console.log(response)
     }
     data()
   }, []);
 
-    const [article, setArticle] = useState();
-    const [color, setColor] = useState('noir');
+  console.log(articleId)
+  console.log(articleId.color)
 
-    useEffect(() => {
-        
-    }, []);
-
-    const onChangeColor = value => {
+   const onChangeColor = value => {
             setColor(value)
       };
 
@@ -74,13 +73,14 @@ useEffect(() => {
                 </Col>
                 <Col md={{span : 12}} sm={{span : 24}}>
                     <Form style={{textAlign:'left'}}>
+                        <Form.Item><p>{articleId.description}</p></Form.Item>
                         <Form.Item style={{width: 400}}name="Modèle" label="Modèle" rules={[{ required: true }]}>
                         <Select
                         
                             placeholder="Choisissez votre modèle"
                             allowClear
                         >
-                            <Option value="male">Modèle 1</Option>
+                            <Option value={articleId.modele}></Option>
                             <Option value="female">Modèle 2</Option>
                             <Option value="other">Modèle 3</Option>
                         </Select>
@@ -95,6 +95,16 @@ useEffect(() => {
                             <Option value="noir">noir</Option>
                             <Option value="rouge">rouge</Option>
                             <Option value="bleu">bleu</Option>
+                            <Option value={articleId.color}></Option>
+                        </Select>
+                        </Form.Item>
+
+                        <Form.Item style={{width: 400}} name="Qualité" label="Qualité" rules={[{ required: true }]}>
+                        <Select
+                            placeholder="Choisissez la qualité du masque"
+                            allowClear
+                        >
+                            <Option value={articleId.quality}></Option>
                         </Select>
                         </Form.Item>
 
@@ -108,6 +118,10 @@ useEffect(() => {
                                     rules={[{ required: true, message: 'Please input your username!' }]}
                         >
                             <Input placeholder= 'Entrez la quantité souhaitée'/>
+                        </Form.Item>
+
+                        <Form.Item label="Prix Unitaire" name="Prix">
+                            <p>{articleId.price} € (c'est cher hein ?)</p>
                         </Form.Item>
 
                         <Link to= '/basket'><Button style={{backgroundColor : '#E23D70', width: 90, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Valider</Button></Link>

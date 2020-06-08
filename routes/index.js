@@ -40,7 +40,7 @@ router.get('/article-list', async function(req, res, next) {
 router.get('/articleId/:id', async function(req, res){
   let articleId = await articleModel.findById(req.params.id);
   console.log(articleId);
-  res.json({articleId});
+  res.json(articleId);
 });
 
 module.exports = router;

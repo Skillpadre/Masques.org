@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import { Row, Col, Card, Button, List, Avatar } from 'antd';
+import { Row, Col, Layout, Card, Button, List, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import GoogleMapReact from 'google-map-react';
 import 'antd/dist/antd.css';
 import Nav from './Nav'
+const { Content, Footer } = Layout;
 
 
 function ScreenMap() {
@@ -97,6 +98,7 @@ function ScreenMap() {
 
         </div>
       </div>
+      <Footer style={{ textAlign: 'center', marginTop: 30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
     </div>
   );
 }

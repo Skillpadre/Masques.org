@@ -11,6 +11,7 @@ import ScreenBasket from './screens/ScreenBasket';
 import ScreenFabricant from './screens/ScreenFabricant';
 import ScreenProfil from './screens/ScreenProfil';
 import ScreenMask from './screens/ScreenMask';
+import Footer from './screens/Footer';
 
 import userToken from './reducer/user';
 import { Provider } from 'react-redux';

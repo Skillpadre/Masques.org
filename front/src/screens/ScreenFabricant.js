@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import Nav from './Nav'
+import FooterComp from './Footer';
 
 import { Row, Col, Layout, Avatar, Card, Form, Select, Input, Button} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -108,8 +109,7 @@ function ScreenFabricant (){
                 </Col> 
 
             </Row>       
-       
-        <Footer style={{ textAlign: 'center', marginTop: 30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+            <FooterComp/>
     </Layout>
 
     )

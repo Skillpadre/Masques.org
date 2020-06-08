@@ -4,6 +4,7 @@ import { Row, Col, Button, Layout, List, Avatar } from 'antd';
 import { Redirect, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import Nav from './Nav'
+import FooterComp from './Footer';
 import {connect} from 'react-redux'
 
 const { Content, Footer } = Layout;
@@ -89,7 +90,7 @@ function ScreenDashboard(props) {
     <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
       <Nav />
 
-      <Content style={{ padding: '0 50px' }} className="Dashboard-page">
+      <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Dashboard-page">
 
       <Row justify='center' align='middle'>
         {finaliserCompte}
@@ -157,7 +158,7 @@ function ScreenDashboard(props) {
         </Row>
 
       </Content>
-      <Footer style={{ textAlign: 'center', marginTop: 30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+      <FooterComp/>
     </Layout>
   );
 }

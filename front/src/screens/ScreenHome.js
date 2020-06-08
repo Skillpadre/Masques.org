@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import '../App.css';
 import { Layout, Row, Col, Card } from 'antd';
+
 import 'antd/dist/antd.css';
-import Nav from './Nav'
+import Nav from './Nav';
+import FooterComp from './Footer';
 
 const { Content, Footer } = Layout;
 
@@ -14,7 +16,7 @@ function ScreenHome() {
 
       <Nav />
 
-      <Content style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20}}>
+      <Content style={{padding: '0 50px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '40px 0'}}>
 
         <h1 id="title">Masques personnalisés</h1>
 
@@ -131,7 +133,7 @@ function ScreenHome() {
           </Row>
 
       </Content>
-      <Footer style={{ textAlign: 'center'}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+      <FooterComp/>
     </Layout>
   );
 }

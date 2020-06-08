@@ -11,8 +11,8 @@ module.exports = override(
     modifyVars: { 
       '@primary-color': '#E23D70', 
       '@menu-dark-highlight-color': '#E23D70',  /*:hover Nav*/  
-      '@menu-dark-item-active-bg' : '#1e272e', /*active color item menu*/ 
-      '@menu-dark-color': '#ffff'
+      '@menu-dark-item-active-bg' : '#1e272e', /* couleur item activé menu*/ 
+      '@menu-dark-color' : '#ffff',
     }
   }),
 );

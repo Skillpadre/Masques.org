@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect} from 'react-router-dom';
 import '../App.css';
 
-import { Row, Col, Card, Button, Layout, List, Avatar, Divider, Radio, Input } from 'antd';
+import { Row, Col, Layout, List, Avatar, Divider, Radio } from 'antd';
 import {CloseCircleOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
@@ -13,7 +13,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import Nav from './Nav'
 import FooterComp from './Footer';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 
 function ScreenBasket(props) {
@@ -41,8 +41,6 @@ function ScreenBasket(props) {
             }else{
                 return <Redirect to='/' />
             }
-           
-          
 
         }
         loadUser();
@@ -79,7 +77,6 @@ function ScreenBasket(props) {
     };
 
 
-
     return (
 
         <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
@@ -98,11 +95,11 @@ function ScreenBasket(props) {
 
                 <Row style={{marginTop: 40}} align='middle'>
                     <Col md={{span: 12}} sm={{span: 24}}>
-                        <h2>Produits en attente</h2>
+                        <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
 
                             <List
-                                style={{margin: "0 20px"}}
+                                style={{margin: "10px 15px 0 10px"}}
                                 itemLayout="horizontal"
                                 dataSource={data}
                                 renderItem={item => (

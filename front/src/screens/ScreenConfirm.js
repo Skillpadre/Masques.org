@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
+
 import Nav from './Nav'
 import FooterComp from './Footer';
 
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Button } from 'antd';
 import {CheckCircleFilled } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-const { Content, Footer } = Layout;
+
+const { Content } = Layout;
 
 
 function LayoutDesign (){
@@ -15,7 +17,7 @@ function LayoutDesign (){
     return(
             
 
-    <Layout className="layout" style={{height: '100vh'}}>
+    <Layout className="layout" style={{height: 'auto'}}>
         
         <Nav />
     
@@ -29,10 +31,10 @@ function LayoutDesign (){
 
 
                 <CheckCircleFilled style={{color: '#5CCF33', fontSize: 150}}/>
-                <p style={{fontWeight : 700, marginTop: 30}}>Votre commande à bien été prise en compte !</p>
+                <p style={{fontWeight : 700, margin: 30}}>Votre commande à bien été prise en compte !</p>
                 <p>Merci pour votre confiance.</p>
 
-                <Link to='/'><Button style={{backgroundColor : '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Retour à l'accueil</Button></Link>
+                <Link to='/'><Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: 20}} type="primary">Retour à l'accueil</Button></Link>
 
             </div>
 

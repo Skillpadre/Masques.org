@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Row, Col, Layout, Card, Button, List, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
-import GoogleMapReact from 'google-map-react';
 import 'antd/dist/antd.css';
+
+import GoogleMapReact from 'google-map-react';
+
 import Nav from './Nav'
-const { Content, Footer } = Layout;
+import FooterComp from './Footer';
+
+const { Content } = Layout;
 
 
 function ScreenMap() {
@@ -72,13 +76,14 @@ function ScreenMap() {
 
   return (
 
-    <div>
+    <Layout className="layout" style={{height: '100vh'}}>
 
       <Nav />
 
-      <div className="Map" >
-        <Button style={{ backgroundColor: '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black' }}>Chercher les fabricants autour de moi</Button>
-        <div style={{ height: '50vh', width: '50%', marginTop: 30 }}>
+      <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Map" > 
+        <Button style={{backgroundColor : '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Chercher les fabricants autour de moi</Button>
+        
+        <div style={{ height: '60vh', width: '70%', marginTop: 30}}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: 'AIzaSyA6lFML5Gv6tvWgNl0X7kXn6X1uMQyzX8o' }}
             defaultCenter={center}
@@ -86,20 +91,18 @@ function ScreenMap() {
 
           />
 
-
-
         </div>
 
 
         <div>
 
-  <h1>Liste des fabricants</h1>
+          <h1>Liste des fabricants</h1>
           {buyingList}
 
         </div>
-      </div>
-      <Footer style={{ textAlign: 'center', marginTop: 30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
-    </div>
+      </Content>
+      <FooterComp/>
+    </Layout>
   );
 }
 

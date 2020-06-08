@@ -92,7 +92,6 @@ width: 250px;
 
 .Map{
   
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -148,9 +147,3 @@ width: 250px;
   justify-content: center;
 }
 
-/* .Card{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-} */

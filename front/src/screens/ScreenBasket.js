@@ -11,6 +11,7 @@ import {connect} from 'react-redux'
 import StripeCheckout from 'react-stripe-checkout';
 
 import Nav from './Nav'
+import FooterComp from './Footer';
 
 const { Content, Footer } = Layout;
 
@@ -84,7 +85,7 @@ function ScreenBasket(props) {
         <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
             <Nav />
 
-            <Content style={{ padding: '0 50px', marginTop: 20}} className="Basket-page">
+            <Content style={{ padding: '0 50px', margin: '40px 0'}} className="Basket-page">
                 
                 <Row>
                     <Col md={{span: 11}} sm={{span: 24}}>
@@ -162,8 +163,7 @@ function ScreenBasket(props) {
 
             </Content>
         
-            <Footer style={{ textAlign: 'center', marginTop:30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
-           
+            <FooterComp/>
         </Layout>
     );
 }

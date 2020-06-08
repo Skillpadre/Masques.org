@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import Nav from './Nav'
+import FooterComp from './Footer';
 
 import { Layout, Menu, Button } from 'antd';
 import {CheckCircleFilled } from '@ant-design/icons';
@@ -18,7 +19,7 @@ function LayoutDesign (){
         
         <Nav />
     
-        <Content style={{ padding: '0 50px' }}>
+        <Content style={{ padding: '0 50px', margin: '40px 0' }}>
             {/* ----------------CONTENU---------------- */}
           
                 
@@ -37,7 +38,7 @@ function LayoutDesign (){
 
 
         </Content>
-        <Footer style={{ textAlign: 'center' }}>© 2020 Masques.org. Tous droits réservés.</Footer>
+        <FooterComp/>
     </Layout>
 
     )

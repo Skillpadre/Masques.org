@@ -116,10 +116,7 @@ router.get('/loadinfo/:token', async function(req, res){
   res.json({user});
 });
 
-router.get('/load-user/:token', async function(req, res){
-  let user = await userModel.findOne({token: req.params.token});
-  res.json({username: user.username, lastName: user.lastName, firstName: user.firstName});
-});
+
 
 
 module.exports = router;

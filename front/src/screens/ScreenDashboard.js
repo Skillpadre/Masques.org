@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../App.css';
-import { Row, Col, Card, Button, Layout, List, Avatar } from 'antd';
+import { Row, Col, Button, Layout, List, Avatar } from 'antd';
 import { Redirect, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import Nav from './Nav'
@@ -30,27 +30,27 @@ function ScreenDashboard(props) {
 
       if(userToken){
 
-      const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
-      const response = await rawResponse.json();
+        const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
+        const response = await rawResponse.json();
 
-      console.log(response.user)
+        console.log(response.user)
 
-      if (response.user){ 
+        if (response.user){ 
 
-        setInfoUsername(response.user.username)
-        setInfoLN(response.user.lastName);
-        setInfoFN(response.user.firstName);
-        setInfoAddress(response.user.address);
-        setInfoZip(response.user.zip_code);
-        setInfoCity(response.user.city);
-        setInfoTel(response.user.tel);
+          setInfoUsername(response.user.username)
+          setInfoLN(response.user.lastName);
+          setInfoFN(response.user.firstName);
+          setInfoAddress(response.user.address);
+          setInfoZip(response.user.zip_code);
+          setInfoCity(response.user.city);
+          setInfoTel(response.user.tel);
 
-      }
+        }
 
       }else{
         return <Redirect to='/' />
-      }  
-     
+      }
+    
     }
     loadUser();
   }, [userToken]);

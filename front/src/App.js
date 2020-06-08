@@ -27,7 +27,7 @@ function App() {
           <Route component={ScreenLogin} path="/login"/>
           <Route component={ScreenMap} path="/map"/>
           <Route component={ScreenConfirm} path="/confirm"/>
-          <Route component={ScreenDashboard} path="/dashboard"/>
+          <Route component={ScreenDashboard} path="/dashboard/"/>
           <Route component={ScreenBasket} path="/basket"/>
           <Route component={ScreenFabricant} path="/fabricant"/>
           <Route component={ScreenProfil} path="/profil"/>

@@ -162,7 +162,7 @@ function ScreenBasket(props) {
 
             </Content>
         
-            <Footer style={{ textAlign: 'center'}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+            <Footer style={{ textAlign: 'center', marginTop:30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
            
         </Layout>
     );

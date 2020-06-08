@@ -19,16 +19,33 @@ function ScreenBasket(props) {
 
     const [infoUsername, setInfoUsername] = useState();
 
+    var userToken;
+
     useEffect(() => {
         async function loadUser() {
-          const rawResponse = await fetch(`/users/loadinfo/${props.token}`);
-          const response = await rawResponse.json();
-    
-          setInfoUsername(response.user.username)
+
+            //Récupération du token dans localStorage
+            userToken = localStorage.getItem('token', (err, value) => {    
+            })
+
+            if(userToken){
+
+                const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
+                const response = await rawResponse.json();
+                    
+                if(response.user){
+                    setInfoUsername(response.user.username)
+                }
+
+            }else{
+                return <Redirect to='/' />
+            }
+           
+          
 
         }
         loadUser();
-      }, []);
+      }, [userToken]);
 
     
 

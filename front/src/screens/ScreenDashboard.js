@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import '../App.css';
-import { Row, Col, Card, Button, Layout, List, Avatar } from 'antd';
+import { Row, Col, Button, Layout, List, Avatar } from 'antd';
 import { Redirect, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import Nav from './Nav'
+import FooterComp from './Footer';
 import {connect} from 'react-redux'
 
 const { Content, Footer } = Layout;
@@ -30,27 +31,27 @@ function ScreenDashboard(props) {
 
       if(userToken){
 
-      const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
-      const response = await rawResponse.json();
+        const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
+        const response = await rawResponse.json();
 
-      console.log(response.user)
+        console.log(response.user)
 
-      if (response.user){ 
+        if (response.user){ 
 
-        setInfoUsername(response.user.username)
-        setInfoLN(response.user.lastName);
-        setInfoFN(response.user.firstName);
-        setInfoAddress(response.user.address);
-        setInfoZip(response.user.zip_code);
-        setInfoCity(response.user.city);
-        setInfoTel(response.user.tel);
+          setInfoUsername(response.user.username)
+          setInfoLN(response.user.lastName);
+          setInfoFN(response.user.firstName);
+          setInfoAddress(response.user.address);
+          setInfoZip(response.user.zip_code);
+          setInfoCity(response.user.city);
+          setInfoTel(response.user.tel);
 
-      }
+        }
 
       }else{
         return <Redirect to='/' />
-      }  
-     
+      }
+    
     }
     loadUser();
   }, [userToken]);
@@ -89,7 +90,7 @@ function ScreenDashboard(props) {
     <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
       <Nav />
 
-      <Content style={{ padding: '0 50px' }} className="Dashboard-page">
+      <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Dashboard-page">
 
       <Row justify='center' align='middle'>
         {finaliserCompte}
@@ -157,7 +158,7 @@ function ScreenDashboard(props) {
         </Row>
 
       </Content>
-      <Footer style={{ textAlign: 'center', marginTop: 30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+      <FooterComp/>
     </Layout>
   );
 }

@@ -1,11 +1,16 @@
 import React, {useState, useEffect} from 'react';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
-import { Row, Form, Input, Button, Checkbox, List, Skeleton, Avatar } from 'antd';
-import 'antd/dist/antd.css';
-import { Redirect, Link } from 'react-router-dom';
-import Nav from './Nav'
+
 import {connect} from 'react-redux'
 
+import { Layout, Row, Input, Button} from 'antd';
+import 'antd/dist/antd.css';
+
+import Nav from './Nav'
+import FooterComp from './Footer';
+
+const { Content } = Layout;
 
 function ScreenProfil(props) {
 
@@ -23,8 +28,6 @@ function ScreenProfil(props) {
         async function loadInfo() {
             const rawResponse = await fetch(`/users/loadinfo/${props.token}`);
             const response = await rawResponse.json();
-            console.log(response);
-            console.log(response.user)
 
             setInfoLN(response.user.lastName);
             setInfoFN(response.user.firstName);
@@ -44,7 +47,6 @@ function ScreenProfil(props) {
     };
 
     
-
     const handleClickChangement = async () => {
         let values = {nom : infoLN, prenom: infoFN, telephone: infoTel, adresse: infoAddress, zipcode: infoZip, city: infoCity};
 
@@ -73,31 +75,30 @@ function ScreenProfil(props) {
     }
 
     return (
-        <div>
+        <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+           
             <Nav />
 
+            <Content style={{ padding: '0 50px', margin: '40px 0'}} className="Profil-page" >
+
+                <Row><h1 style={{fontWeight: 700}}>Mon Compte</h1></Row>
 
 
-            <div className="Profil-page" >
-
-                <Row><h1>Mon Compte</h1></Row>
-
-
-                <Row>
+                <Row justify='center'>
                     {/* <div id="profil-box">
 
-<List
-    itemLayout="horizontal"
-    dataSource={info}
-    renderItem={item => (
-      <List.Item>
-        <List.Item.Meta
-          title={item.title}
-          description={item.value}
-        />
-      </List.Item>
-    )}
-/>
+                        <List
+                            itemLayout="horizontal"
+                            dataSource={info}
+                            renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                title={item.title}
+                                description={item.value}
+                                />
+                            </List.Item>
+                            )}
+                        />
                 
                     </div> */}
                     
@@ -106,19 +107,17 @@ function ScreenProfil(props) {
 
                         {/* <h2>Infos personnelles</h2> */}
 
-                        <Input onChange={e => setInfoFN(e.target.value)} value={infoFN} placeholder='Votre prénom' />
-                        <Input onChange={e => setInfoLN(e.target.value)} value={infoLN} placeholder='Votre nom' />
-                        <Input onChange={e => setInfoAddress(e.target.value)} value={infoAddress} placeholder='Votre addresse' />
-                        <Input onChange={e => setInfoZip(e.target.value)} value={infoZip} placeholder='Votre code postal' />
-                        <Input onChange={e => setInfoCity(e.target.value)} value={infoCity} placeholder='Votre ville' />
-                        <Input onChange={e => setInfoTel(e.target.value)} value={infoTel} placeholder='Votre numéro de téléphone' />
+                        <Input onChange={e => setInfoFN(e.target.value)} value={infoFN} placeholder='Votre prénom' style={{marginTop: 20}}/>
+                        <Input onChange={e => setInfoLN(e.target.value)} value={infoLN} placeholder='Votre nom' style={{marginTop: 20}}/>
+                        <Input onChange={e => setInfoAddress(e.target.value)} value={infoAddress} placeholder='Votre addresse' style={{marginTop: 20}}/>
+                        <Input onChange={e => setInfoZip(e.target.value)} value={infoZip} placeholder='Votre code postal' style={{marginTop: 20}}/>
+                        <Input onChange={e => setInfoCity(e.target.value)} value={infoCity} placeholder='Votre ville' style={{marginTop: 20}}/>
+                        <Input onChange={e => setInfoTel(e.target.value)} value={infoTel} placeholder='Votre numéro de téléphone' style={{marginTop: 20}}/>
 
 
-                        <Row>  
-                            <Button style={{marginTop: 25}} type="primary" onClick={() => handleClickChangement()}>
-                                Valider mes changement
-                            </Button>
-                        </Row>
+                        <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickChangement()}>
+                            Valider mes changement
+                        </Button>
                     </div>
 
                     {/* <div id="profil-box">
@@ -156,9 +155,9 @@ function ScreenProfil(props) {
                         Valider mes changements
         </Button>
                 </Form.Item></Row> */}
-            </div>
-
-        </div>
+            </Content>
+            <FooterComp/>
+        </Layout>
     )
 }
 

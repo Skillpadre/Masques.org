@@ -71,15 +71,13 @@ width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: center;
-  padding-bottom: 15px;
-  border-radius: 5%;
   border-color: white;
-  margin: 40px;
 }
 
 #profil-box{
-  width: 100%;
+  width: 60%;
   height: auto;
   margin:15px;
 }
@@ -91,16 +89,10 @@ width: 250px;
 }
 
 .Map{
-  
   display: flex;
   flex-direction: column;
+  text-align: center;
   align-items: center;
-  justify-content: center;
-  padding-bottom: 15px;
-  border-radius: 5%;
-  border-color: white;
-   margin: 40px;
-  
 }
 
 .Dashboard-page{
@@ -118,23 +110,12 @@ width: 250px;
 .Basket-page{
   display: flex;
   flex-direction: column;
-  /* align-items: left; */
-  /* justify-content: left; */
-  height:100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  }
+}
 
   .Mask-page{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height:100vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     }
 
 #retrait{
@@ -154,9 +135,3 @@ width: 250px;
   justify-content: center;
 }
 
-/* .Card{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-} */

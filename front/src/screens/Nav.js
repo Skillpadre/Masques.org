@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
@@ -31,7 +31,7 @@ function Nav(props) {
         let itemLogout = 
             <Menu.Item key="4" style={{float: 'right'}}>
 
-                    <Link onClick={()=>{props.deleteToken(); localStorage.clear()}} to='/' className="customclass" >Logout</Link>
+                    <Link onClick={()=>{props.deleteToken(); localStorage.clear()}} to='/'>Logout</Link>
                 
             </Menu.Item>
         
@@ -39,7 +39,7 @@ function Nav(props) {
             <Menu.Item key="5" style={{float: 'right'}}>
 
                 <Avatar style={{marginRight: 10}} size={30} icon={<UserOutlined />} />
-                <Link to='/dashboard' className="customclass" >Mon Compte</Link>
+                <Link to='/dashboard'>Mon Compte</Link>
              
             </Menu.Item>
 
@@ -47,7 +47,7 @@ function Nav(props) {
             <Menu.Item key="6" style={{float: 'right'}}>
                 
                 <ShoppingFilled style={{fontSize:20}}/>
-                <Link to='/basket' className="customclass" >Panier</Link>
+                <Link to='/basket'>Panier</Link>
 
             </Menu.Item>
 
@@ -56,7 +56,7 @@ function Nav(props) {
     } else {
         items = 
             <Menu.Item key="4" style={{float: 'right'}}>
-                <Link to='/login' className="customclass" >S'inscrire / Se connecter</Link>
+                <Link to='/login'>S'inscrire / Se connecter</Link>
             </Menu.Item>
     }
 
@@ -65,13 +65,13 @@ function Nav(props) {
     <Menu className='Menu' theme="dark" style={{backgroundColor: '#1e272e'}} mode="horizontal" defaultSelectedKeys={['2']}>
 
         <Menu.Item className='logo' key="1">
-            <Link to='/' className="customclass" style={{fontSize: 20}}>Masques.org</Link>
+            <Link to='/' style={{fontSize: 20}}>Masques.org</Link>
         </Menu.Item>
         <Menu.Item key="2" className="menuItem">
-            <Link to='/' className="customclass">Accueil</Link> 
+            <Link to='/'>Accueil</Link> 
         </Menu.Item>
         <Menu.Item key="3">
-            <Link to='/map' className="customclass" >Fabricants</Link>
+            <Link to='/map'>Fabricants</Link>
         </Menu.Item>
         
         {items}

@@ -24,26 +24,9 @@ function ScreenMap() {
     loadData()
   }, []);
 
-  const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-  ];
-
-
-
-
   let buyingList = articleList.map((item, i) => {
     return (
+
 
       <List.Item key={i}>
         <Card title={item.modele}>
@@ -54,21 +37,12 @@ function ScreenMap() {
           <Card.Meta description={item.price + " €"}>
 
           </Card.Meta>
-        <Button><Link to={`/fabricant/${item._id}`}>Choisir cet article</Link></Button>
+          <Button><Link to={`/fabricant/${item._id}`}>Choisir cet article</Link></Button>
         </Card>
       </List.Item>
+
     )
   })
-
-  // var cardWish = moviesWishList.map((movie,i) => {
-  //   return (
-  //     <ListGroupItem>
-  //       <ListGroupItemText onClick={() => {handleClickDeleteMovie(movie.name)}}>
-  //       <img width="25%" src={movie.img} /> {movie.name}
-  //       </ListGroupItemText>
-  //     </ListGroupItem>
-  //   )
-  // })
 
   return (
 
@@ -76,29 +50,36 @@ function ScreenMap() {
 
       <Nav />
 
+      <Row>
+        <Col offset={10} span={4}>
+          <Button style={{ backgroundColor: '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }}>Chercher les fabricants autour de moi</Button>
+        </Col>
+
+      </Row>
       <div className="Map" >
-        <Button style={{ backgroundColor: '#E23D70', borderRadius: 5, boxShadow: '0px 3px 3px 0px black' }}>Chercher les fabricants autour de moi</Button>
-        <div style={{ height: '50vh', width: '50%', marginTop: 30 }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: 'AIzaSyA6lFML5Gv6tvWgNl0X7kXn6X1uMQyzX8o' }}
-            defaultCenter={center}
-            defaultZoom={zoom}
+        <Row>
+          <Col offset={1} span={11}>
+            <div style={{ height: '75vh', width: '100%', marginTop: 25 }}>
+              <GoogleMapReact
+                bootstrapURLKeys={{ key: 'AIzaSyA6lFML5Gv6tvWgNl0X7kXn6X1uMQyzX8o' }}
+                defaultCenter={center}
+                defaultZoom={zoom}
+              />
 
-          />
+            </div>
+          </Col>
 
+          <Col offset={1} span={11}>
+            <Row> <Col offset={4}><h1>Liste des fabricants</h1></Col></Row>
+            <Row gutter={15} >
+              {buyingList}
+            </Row>
+          </Col>
 
-
-        </div>
-
-
-        <div>
-
-  <h1>Liste des fabricants</h1>
-          {buyingList}
-
-        </div>
+        </Row>
       </div>
-      <Footer style={{ textAlign: 'center', marginTop: 30}}>© 2020 Masques.org. Tous droits réservés.</Footer>
+
+      <Footer style={{ textAlign: 'center', marginTop: 30 }}>© 2020 Masques.org. Tous droits réservés.</Footer>
     </div>
   );
 }

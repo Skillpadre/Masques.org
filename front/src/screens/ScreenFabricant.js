@@ -72,10 +72,9 @@ function ScreenFabricant(props) {
                 {/* images +  choix masques */}
                 <Row justify='center' align='middle'/* style={{marginTop: 30, display : 'flex', justify:'space-around'}} */>
 
-
-                    <Col md={{ span: 12 }} sm={{ span: 24 }}>
-                        <Card style={{ width: '70%' }}
-                            cover={<img alt="example" src={`../assets/masques/masque-${color}.png`} />}
+                    <Col md={{span : 12}} sm={{span : 24}}>
+                        <Card style={{width: '70%'}}
+                            cover={<img alt="masque" src={`../assets/masques/masque-${color}.png`} />}
                         >
                         </Card>
 

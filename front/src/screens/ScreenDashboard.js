@@ -19,19 +19,21 @@ function ScreenDashboard(props) {
     const [infoZip, setInfoZip] = useState();
     const [infoCity, setInfoCity] = useState();
     const [infoTel, setInfoTel] = useState();
+    const [avatar, setAvatar] = useState();
 
-    var userToken;
+
+    var user;
 
   useEffect(() => {
     async function loadUser() {
 
        //Récupération du token dans localStorage
-        userToken = localStorage.getItem('token', (err, value) => {    
-      })
+        user = JSON.parse(localStorage.getItem('user', (err, value) => {    
+      }))
 
-      if(userToken){
+      if(user){
 
-        const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
+        const rawResponse = await fetch(`/users/loadinfo/${user.token}`);
         const response = await rawResponse.json();
 
         console.log(response.user)
@@ -45,6 +47,7 @@ function ScreenDashboard(props) {
           setInfoZip(response.user.zip_code);
           setInfoCity(response.user.city);
           setInfoTel(response.user.tel);
+          setAvatar(response.user.avatar)
 
         }
 
@@ -54,7 +57,7 @@ function ScreenDashboard(props) {
     
     }
     loadUser();
-  }, [userToken]);
+  }, [user]);
 
 
   let afficherNom = infoFN + ' ' + infoLN;
@@ -63,7 +66,7 @@ function ScreenDashboard(props) {
   }
 
   let finaliserCompte;
-  if(!infoFN || !infoLN || !infoAddress || !infoCity || !infoZip || !infoTel){
+  if(!infoFN || !infoLN || !infoAddress || !infoCity || !infoZip || !infoTel || avatar === ''){
     finaliserCompte = <p>Vous pouvez finaliser votre compte en renseignant vos information <Link to='/profil'>ici</Link></p>
   }
 
@@ -164,7 +167,7 @@ function ScreenDashboard(props) {
 }
 
 function mapStateToProps(state){
-  return { token: state.userToken}
+  return { user: state.user}
 }
 
 export default connect(mapStateToProps, null)(ScreenDashboard);

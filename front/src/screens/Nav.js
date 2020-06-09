@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
@@ -12,33 +12,41 @@ import {connect} from 'react-redux'
 
 function Nav(props) {
     
+    const [avatar, setAvatar] = useState("https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png")
     //Récupération du token dans localStorage
-    var userToken = localStorage.getItem('token', (err, value) => {
-        console.log('value = ' + value)       
-    })
+    var user = localStorage.getItem('user', (err, value) => {
+        console.log('value = ' + value)  
+             
+    });
 
 
     useEffect(() => {        
-        props.addToken(userToken);  
+        props.addUser(JSON.parse(user));  
         /* Prends en compte tous les changement de userData --> localStorage */
-    }, [userToken])
+    }, [user])
+
+    useEffect(() => {
+        if(props.user)
+            setAvatar(props.user.urlAvatar);
+            
+    }, [props.user]);
 
 
     let items;
 
-    if(userToken){
+    if(user){
 
         let itemLogout = 
             <Menu.Item key="4" style={{float: 'right'}}>
 
-                    <Link onClick={()=>{props.deleteToken(); localStorage.clear()}} to='/'>Logout</Link>
+                    <Link onClick={()=>{props.deleteUser(); localStorage.clear()}} to='/'>Deconnexion</Link>
                 
             </Menu.Item>
         
         let itemCompte = 
             <Menu.Item key="5" style={{float: 'right'}}>
-
-                <Avatar style={{marginRight: 10}} size={30} icon={<UserOutlined />} />
+                
+                <Avatar style={{marginRight: 10}} size={30} src={avatar} />
                 <Link to='/dashboard'>Mon Compte</Link>
              
             </Menu.Item>
@@ -82,15 +90,15 @@ function Nav(props) {
 }
 
 function mapStateToProps(state){
-    return { token: state.userToken}
+    return { user: state.user}
 }
 function mapDispatchToProps(dispatch){
     return {
-        addToken: function(token){
-            dispatch( {type: 'addToken', token: token} )
+        addUser: function(user){
+            dispatch( {type: 'addUser', user: user} )
           },
-        deleteToken: function(){
-            dispatch({type: 'deleteToken'})
+        deleteUser: function(){
+            dispatch({type: 'deleteUser'})
         }
     }
 }

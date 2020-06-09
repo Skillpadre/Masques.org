@@ -42,10 +42,13 @@ function ScreenLogin(props) {
 
       // On test la réponse du back
       if(response.result){      // Si on a bien un user
-        console.log(response.user.token);
-        props.addToken(response.user.token);// add token reducer
-        localStorage.setItem('user', JSON.stringify(response.user));
-        console.log(response.user)
+        let user = {
+          token : response.user.token,
+          username: response.user.username,
+          urlAvatar: response.user.avatar
+        }
+        props.addUser(user);// add user reducer
+        localStorage.setItem('user', JSON.stringify(user));
         setUserExist(true);
       } else {                  // Si pas de user
         setErrorSignup(response.error)
@@ -75,11 +78,13 @@ function ScreenLogin(props) {
 
     // On test la réponse du back
     if(response.result){      // Si on a bien un user
-      console.log(response.user.token);
-      props.addToken(response.user.token);// add token reducer
-      localStorage.setItem('email', singInEmail);
-      localStorage.setItem('password', singInPassword);
-      localStorage.setItem('token', response.user.token);
+      let user = {
+        token : response.user.token,
+        username: response.user.username,
+        urlAvatar: response.user.avatar
+      }
+      props.addUser(user);// add user reducer
+      localStorage.setItem('user', JSON.stringify(user));
       setUserExist(true);
     } else {                  // Si pas de user
       setErrorSignin(response.error)
@@ -228,8 +233,8 @@ function ScreenLogin(props) {
 
 function mapDispatchToProps(dispatch){
   return {
-    addToken: function(token){
-      dispatch( {type: 'addToken', token: token} )
+    addUser: function(user){
+      dispatch( {type: 'addUser', user: user} )
     }
   }
 }

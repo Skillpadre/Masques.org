@@ -47,6 +47,7 @@ router.post('/signup', async function(req, res) {
       salt: salt,
       password: SHA256(req.body.password + salt).toString(encBase64),
       token: uid2(32),
+      avatar: '',
     });
     user = await newUser.save();
     if(user)
@@ -113,6 +114,16 @@ router.post('/update-info/:token', async function(req, res){
 
 router.get('/loadinfo/:token', async function(req, res){
   let user = await userModel.findOne({token: req.params.token});
+  res.json({user});
+});
+
+router.post('/add-avatar/:token', async function(req, res){
+  let user = await userModel.findOne({token: req.params.token});
+
+
+  user.avatar = req.body.url;
+
+  user = await user.save();
   res.json({user});
 });
 

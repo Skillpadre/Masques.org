@@ -23,10 +23,14 @@ function ScreenProfil(props) {
 
     const [changementOk, setChangementOk] = useState();
 
+    const [avatar, setAvatar] = useState('');
+    const [changAvatar, setChangAvatar] = useState();
+
     useEffect(() => {
         // On charge les info pour les afficher
+        console.log(props.user);
         async function loadInfo() {
-            const rawResponse = await fetch(`/users/loadinfo/${props.token}`);
+            const rawResponse = await fetch(`/users/loadinfo/${props.user.token}`);
             const response = await rawResponse.json();
 
             setInfoLN(response.user.lastName);
@@ -35,6 +39,7 @@ function ScreenProfil(props) {
             setInfoZip(response.user.zip_code);
             setInfoCity(response.user.city);
             setInfoTel(response.user.tel);
+            setAvatar(response.user.avatar);
         }
         loadInfo();
     }, []);
@@ -50,7 +55,7 @@ function ScreenProfil(props) {
     const handleClickChangement = async () => {
         let values = {nom : infoLN, prenom: infoFN, telephone: infoTel, adresse: infoAddress, zipcode: infoZip, city: infoCity};
 
-        const data = await fetch('/users/update-info/' + props.token, {
+        const data = await fetch('/users/update-info/' + props.user.token, {
             method: 'POST',
             headers: {'Content-Type':'application/Json'},
             body: JSON.stringify(values)
@@ -68,9 +73,40 @@ function ScreenProfil(props) {
         setChangementOk(<p>Vos changement on bien été pris en compte</p>)
 
     };
+
+    const handleClickAvatar = async () =>{
+        let values = {url: avatar}
+
+        const data = await fetch('/users/add-avatar/' + props.user.token, {
+            method: 'POST',
+            headers: {'Content-Type':'application/Json'},
+            body: JSON.stringify(values)
+        });
+
+        const response = await data.json();
+
+        if(response.user.avatar === avatar){
+            console.log('ca marche')
+            let newAvatarUser = props.user;
+            newAvatarUser.urlAvatar = avatar;
+            console.log(newAvatarUser);
+            props.addUser(newAvatarUser);
+            localStorage.setItem('user', JSON.stringify(newAvatarUser));
+            setChangAvatar(<p>Le changement de votre avatar à bien été effectué</p>)
+           
+        }
+    }
+
+    let urlImg;
+
+    if(!avatar || avatar === ''){
+        urlImg = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png"
+    } else {
+        urlImg = avatar;
+    }
     
  
-    if(!props.token){
+    if(!props.user.token){
         return <Redirect to='/' />
     }
 
@@ -85,27 +121,9 @@ function ScreenProfil(props) {
 
 
                 <Row justify='center'>
-                    {/* <div id="profil-box">
-
-                        <List
-                            itemLayout="horizontal"
-                            dataSource={info}
-                            renderItem={item => (
-                            <List.Item>
-                                <List.Item.Meta
-                                title={item.title}
-                                description={item.value}
-                                />
-                            </List.Item>
-                            )}
-                        />
-                
-                    </div> */}
                     
                     <div id="profil-box">
                         {changementOk}
-
-                        {/* <h2>Infos personnelles</h2> */}
 
                         <Input onChange={e => setInfoFN(e.target.value)} value={infoFN} placeholder='Votre prénom' style={{marginTop: 20}}/>
                         <Input onChange={e => setInfoLN(e.target.value)} value={infoLN} placeholder='Votre nom' style={{marginTop: 20}}/>
@@ -120,41 +138,21 @@ function ScreenProfil(props) {
                         </Button>
                     </div>
 
-                    {/* <div id="profil-box">
-
-                        <h2>Infos de connexion</h2>
-                        <Form>
-                            <Form.Item
-                                label="Username"
-                                name="username"
-                            >
-                                <Input />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Password"
-                                name="Password"
-                            >
-                                <Input />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Confirmer Password"
-                                name="Password"
-                            >
-                                <Input />
-                            </Form.Item>
-
-                        </Form>
-
-                    </div> */}
                 </Row>
 
-                {/* <Row><Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Valider mes changements
-        </Button>
-                </Form.Item></Row> */}
+                <Row justify='center'>
+                    <div id="profil-box">
+
+                        <h3>Avatar</h3>
+                        {changAvatar}
+                        <Input onChange={e => setAvatar(e.target.value)} value={avatar} placeholder="url de l'image" style={{marginTop: 20}}/>
+                        <img style={{width: 200, height: 200, borderRadius: '50%'}} src={urlImg} />
+                        <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickAvatar()}>
+                            Valider
+                        </Button>
+                    </div>
+                </Row>
+
             </Content>
             <FooterComp/>
         </Layout>
@@ -162,11 +160,18 @@ function ScreenProfil(props) {
 }
 
 function mapStateToProps(state) {
-    return { token: state.userToken }
+    return { user: state.user }
 }
-  
+
+function mapDispatchToProps(dispatch){
+    return {
+        addUser: function(user){
+            dispatch( {type: 'addUser', user: user} )
+          }
+    }
+}
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
    )(ScreenProfil);

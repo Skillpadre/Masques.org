@@ -41,7 +41,7 @@ function ScreenMasks(props) {
     let handleNewOrder = async (article) => {
         const articleData = JSON.stringify(article)
 
-        let data = await fetch('/add-article/' + props.token, {
+        let data = await fetch('/add-article/' + props.user.token, {
             method: 'POST',
             headers: {'Content-Type':'application/Json'},
             body: articleData
@@ -228,7 +228,7 @@ function ScreenMasks(props) {
 }
 
 function mapStateToProps(state) {
-    return { token: state.userToken }
+    return { user: state.user }
   }
   
 

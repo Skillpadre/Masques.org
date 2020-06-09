@@ -1,13 +1,13 @@
-export default function(userToken= null, action){
+export default function(user = {}, action){
     
-    if(action.type === 'addToken'){
-        console.log('add token ' + action.token)
-        return action.token;
-    } else if (action.type === 'deleteToken') {
-        let token = null
-        return token;
+    if(action.type === 'addUser'){
+        console.log(action.user)
+        return action.user;
+    } else if (action.type === 'deleteUser') {
+        let resetUser = {};
+        return resetUser;
 
     } else {
-        return userToken;
+        return user;
     }
 }

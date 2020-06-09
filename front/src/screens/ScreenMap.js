@@ -29,24 +29,6 @@ function ScreenMap() {
     loadData()
   }, []);
 
-  const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-  ];
-
-
-
-
   let buyingList = articleList.map((item, i) => {
     return (
 
@@ -61,18 +43,9 @@ function ScreenMap() {
           </Card.Meta><Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={`/fabricant/${item._id}`}>Choisir cet article</Link></Button>
         </Card>
       </List.Item>
+
     )
   })
-
-  // var cardWish = moviesWishList.map((movie,i) => {
-  //   return (
-  //     <ListGroupItem>
-  //       <ListGroupItemText onClick={() => {handleClickDeleteMovie(movie.name)}}>
-  //       <img width="25%" src={movie.img} /> {movie.name}
-  //       </ListGroupItemText>
-  //     </ListGroupItem>
-  //   )
-  // })
 
   return (
 

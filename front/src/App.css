@@ -3,9 +3,9 @@
 }
 
 h1{
-  font-weight:bold;
+  font-weight: bold;
   text-decoration: underline;
-  font-size:40px
+  font-size:40px;
 }
 #title{
   text-align: center;
@@ -126,4 +126,3 @@ header{
   flex-direction: row;
   justify-content: center;
 }
-

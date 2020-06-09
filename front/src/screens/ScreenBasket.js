@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
 
 import { Row, Col, Layout, List, Avatar, Divider, Radio } from 'antd';
-import {CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import StripeCheckout from 'react-stripe-checkout';
 
@@ -19,6 +19,7 @@ const { Content } = Layout;
 function ScreenBasket(props) {
 
     const [infoUsername, setInfoUsername] = useState();
+    const [articleList, setArticleList] = useState([])
 
     var userToken;
 
@@ -26,49 +27,54 @@ function ScreenBasket(props) {
         async function loadUser() {
 
             //Récupération du token dans localStorage
-            userToken = localStorage.getItem('token', (err, value) => {    
+            userToken = localStorage.getItem('token', (err, value) => {
             })
 
-            if(userToken){
+            if (userToken) {
 
                 const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
                 const response = await rawResponse.json();
-                    
-                if(response.user){
+
+                if (response.user) {
                     setInfoUsername(response.user.username)
                 }
 
-            }else{
+            } else {
                 return <Redirect to='/' />
             }
 
         }
         loadUser();
-      }, [userToken]);
+    }, [userToken]);
 
-    
-
-    const data = [
-        {
-            title: 'Modèle 1',
-        },
-        {
-            title: 'Modèle 2',
-        },
-        {
-            title: 'Modèle 3',
-        },
-        {
-            title: 'Modèle 4',
-        },
-    ];
+    useEffect(() => {
+        async function basketList() {
+            setArticleList(props.order)
+        }
+        basketList();
+    }, []);
+    console.log(articleList)
 
     const radioStyle = {
         display: 'block',
         height: '30px',
         lineHeight: '30px',
     };
+    
+let basketList = articleList.map((article, i) => {
+        return (
+            <List.Item key={i}>
+                <List.Item.Meta
+                    
+                    title={article.title}
+                    description={article.description, article.color, article.price}
 
+                />
+                <CloseCircleOutlined />
+            </List.Item>
+        )
+    })
+console.log(basketList)
     const [radioValue, setRadioValue] = useState('')
 
     var onChange = e => {
@@ -76,67 +82,56 @@ function ScreenBasket(props) {
         setRadioValue(e.target.value);
     };
 
-
     return (
 
-        <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
+        <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
             <Nav />
 
-            <Content style={{ padding: '0 50px', margin: '40px 0'}} className="Basket-page">
-                
+            <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Basket-page">
+
                 <Row>
-                    <Col md={{span: 11}} sm={{span: 24}}>
-                        <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue {infoUsername} !</h2>
+                    <Col md={{ span: 11 }} sm={{ span: 24 }}>
+                        <h2 style={{ fontWeight: 700, fontSize: 25 }}>Bienvenue {infoUsername} !</h2>
                     </Col>
-                    <Col md={{span: 13}} sm={{span: 12}} xs={{span: 24}}> 
-                        <h1 style={{fontWeight: 700, fontSize: 40}}>Panier</h1>
+                    <Col md={{ span: 13 }} sm={{ span: 12 }} xs={{ span: 24 }}>
+                        <h1 style={{ fontWeight: 700, fontSize: 40 }}>Panier</h1>
                     </Col>
                 </Row>
 
-                <Row style={{marginTop: 40}} align='middle'>
-                    <Col md={{span: 12}} sm={{span: 24}}>
+                <Row style={{ marginTop: 40 }} align='middle'>
+                    <Col md={{ span: 12 }} sm={{ span: 24 }}>
                         <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
 
                             <List
-                                style={{margin: "10px 15px 0 10px"}}
+                                style={{ margin: "10px 15px 0 10px" }}
                                 itemLayout="horizontal"
-                                dataSource={data}
-                                renderItem={item => (
-                                    <List.Item>
-                                        <List.Item.Meta
-                                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                            title={<a href="https://ant.design">{item.title}</a>}
-                                            description="Masque personnalisé de couleur noir avec logo et inscription"
-                                            
-                                            
-                                        />
-                                        <CloseCircleOutlined/>
-                                    </List.Item>
-                                )}
-                            />
+                                dataSource={basketList}
+                                renderItem={article => (
+                                    {article} )}
+                                />
                             <Divider />
                             <div id="total">
-                                <p style={{fontSize: 18, fontWeight: 700}}>TOTAL : 1000€</p>
+                                <p style={{ fontSize: 18, fontWeight: 700 }}>TOTAL : 1000€</p>
                             </div>
 
                         </div>
                     </Col>
 
-                    <Col md={{span: 12}} sm={{span: 24}}>
+                    <Col md={{ span: 12 }} sm={{ span: 24 }}>
 
                         <div id="retrait">
                             <h2>Moyen de retrait</h2>
                             <Radio.Group onChange={onChange} value={radioValue}>
                                 <Radio style={radioStyle} value={'Retrait'}>
                                     Retrait
-        </Radio>
+                                 </Radio>
                                 <Radio style={radioStyle} value={'Livraison'}>
                                     Livraison
-        </Radio>
+                             </Radio>
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
-                        
+
                             {/* Stripe */}
                             <StripeCheckout
                                 amount="500" //TO DO --> Dynamiser
@@ -151,7 +146,7 @@ function ScreenBasket(props) {
                                 label="Payer avec Stripe 💳"
                                 panelLabel="Acheter pour {{amount}}"
                             />
-                                                
+
                         </div>
                     </Col>
                 </Row>
@@ -159,17 +154,19 @@ function ScreenBasket(props) {
 
 
             </Content>
-        
-            <FooterComp/>
+
+            <FooterComp />
         </Layout>
     );
 }
 
 
-function mapStateToProps(state){
-    return { token: state.userToken}
+function mapStateToProps(state) {
+    return {
+        token: state.userToken,
+        order: state.basketList
+    }
 }
-
 
 export default connect(mapStateToProps, null)(ScreenBasket)
 

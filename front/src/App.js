@@ -14,10 +14,11 @@ import ScreenMask from './screens/ScreenMask';
 import Footer from './screens/Footer';
 
 import userToken from './reducer/user';
+import basketList from './reducer/order';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 
-const store = createStore(combineReducers({ userToken }))
+const store = createStore(combineReducers({ userToken, basketList }))
 
 function App() {
   return (

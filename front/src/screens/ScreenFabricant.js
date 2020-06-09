@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-
+import {connect} from 'react-redux'
 import Nav from './Nav'
 import FooterComp from './Footer';
 
@@ -15,26 +15,29 @@ const { Option } = Select;
 function ScreenFabricant (props){
 
 const [articleId, setArticleId] = useState('')
-const [article, setArticle] = useState();
 const [color, setColor] = useState('noir');
+
 
 useEffect(() => {
     var data = async() => {
     var rawResponse = await fetch(`/articleId/${props.match.params.id}`);
     var response = await rawResponse.json();
-      setArticleId(response)
-      console.log(response)
+    setArticleId(response)
     }
     data()
   }, []);
 
   console.log(articleId)
-  console.log(articleId.color)
 
    const onChangeColor = value => {
             setColor(value)
       };
 
+
+let handleOrder = async (order) => {
+props.sendOrder(order)
+console.log(order)
+}
     return(
 
 
@@ -79,7 +82,7 @@ useEffect(() => {
                             <Select placeholder="Choisissez votre modèle"
                                     allowClear
                             >
-                                <Option value={articleId.modele}></Option>
+                                <Option value={articleId.title}></Option>
                                 <Option value="female">Modèle 2</Option>
                                 <Option value="other">Modèle 3</Option>
                             </Select>
@@ -92,9 +95,6 @@ useEffect(() => {
                                 placeholder="Choisissez votre couleur"
                                 allowClear
                             >
-                                <Option value="noir">noir</Option>
-                                <Option value="rouge">rouge</Option>
-                                <Option value="bleu">bleu</Option>
                                 <Option value={articleId.color}></Option>
                             </Select>
                             </Form.Item>
@@ -121,10 +121,10 @@ useEffect(() => {
                             </Form.Item>
 
                             <Form.Item label="Prix Unitaire" name="Prix">
-                                <p>{articleId.price} € (c'est cher hein ?)</p>
+                                <p>{articleId.priceUnit} € (c'est cher hein ?)</p>
                             </Form.Item>
 
-                            <Link to= '/basket'><Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary">Ajouter au panier</Button></Link>
+                            <Link to='/basket'><Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" onClick={() => handleOrder(articleId)} >Ajouter au panier</Button></Link>
 
                         </Form>
 
@@ -140,4 +140,15 @@ useEffect(() => {
     
 }
 
-export default ScreenFabricant;
+function mapDispatchToProps(dispatch) {
+    return {
+      sendOrder: function(order) { 
+          dispatch( {type: 'addBasket', userOrder: order} ) 
+      }
+    }
+  }
+
+  export default connect(
+    null, 
+    mapDispatchToProps
+)(ScreenFabricant);

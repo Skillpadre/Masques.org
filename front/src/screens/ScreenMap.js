@@ -33,12 +33,12 @@ function ScreenMap() {
     return (
 
       <List.Item key={i} style={{alignItems: 'flex-start'}}>
-        <Card hoverable title={item.modele} bodyStyle={{width: 400}}>
+        <Card hoverable title={item.title} bodyStyle={{width: 400}}>
 
           <Card.Meta description={item.description} avatar={item.img}>
           </Card.Meta>
 
-          <Card.Meta description={item.price + " €"}>
+          <Card.Meta description={item.priceUnit + " €"}>
 
           </Card.Meta><Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={`/fabricant/${item._id}`}>Choisir cet article</Link></Button>
         </Card>
@@ -70,7 +70,8 @@ function ScreenMap() {
         <div style={{width: '100%', marginTop: 25}}>
 
           <h3 style={{fontWeight: 700, fontSize: 30}}>Liste des fabricants</h3>
-          {buyingList}
+          <Row > {buyingList}</Row>
+         
 
         </div>
 

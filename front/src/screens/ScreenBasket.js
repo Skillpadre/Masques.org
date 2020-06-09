@@ -53,28 +53,28 @@ function ScreenBasket(props) {
         }
         basketList();
     }, []);
+
     console.log(articleList)
+
+    let totalCommande = 0
+    for (let i = 0; i < articleList.length; i++) {
+
+        totalCommande = articleList[i].priceUnit * articleList[i].quantity
+
+    }
+
+    if (totalCommande == NaN) {
+
+        totalCommande = 0
+    }
+
 
     const radioStyle = {
         display: 'block',
         height: '30px',
         lineHeight: '30px',
     };
-    
-let basketList = articleList.map((article, i) => {
-        return (
-            <List.Item key={i}>
-                <List.Item.Meta
-                    
-                    title={article.title}
-                    description={article.description, article.color, article.price}
 
-                />
-                <CloseCircleOutlined />
-            </List.Item>
-        )
-    })
-console.log(basketList)
     const [radioValue, setRadioValue] = useState('')
 
     var onChange = e => {
@@ -105,14 +105,22 @@ console.log(basketList)
 
                             <List
                                 style={{ margin: "10px 15px 0 10px" }}
-                                itemLayout="horizontal"
-                                dataSource={basketList}
-                                renderItem={article => (
-                                    {article} )}
-                                />
+                                dataSource={articleList}
+                                renderItem={item => (
+                                    <List.Item>
+                                        <List.Item.Meta
+
+                                            title={item.title}
+                                            description={item.description + ' ' + item.quality + ' ' + item.colors + ' ' + item.quantity + ' ' + totalCommande + ' €'}
+                                        />
+                                    </List.Item>
+                                )}
+
+                            />
+
                             <Divider />
                             <div id="total">
-                                <p style={{ fontSize: 18, fontWeight: 700 }}>TOTAL : 1000€</p>
+                                <p style={{ fontSize: 18, fontWeight: 700 }}>TOTAL : {totalCommande += totalCommande} €</p>
                             </div>
 
                         </div>

@@ -17,7 +17,7 @@ function FooterComp() {
 
           <Row justify='center' align='middle'>
             <Col span={6}>
-                <Link to='#'><p style={{color: 'white'}}>A propos</p></Link>
+                <Link to='/apropos'><p style={{color: 'white'}}>A propos</p></Link>
             </Col>
             <Col span={6}>
                 <Link to='/contact'><p style={{color: 'white'}}>Contact</p></Link>

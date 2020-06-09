@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import '../App.css';
-import { Row, Form, Input, Button, Checkbox, Col, Slider, InputNumber, Modal } from 'antd';
+import { Row, Form, Input, Button, Checkbox, Col, Slider, InputNumber, Modal, Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { Redirect, Link } from 'react-router-dom';
 import Nav from './Nav'
 
+const { Header, Content, Footer } = Layout;
 
 function ScreenMasks() {
 
@@ -70,10 +71,11 @@ function ScreenMasks() {
 
 
     return (
-        <div>
-            <Nav />
+        <Layout style={{height: 'auto', backgroundColor: 'white'}} className="layout">
 
+                <Nav />
 
+            <Content>
 
             <div className="Mask-page" >
 
@@ -94,7 +96,16 @@ function ScreenMasks() {
                             >
                                 <Input onChange={e => setModèle(e.target.value)} value={modèle} />
                             </Form.Item>
-                            </Col>
+                    </Col>
+
+                    <Col span={24}>
+                            <Form.Item
+                                label="Modèle"
+                                name="modèle"
+                            >
+                                <Input onChange={e => setModèle(e.target.value)} value={modèle} />
+                            </Form.Item>
+                    </Col>
                 </Row>
                 <Row>
                             <Form.Item
@@ -198,8 +209,9 @@ function ScreenMasks() {
           <p>Article mis en ligne !</p>
         </Modal>
             </div>
-
-        </div>
+            
+            </Content>
+        </Layout>
     )
 }
 

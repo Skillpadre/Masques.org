@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 import {Row, Col, Layout} from 'antd';
-import {FacebookFilled, InstagramFilled} from '@ant-design/icons';
+import {FacebookFilled, TwitterSquareFilled} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 const { Footer } = Layout;
@@ -20,15 +20,15 @@ function FooterComp() {
                 <Link to='#'><p style={{color: 'white'}}>A propos</p></Link>
             </Col>
             <Col span={6}>
-                <Link to='#'><p style={{color: 'white'}}>Contact</p></Link>
+                <Link to='/contact'><p style={{color: 'white'}}>Contact</p></Link>
             </Col>
             <Col span={6}>
                 <Link to='#'><p style={{color: 'white'}}>Actualité</p></Link>
             </Col>
       
             <Col span={6} style={{color : 'red'}}>
-                <Link to='#' style={{color: 'white'}}><FacebookFilled style={{fontSize: 25, marginRight: 3}}/></Link>
-                <Link to='#' style={{color: 'white'}}><InstagramFilled style={{fontSize: 25}}/></Link>
+                <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' target="_blank" style={{color: 'white'}}><FacebookFilled style={{fontSize: 25, marginRight: 3}}/></a>
+                <a href='https://twitter.com/MasquesOrg' target="_blank" style={{color: 'white'}}><TwitterSquareFilled style={{fontSize: 25}}/></a>
             </Col>
           </Row>
         

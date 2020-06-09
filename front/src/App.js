@@ -12,6 +12,7 @@ import ScreenFabricant from './screens/ScreenFabricant';
 import ScreenProfil from './screens/ScreenProfil';
 import ScreenMask from './screens/ScreenMask';
 import Footer from './screens/Footer';
+import ScreenContact from './screens/ScreenContact'
 
 import userToken from './reducer/user';
 import { Provider } from 'react-redux';
@@ -33,6 +34,7 @@ function App() {
           <Route component={ScreenFabricant} path="/fabricant/:id"/>
           <Route component={ScreenProfil} path="/profil"/>
           <Route component={ScreenMask} path="/mask"/>
+          <Route component={ScreenContact} path="/contact"/>
         </Switch>
       </Router>
     </Provider>

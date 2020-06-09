@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-<<<<<<< HEAD
-import { Row, Form, Input, Button, Checkbox, Col, Slider, InputNumber, Modal, Layout } from 'antd';
-=======
 
-import { Row, Form, Input, Button, Layout, Col, Slider, InputNumber, Modal } from 'antd';
->>>>>>> b6972ec34dc8712c3a23424b573f9305e28b80af
+import { Form, Input, Button, Layout, Slider, InputNumber, Modal } from 'antd';
 import 'antd/dist/antd.css';
 
 import Nav from './Nav'
@@ -14,7 +10,6 @@ import FooterComp from './Footer';
 
 const { Content } = Layout;
 
-const { Header, Content, Footer } = Layout;
 
 function ScreenMasks() {
 

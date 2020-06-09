@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 let articleModel = require('../models/articles');
+let userModel = require('../models/user')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -11,21 +12,31 @@ router.get('/', function (req, res, next) {
 
 // route qui ajoute un nouvel article créé par le fabricant
 
-router.post('/articles', async function (req, res, next) {
-  let articles
-  let newArticles = new articleModel({
-    modele: req.body.modèle,
+router.post('/add-article/:token', async function (req, res, next) {
+  let user = await userModel.findOne({token: req.params.token})
+
+  console.log(req.params.token);
+  console.log(req.body);
+  let article;
+  let result = false;
+
+  let newArticle = new articleModel({
     description: req.body.description,
-    price: req.body.price,
+    priceUnit: req.body.priceUnit,
     stock: req.body.stock,
-    color: req.body.couleur,
+    colors: req.body.colors,
     img: req.body.image,
-    quality: req.body.qualité
+    quality: req.body.quality,
+    sellerId: user._id
 
   });
-  articles = await newArticles.save();
+  article = await newArticle.save();
 
-  res.json({ articles });
+  if(article.stock) {
+    result = true;
+  }
+
+  res.json({ article, result });
 });
 
 

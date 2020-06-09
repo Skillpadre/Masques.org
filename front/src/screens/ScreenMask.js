@@ -1,83 +1,72 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
-<<<<<<< HEAD
-import { Row, Form, Input, Button, Checkbox, Col, Slider, InputNumber, Modal, Layout } from 'antd';
-=======
+import {connect} from 'react-redux'
 
-import { Row, Form, Input, Button, Layout, Col, Slider, InputNumber, Modal } from 'antd';
->>>>>>> b6972ec34dc8712c3a23424b573f9305e28b80af
+import { Row, Form, Input, Button, Layout, Col, Checkbox, InputNumber, Modal } from 'antd';
 import 'antd/dist/antd.css';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
+import { PropertySafetyFilled } from '@ant-design/icons';
 
 const { Content } = Layout;
 
-const { Header, Content, Footer } = Layout;
 
-function ScreenMasks() {
+function ScreenMasks(props) {
 
-    const [modèle, setModèle] = useState('')
     const [description, setDescription] = useState('')
     const [inputPrice, setInputPrice] = useState(1)
     const [inputStock, setInputStock] = useState(1)
-    const [couleur, setCouleur] = useState('')
-    const [image, setImage] = useState('')
     const [qualité, setQualité] = useState('')
+    const [couleurs, setCouleurs] = useState([])
+
     const [isVisible, setIsVisible] = useState(false)
+    const [isCreated, setIsCreated] = useState(false);
+
 
     const { TextArea } = Input
 
-    const tailLayout = {
-        wrapperCol: {
-            offset: 8,
-            span: 16,
-        },
-    };
-    // Cale le prix sur la position du Slider
-    let onChangePrice = (value) => {
-        setInputPrice(value)
-    };
-
-
-    // Cale le stock sur la position du slider
-    let onChangeStock = (value) => {
-        setInputStock(value)
-    };
-
-    console.log(inputStock)
-    // au click sur "Valider la création"
-    let handleNewOrder = async () => {
-        let data = await fetch('/articles', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `modèle=${modèle}&description=${description}&price=${inputPrice}&stock=${inputStock}&couleur=${couleur}&image=${image}&qualité=${qualité}`
-        });
-        let response = await data.json();
-        setModèle('')
+    const onFinish = values => {
+        setDescription(values.description);
+        setInputPrice(values.priceUnit);
+        setInputStock(values.stock);
+        setQualité(values.quality);
+        setCouleurs(values.colors);
+    
+        handleNewOrder(values); 
     }
 
-    // Fonction pour clear les fields après validation - Work in progress
+    // au click sur "Valider la création"
+    let handleNewOrder = async (article) => {
+        const articleData = JSON.stringify(article)
 
-    let clearFields = (e) => {
-         setModèle('');
-        setDescription('');
-          setInputPrice(1);
-          setInputStock(1);
-             setCouleur('');
-             setImage('');
-             setQualité('')
-     }
+        let data = await fetch('/add-article/' + props.token, {
+            method: 'POST',
+            headers: {'Content-Type':'application/Json'},
+            body: articleData
+        });
+        let response = await data.json();
+        console.log(response);
 
- let   showModal = () => {
+        if(response.result){
+            showModal();
+        }
+    }
+
+     let showModal = () => {
        setIsVisible(true)
-      };
+    };
 
     let  handleOk = () => {
-             setIsVisible(false)
-        }
+        setIsCreated(true);
+        setIsVisible(false)
 
+    }
+
+    if(isCreated){
+        return <Redirect to='/dashboard' />
+    }
 
     return (
         
@@ -87,92 +76,149 @@ function ScreenMasks() {
 
             <Content style={{ padding: '0 50px', margin: '40px 0'}} className="Mask-page" >
 
-                <h1>Création de masques</h1>
+                <h1>Publier une offre de fabrication</h1>
         
-                <h2>Paramètres de la création</h2>
+                <h2>Paramètres de la fabrication</h2>
     
-                <Form size='middle' style={{ width: '50%', textAlign: 'center'}}>
-                  
-                    <Form.Item label="Modèle"
-                            name="modèle"
-                    >
-                        <Input onChange={e => setModèle(e.target.value)} value={modèle} />
-                    </Form.Item>
-                      
-                <Form.Item label="Description"
-                        name="description"
+                <Form size='middle' style={{ width: '50%', textAlign: 'center'}}
+                    onFinish={onFinish}
+                    initialValues={{
+                        'stock': 1,
+                        'priceUnit': 1,
+                        'colors': ['bleu'],
+                    }}
                 >
-                    <TextArea rows={6} onChange={e => setDescription(e.target.value)} value={description} />
-                </Form.Item>
-                   
-                    <Form.Item label="Prix"
-                            name="value"
+
+                    <p>Indiquez le nombre de masques que vous pouvez réaliser.</p>
+
+                    <Form.Item label="Quantitée"
+                            name="stock"
                     >
 
-                        <Slider min={1}
-                                max={50}
-                                onChange={onChangePrice}
-                                value={typeof inputPrice === 'number' ? inputPrice : 0}
-                                
+                        <InputNumber min={1}
+                                    
+                                    style={{ margin: '0 16px' }}
+                                    value={inputStock}
+                                    onChange={setInputStock}
                         />
+
+                    </Form.Item>
+
+                    
+                    <p>Indiquez le prix unitaire.</p>
+
+                    <Form.Item label="Prix unitaire"
+                            name="priceUnit"
+                    >
+
                         <InputNumber min={1}
                                     max={2000}
                                     style={{ margin: '0 16px' }}
                                     value={inputPrice}
-                                    
-                        />
-                        
-                    </Form.Item>
-                           
-                    <Form.Item label="Stock"
-                            name="stock"
-                    >
-
-                        <Slider min={1}
-                                max={2000}
-                                onChange={onChangeStock}
-                                value={typeof inputStock === 'number' ? inputStock : 0}
-                        />
-
-                        <InputNumber min={1}
-                                    max={2000}
-                                    style={{ margin: '0 16px' }}
-                                    value={inputStock}
+                                    onChange={setInputPrice}
                         />
 
                     </Form.Item>
-                           
-                       
-                    
-                    <Form.Item label="Couleur"
-                            name="couleur"
-                    >
-                        <Input onChange={e => setCouleur(e.target.value)} value={couleur} />
+                  
+                    <p>Indiquez les couleurs de masque que vous pouvez réaliser.</p>
+                    <Form.Item name="colors" label="Couleurs disponibles">
+                        <Checkbox.Group>
+                        <Row>
+                            <Col span={8}>
+                            <Checkbox
+                                value="bleu"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Bleu
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="noir"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Noir
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="rouge"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Rouge
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="vert"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Vert
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="jaune"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Jaune
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="blanc"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Blanc
+                            </Checkbox>
+                            </Col>
+                        </Row>
+                        </Checkbox.Group>
                     </Form.Item>
-                    
-                    <Form.Item label="Image"
-                            name="Image"
-                    >
-                        <Input onChange={e => setImage(e.target.value)} value={image} />
-                    </Form.Item>
-                
+
+
                     <Form.Item label="Qualité"
-                            name="Qualité"
+                            name="quality"
                     >
-                        <Input onChange={e => setQualité(e.target.value)} value={qualité} />
+                        <Input onChange={e => setQualité(e.target.value)} value={qualité} placeholder='moyenne, supérieure ...' />
                     </Form.Item>
                       
+                    <p>Vous pouvez modifiez la description comme vous le souhaitez.</p>
+                    <Form.Item label="Description"
+                            name="description"
+                    >
+                        <TextArea rows={6} onChange={e => setDescription(e.target.value)} value={description} />
+                    </Form.Item>
+                   
+                                  
+                    <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" htmlType="submit" >   
+                        Valider
+                    </Button>
                 </Form>
-            
-                <Link to="/mask"><Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" htmlType="submit" onClick={(e) => {handleNewOrder(); clearFields(e); showModal()}}>   
-                    Valider la création
-                </Button></Link>
 
-                <Modal title="Validation"
+
+                <Modal title="Article mis en ligne !"
                     visible={isVisible}
                     onOk={handleOk}
                 >
-                    <p>Article mis en ligne !</p>
+                    <h3>Récapitulatif</h3>
+                    <p>Nombre de masques : {inputStock}</p>
+                    <p>Prix d'un masque : {inputPrice}</p>
+                    <p>Couleurs disponibles : {couleurs.join(', ')}</p>
+                    <p>Qualitée : {qualité}</p>
+
                 </Modal>
 
             </Content>
@@ -181,4 +227,13 @@ function ScreenMasks() {
     )
 }
 
-export default ScreenMasks
+function mapStateToProps(state) {
+    return { token: state.userToken }
+  }
+  
+
+  export default connect(
+    mapStateToProps,
+    null
+   )(ScreenMasks);
+  

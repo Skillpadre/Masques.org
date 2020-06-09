@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
 const articleSchema = new mongoose.Schema({
-    modele: String,
+    title: String,
     description: String,
-    price: Number,
+    priceUnit: Number,
     stock: Number,
-    color: String,
+    colors: Array,
     img: String,
     quality: String,
-    user: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
+    sellerId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
 });
 
 const articleModel = new mongoose.model('articles', articleSchema);

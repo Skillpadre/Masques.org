@@ -54,7 +54,19 @@ function ScreenBasket(props) {
         basketList();
     }, []);
 
+    console.log(articleList)
+
     let totalCommande = 0
+    for (let i = 0; i < articleList.length; i++) {
+
+        totalCommande = articleList[i].priceUnit * articleList[i].quantity
+
+    }
+
+    if (totalCommande == NaN) {
+
+        totalCommande = 0
+    }
 
 
     const radioStyle = {
@@ -99,7 +111,7 @@ function ScreenBasket(props) {
                                         <List.Item.Meta
 
                                             title={item.title}
-                                            description={item.description + ' ' + item.quality + ' ' + totalCommande + ' €'}
+                                            description={item.description + ' ' + item.quality + ' ' + item.colors + ' ' + item.quantity + ' ' + totalCommande + ' €'}
                                         />
                                     </List.Item>
                                 )}

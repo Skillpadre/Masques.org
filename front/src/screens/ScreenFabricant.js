@@ -34,13 +34,15 @@ function ScreenFabricant(props) {
     console.log(articleId)
 
 
-    const onChangeColor = value => {
+    const onChangeColor = async (value) => {
         setColor(value)
     };
     console.log(color)
 
     // Envoie de l'odre au reducer
     let handleOrder = async (order) => {
+        order.colors = color
+        order.quantity = quantity
         props.sendOrder(order)
         console.log(order)
     }
@@ -164,6 +166,7 @@ function mapDispatchToProps(dispatch) {
     return {
         sendOrder: function (order) {
             dispatch({ type: 'addBasket', userOrder: order })
+
         }
     }
 }

@@ -11,6 +11,7 @@ import ScreenBasket from './screens/ScreenBasket';
 import ScreenFabricant from './screens/ScreenFabricant';
 import ScreenProfil from './screens/ScreenProfil';
 import ScreenMask from './screens/ScreenMask';
+import Footer from './screens/Footer';
 
 import userToken from './reducer/user';
 import { Provider } from 'react-redux';
@@ -27,7 +28,7 @@ function App() {
           <Route component={ScreenLogin} path="/login"/>
           <Route component={ScreenMap} path="/map"/>
           <Route component={ScreenConfirm} path="/confirm"/>
-          <Route component={ScreenDashboard} path="/dashboard"/>
+          <Route component={ScreenDashboard} path="/dashboard/"/>
           <Route component={ScreenBasket} path="/basket"/>
           <Route component={ScreenFabricant} path="/fabricant/:id"/>
           <Route component={ScreenProfil} path="/profil"/>

@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../App.css';
-import { Row, Form, Input, Button, Checkbox, Col, Slider, InputNumber, Modal } from 'antd';
-import 'antd/dist/antd.css';
-import { Redirect, Link } from 'react-router-dom';
-import Nav from './Nav'
+<<<<<<< HEAD
+import { Row, Form, Input, Button, Checkbox, Col, Slider, InputNumber, Modal, Layout } from 'antd';
+=======
 
+import { Row, Form, Input, Button, Layout, Col, Slider, InputNumber, Modal } from 'antd';
+>>>>>>> b6972ec34dc8712c3a23424b573f9305e28b80af
+import 'antd/dist/antd.css';
+
+import Nav from './Nav'
+import FooterComp from './Footer';
+
+const { Content } = Layout;
+
+const { Header, Content, Footer } = Layout;
 
 function ScreenMasks() {
 
@@ -70,136 +80,104 @@ function ScreenMasks() {
 
 
     return (
-        <div>
+        
+        <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+
             <Nav />
 
+            <Content style={{ padding: '0 50px', margin: '40px 0'}} className="Mask-page" >
 
+                <h1>Création de masques</h1>
+        
+                <h2>Paramètres de la création</h2>
+    
+                <Form size='middle' style={{ width: '50%', textAlign: 'center'}}>
+                  
+                    <Form.Item label="Modèle"
+                            name="modèle"
+                    >
+                        <Input onChange={e => setModèle(e.target.value)} value={modèle} />
+                    </Form.Item>
+                      
+                <Form.Item label="Description"
+                        name="description"
+                >
+                    <TextArea rows={6} onChange={e => setDescription(e.target.value)} value={description} />
+                </Form.Item>
+                   
+                    <Form.Item label="Prix"
+                            name="value"
+                    >
 
-            <div className="Mask-page" >
+                        <Slider min={1}
+                                max={50}
+                                onChange={onChangePrice}
+                                value={typeof inputPrice === 'number' ? inputPrice : 0}
+                                
+                        />
+                        <InputNumber min={1}
+                                    max={2000}
+                                    style={{ margin: '0 16px' }}
+                                    value={inputPrice}
+                                    
+                        />
+                        
+                    </Form.Item>
+                           
+                    <Form.Item label="Stock"
+                            name="stock"
+                    >
 
-                <Row><h1>Création de masques</h1></Row>
+                        <Slider min={1}
+                                max={2000}
+                                onChange={onChangeStock}
+                                value={typeof inputStock === 'number' ? inputStock : 0}
+                        />
 
+                        <InputNumber min={1}
+                                    max={2000}
+                                    style={{ margin: '0 16px' }}
+                                    value={inputStock}
+                        />
 
-                <Row>
-
-                        <h2>Paramètres de la création</h2>
-                 </Row>
-                         
-                        <Form id="form-articles" style={{ size: 'large' }}>
-                <Row>
-                    <Col span={24}>
-                            <Form.Item
-                                label="Modèle"
-                                name="modèle"
-                            >
-                                <Input onChange={e => setModèle(e.target.value)} value={modèle} />
-                            </Form.Item>
-                            </Col>
-                </Row>
-                <Row>
-                            <Form.Item
-                                label="Description"
-                                name="description"
-                            >
-                                <TextArea rows={6} onChange={e => setDescription(e.target.value)} value={description} />
-                            </Form.Item>
-                            </Row>
-                            <Row>
-
-                                <Col span={12}>
-                                    <Form.Item
-                                        label="Prix"
-                                        name="value"
-                                    >
-                                        <Slider
-                                            min={1}
-                                            max={2000}
-                                            onChange={onChangePrice}
-                                            value={typeof inputPrice === 'number' ? inputPrice : 0}
-                                        />
-                                    </Form.Item>
-                                </Col>
-                                <Col span={4}>
-                                    <InputNumber
-                                        min={1}
-                                        max={2000}
-                                        style={{ margin: '0 16px' }}
-                                        value={inputPrice}
-                                    />
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col span={12}>
-                                    <Form.Item
-                                        label="Stock"
-                                        name="stock"
-                                    >
-
-                                        <Slider
-                                            min={1}
-                                            max={2000}
-                                            onChange={onChangeStock}
-                                            value={typeof inputStock === 'number' ? inputStock : 0}
-                                        />
-
-                                    </Form.Item>
-                                </Col>
-                                <Col span={4}>
-                                    <InputNumber
-                                        min={1}
-                                        max={2000}
-                                        style={{ margin: '0 16px' }}
-                                        value={inputStock}
-                                    />
-                                </Col>
-                            </Row>
-            <Row>
-                            <Form.Item
-                                label="Couleur"
-                                name="couleur"
-                            >
-                                <Input onChange={e => setCouleur(e.target.value)} value={couleur} />
-                            </Form.Item>
-            </Row>
-            <Row>
-                            <Form.Item
-                                label="Image"
-                                name="Image"
-                            >
-                                <Input onChange={e => setImage(e.target.value)} value={image} />
-                            </Form.Item>
-            </Row>
-            <Row>
-                            <Form.Item
-                                label="Qualité"
-                                name="Qualité"
-                            >
-                                <Input onChange={e => setQualité(e.target.value)} value={qualité} />
-                            </Form.Item>
-                            </Row>
-                        </Form>
-       
-
-                <Row><Form.Item {...tailLayout}>
-                    <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" htmlType="submit" onClick={(e) => {handleNewOrder(); clearFields(e); showModal()}}>
-                        <Link to="/mask">
-                        Valider la création
-                        </Link>
+                    </Form.Item>
+                           
                        
-                    </Button>
-                </Form.Item></Row>
+                    
+                    <Form.Item label="Couleur"
+                            name="couleur"
+                    >
+                        <Input onChange={e => setCouleur(e.target.value)} value={couleur} />
+                    </Form.Item>
+                    
+                    <Form.Item label="Image"
+                            name="Image"
+                    >
+                        <Input onChange={e => setImage(e.target.value)} value={image} />
+                    </Form.Item>
+                
+                    <Form.Item label="Qualité"
+                            name="Qualité"
+                    >
+                        <Input onChange={e => setQualité(e.target.value)} value={qualité} />
+                    </Form.Item>
+                      
+                </Form>
+            
+                <Link to="/mask"><Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" htmlType="submit" onClick={(e) => {handleNewOrder(); clearFields(e); showModal()}}>   
+                    Valider la création
+                </Button></Link>
 
-                <Modal
-          title="Validation"
-          visible={isVisible}
-          onOk={handleOk}
-        >
-          <p>Article mis en ligne !</p>
-        </Modal>
-            </div>
+                <Modal title="Validation"
+                    visible={isVisible}
+                    onOk={handleOk}
+                >
+                    <p>Article mis en ligne !</p>
+                </Modal>
 
-        </div>
+            </Content>
+            <FooterComp/>
+        </Layout>
     )
 }
 

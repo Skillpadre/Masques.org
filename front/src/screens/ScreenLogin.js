@@ -1,10 +1,16 @@
 import React, {useState} from 'react';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
-import { Row, Col, Card, Input, Button} from 'antd';
-import 'antd/dist/antd.css';
-import { Redirect, Link } from 'react-router-dom';
-import Nav from './Nav'
+
 import {connect} from 'react-redux'
+
+import { Layout, Form, Checkbox, Row, Col, Card, Input, Button} from 'antd';
+import 'antd/dist/antd.css';
+
+import Nav from './Nav'
+import FooterComp from './Footer';
+
+const { Content } = Layout;
 
 
 function ScreenLogin(props) {
@@ -84,49 +90,139 @@ function ScreenLogin(props) {
   let tabErrorSignin = listErrorSignin.map((error, i)=>{
     return(<p key={i}>{error}</p>)
   });
+
+  //Disposition form
+  const layout = {
+    labelCol: {
+      span: 24,
+    },
+    wrapperCol: {
+      span: 24,
+    },
+  };
  
+
+
   if(userExist)
     return <Redirect to='/' />
 
   return (
-    <div>
+    <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+
       <Nav/>
 
-      <div className="Login-page" >
-        {/* SIGN-IN */}
-        <div className="Sign">
-          <h1>Se connecter</h1>
+      <Content style={{padding: '0 50px', display: 'flex', flexDirection:'column', alignItems: 'center', margin: '40px 0'}}>
+        <h1>Rejoingnez-nous!</h1>
 
-          {tabErrorSignin}
+          {/* SIGN-IN */}
+          <Row className="Sign" className="Login-page">
+            <Col md={{span: 6}} sm={{span: 22}} className='Sign'>
+              <h2 style={{fontWeight: 700}}>Se connecter</h2>
 
-          <Input required className="Login-input" placeholder="Email" onChange={e => setSingInEmail(e.target.value)} value={singInEmail} />
+              {tabErrorSignin}
 
-          <Input.Password required className="Login-input" placeholder="Password" onChange={e => setSingInPassword(e.target.value)} value={singInPassword} />
+              <Form {...layout} name="basic" initialValues={{remember: true}}>
 
-          <Button onClick={()=> handleSubmitSingIn()} style={{backgroundColor : '#E23D70', width: 100, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Sign-in</Button>
+                <Form.Item label="Email"
+                          name="Email"
+                          rules={[
+                            {
+                              required: true,
+                            }
+                          ]}
+                >
+                  <Input onChange={e => setSingInEmail(e.target.value)} value={singInEmail}/>
+                </Form.Item>
 
-        </div>
+                <Form.Item
+                  label="Mot de passe"
+                  name="Mot de passe"
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
+                  <Input.Password onChange={e => setSingInPassword(e.target.value)} value={singInPassword}/>
+                </Form.Item>
 
-        {/* SIGN-UP */}
+                <Form.Item>
+                  <Button onClick={()=> handleSubmitSingIn()} style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" htmlType="submit">
+                    Valider
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Col>
 
-        <div className="Sign">
-          <h1>S'inscrire</h1>
+          {/* SIGN-UP */}
 
-          {tabErrorSignup}
+            <Col md={{span: 6}} sm={{span: 22}} className='Sign'>
+              <h2 style={{fontWeight: 700}}>S'inscrire</h2>
 
-          <Input required maxLength={24} className="Login-input" placeholder="username" onChange={e => setSingUpUsername(e.target.value)} value={singUpUsername} />
-                  
-          <Input required className="Login-input" placeholder="email" onChange={e => setSingUpEmail(e.target.value)} value={singUpEmail}/>
+              {tabErrorSignup}
 
-          <Input.Password required minLength="8" maxLength="24" className="Login-input" placeholder="password" onChange={e => setSingUpPassword(e.target.value)} value={singUpPassword} />
-          <Input.Password required className="Login-input" placeholder="confirm password" onChange={e => setSingUpPasswordConfirm(e.target.value)} value={singUpPasswordConfirm} />
+              <Form {...layout} name="basic" initialValues={{remember: true}}>
 
-          <Button onClick={()=> handleSubmitSingUp()} style={{backgroundColor : '#E23D70', width: 100, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>Sign-up</Button>
+                <Form.Item label="Nom d'utilisateur"
+                          name="Nom d'utilisateur"
+                          rules={[
+                            {
+                              required: true,
+                            }
+                          ]}
+                >
+                  <Input onChange={e => setSingUpUsername(e.target.value)} value={singUpUsername}/>
+                </Form.Item>
 
-        </div>
+                <Form.Item
+                  label="Email"
+                  name="Email"
+                  rules={[
+                    {
+                      required: true,
+                    }
+                  ]}
+                >
+                  <Input onChange={e => setSingUpEmail(e.target.value)} value={singUpEmail}/>
+                </Form.Item>
 
-      </div>
-    </div>
+                <Form.Item
+                    label="Mot de passe"
+                    name="Mot de passe"
+                    rules={[
+                      {
+                        required: true,
+                      }
+                    ]}
+                  >
+                    <Input.Password required minLength="8" maxLength="24" onChange={e => setSingUpPassword(e.target.value)} value={singUpPassword}/>
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Confirmer le mot de passe"
+                    name="Confirmation mot de passe"
+                    rules={[
+                      {
+                        required: true,
+                      }
+                    ]}
+                  >
+                    <Input.Password onChange={e => setSingUpPasswordConfirm(e.target.value)} value={singUpPasswordConfirm}/>
+                  </Form.Item>
+
+                  <Form.Item>
+                  <Button onClick={()=> handleSubmitSingUp()} style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" htmlType="submit">
+                    Valider
+                  </Button>
+                </Form.Item>
+              </Form>
+
+            </Col>
+          </Row>
+
+      </Content>
+      <FooterComp/>
+    </Layout>
   )
 }
 

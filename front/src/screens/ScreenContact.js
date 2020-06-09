@@ -1,10 +1,8 @@
 import React from 'react';
 import '../App.css';
+
 import { Layout, Form, Input, Select, Button } from 'antd';
 import { FacebookFilled, TwitterSquareFilled } from '@ant-design/icons';
-
-
-
 import 'antd/dist/antd.css';
 import Nav from './Nav';
 import FooterComp from './Footer';
@@ -124,7 +122,7 @@ function ScreenContact() {
           </Form.Item>
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>
-            <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" type="primary" htmlType="submit">
+            <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary" htmlType="submit">
               Envoyer
             </Button>
           </Form.Item>

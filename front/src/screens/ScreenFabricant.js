@@ -17,21 +17,30 @@ function ScreenFabricant(props) {
     const [articleId, setArticleId] = useState('');
     const [colorsList, setColorsList] = useState([]);
     const [color, setColor] = useState('noir');
-    const [quantity, setQuantity] = useState(0)
+    const [stock, setStock] = useState();
+    const [description, setDescription] = useState('')
+
+    const [quantity, setQuantity] = useState(0);
+
+    const [username, setUsername] = useState('');
+    const [avatar, setAvatar] = useState('');
 
 
     useEffect(() => {
         var data = async () => {
             var rawResponse = await fetch(`/articleId/${props.match.params.id}`);
             var response = await rawResponse.json();
-            setArticleId(response);
+            setArticleId(response.article);
             // récuperation spécifique du tableau de couleur
-            setColorsList(response.colors)
-        }
-        data()
-    }, []);
+            setColorsList(response.article.colors);
+            setDescription(response.article.description);
+            setStock(response.article.stock)
 
-    console.log(articleId)
+            setUsername(response.seller.username);
+            setAvatar(response.seller.avatar);
+        }
+        data();
+    }, []);
 
 
     const onChangeColor = async (value) => {
@@ -64,8 +73,8 @@ function ScreenFabricant(props) {
                     <Col md={{ span: 10 }} sm={{ span: 16 }}>
                         <div style={{ marginLeft: 10 }}>
 
-                            <h3 style={{ fontWeight: 700, fontSize: 25 }}>Shawn Williamson</h3>
-                            <p style={{ width: 400 }}>Dolor eu nostrud magna ut dolore ad non mollit occaecat. Adipisicing ullamco et tempor nostrud. Occaecat occaecat non magna consectetur quis adipisicing sunt culpa.</p>
+                            <h3 style={{ fontWeight: 700, fontSize: 25 }}>{username}</h3>
+                            <p style={{ width: 400 }}>{description}</p>
 
                         </div>
                     </Col>
@@ -86,16 +95,6 @@ function ScreenFabricant(props) {
 
                         <Form style={{ textAlign: 'center' }}>
                             <Form.Item><p style={{ fontSize: 20 }}>{articleId.description}</p></Form.Item>
-                            <Form.Item style={{ width: 400 }} name="Modèle" label="Modèle" rules={[{ required: true }]}>
-                                <Select placeholder="Choisissez votre modèle"
-                                    allowClear
-                                         >
-                                    <Option value={articleId.title}></Option>
-                                    <Option value="female">Modèle 2</Option>
-                                    <Option value="other">Modèle 3</Option>
-                                </Select>
-
-                            </Form.Item>
 
                             <Form.Item style={{ width: 400 }} name="Couleur" label="Couleur" rules={[{ required: true }]}>
                                 <Select
@@ -114,20 +113,13 @@ function ScreenFabricant(props) {
                                 </Select>
                             </Form.Item>
 
-                            <Form.Item style={{ width: 400 }} name="Qualité" label="Qualité" rules={[{ required: true }]}>
-                                <Select placeholder="Choisissez la qualité du masque"
-                                    allowClear
-                                >
-                                    <Option value={articleId.quality}></Option>
-                                </Select>
+                            
 
-                            </Form.Item>
-
-                            <Form.Item label="Personnalisation" name="Personnalisation"
+                            {/* <Form.Item label="Personnalisation" name="Personnalisation"
                                 rules={[{ required: false }]}
                             >
                                 <Input.TextArea placeholder='Entrez l’inscription souhaitée' />
-                            </Form.Item>
+                            </Form.Item> */}
 
                             <Form.Item label="Quantité" name="Quantité"
                                 rules={[{ required: true, message: 'Entrer la quantité de masque souhaitée' }]}

@@ -57,9 +57,11 @@ router.get('/article-list', async function(req, res, next) {
 });
 
 router.get('/articleId/:id', async function(req, res){
-  let articleId = await articleModel.findById(req.params.id);
-  console.log(articleId);
-  res.json(articleId);
+  let article = await articleModel.findById(req.params.id);
+  let seller = await userModel.findById(article.sellerId)
+  console.log(article);
+  console.log(seller);
+  res.json({article, seller});
 });
 
 module.exports = router;

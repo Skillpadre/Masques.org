@@ -42,7 +42,7 @@ function ScreenProfil(props) {
             setAvatar(response.user.avatar);
         }
         loadInfo();
-    }, []);
+    }, [props.user]);
 
     const tailLayout = {
         wrapperCol: {
@@ -70,59 +70,78 @@ function ScreenProfil(props) {
         setInfoCity(response.user.city);
         setInfoTel(response.user.tel);
 
-        setChangementOk(<p>Vos changement on bien été pris en compte</p>)
+        setChangementOk(<p style={{color: '#52C41A', margin: 20}}>Vos changement on bien été pris en compte !</p>)
 
     };
 
-    const handleClickAvatar = async () =>{
-        let values = {url: avatar}
+    var fileSelectedHandler= event =>{
+        console.log(event.target.files[0]);
+        setAvatar(event.target.files[0])
+      }
 
-        const data = await fetch('/users/add-avatar/' + props.user.token, {
+    const handleClickAvatar = async () =>{
+
+        var data = new FormData();
+        data.append('avatar', avatar, 'blabla.jpg');
+
+        var rawResponse = await fetch('/users/add-avatar/'+ props.user.token, {
             method: 'POST',
-            headers: {'Content-Type':'application/Json'},
-            body: JSON.stringify(values)
+            body: data
         });
 
-        const response = await data.json();
+        var response = await rawResponse.json();
 
-        if(response.user.avatar === avatar){
-            console.log('ca marche')
-            let newAvatarUser = props.user;
-            newAvatarUser.urlAvatar = avatar;
-            console.log(newAvatarUser);
-            props.addUser(newAvatarUser);
-            localStorage.setItem('user', JSON.stringify(newAvatarUser));
-            setChangAvatar(<p>Le changement de votre avatar à bien été effectué</p>)
-           
-        }
+        console.log('data =' + data)
+        console.log(response.user);
+        
+        let newAvatarUser = props.user;
+        newAvatarUser.urlAvatar = response.user.avatar;
+
+        console.log(newAvatarUser)
+        props.addUser(newAvatarUser);
+        setAvatar(response.user.avatar)
+
+        localStorage.setItem('user', JSON.stringify(newAvatarUser));
+        setChangAvatar(<p style={{color: '#52C41A', margin : 20}}>Le changement de votre avatar à bien été effectué !</p>)
+
+       
     }
 
     let urlImg;
 
-    if(!avatar || avatar === ''){
+    if(avatar === ''){
         urlImg = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png"
     } else {
         urlImg = avatar;
     }
     
  
-    if(!props.user.token){
+    /* if(!props.user.token){
         return <Redirect to='/' />
-    }
+    } */
 
     return (
         <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
            
             <Nav />
 
-            <Content style={{ padding: '0 50px', margin: '40px 0'}} className="Profil-page" >
+            <Content style={{ padding: '0 50px', margin: '40px 0', display: 'flex', flexDirection: 'column'}} className="Profil-page" >
 
                 <Row><h1 style={{fontWeight: 700}}>Mon Compte</h1></Row>
 
 
-                <Row justify='center'>
+                    <h3 style={{fontSize: 20, fontWeight: 700}}>Avatar</h3>
+
+                    <Input type='file' onChange={fileSelectedHandler} style={{margin: 20, width: '20%'}}/>
                     
-                    <div id="profil-box">
+    <div><img style={{width: 150, height: 150, borderRadius: '50%'}} src={urlImg}/></div>
+                    <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickAvatar()}>
+                        Valider
+                    </Button>
+
+                    {changAvatar}
+            
+                    <div style={{width: '50%'}}>
                         {changementOk}
 
                         <Input onChange={e => setInfoFN(e.target.value)} value={infoFN} placeholder='Votre prénom' style={{marginTop: 20}}/>
@@ -138,20 +157,7 @@ function ScreenProfil(props) {
                         </Button>
                     </div>
 
-                </Row>
-
-                <Row justify='center'>
-                    <div id="profil-box">
-
-                        <h3>Avatar</h3>
-                        {changAvatar}
-                        <Input onChange={e => setAvatar(e.target.value)} value={avatar} placeholder="url de l'image" style={{marginTop: 20}}/>
-                        <img style={{width: 200, height: 200, borderRadius: '50%'}} src={urlImg} />
-                        <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickAvatar()}>
-                            Valider
-                        </Button>
-                    </div>
-                </Row>
+           
 
             </Content>
             <FooterComp/>

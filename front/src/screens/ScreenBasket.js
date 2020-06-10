@@ -103,21 +103,18 @@ function ScreenBasket(props) {
 
     return (
 
-        <Layout className="layout" style={{ height: '100vh', backgroundColor: 'white' }}>
+        <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
             <Nav />
 
             <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Basket-page">
 
-                <Row>
-                    <Col md={{ span: 11 }} sm={{ span: 24 }}>
-                        <h2 style={{ fontWeight: 700, fontSize: 25 }}>Bienvenue {infoUsername} !</h2>
-                    </Col>
-                    <Col md={{ span: 13 }} sm={{ span: 12 }} xs={{ span: 24 }}>
+                <Row justify='center'>
+                   
                         <h1 style={{ fontWeight: 700, fontSize: 40 }}>Panier</h1>
-                    </Col>
+                
                 </Row>
 
-                <Row style={{ marginTop: 40 }} align='middle'>
+                <Row style={{ marginTop: 40, textAlign: 'center'}} justify='center' align='middle'>
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
                         <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
@@ -127,7 +124,7 @@ function ScreenBasket(props) {
                                 dataSource={articleList}
                                 renderItem={item => (
                                     <List.Item
-                                        actions={[<a key="list-delete"><DeleteOutlined style={{ size: 24 }} onClick={() => deleteArticle(item)} /></a>]}
+                                        actions={[<a key="list-delete"><DeleteOutlined style={{ size: 25, color: '#E23D70'}} onClick={() => deleteArticle(item)} /></a>]}
                                     >
                                         {/* <List.Item.Meta
 
@@ -136,26 +133,26 @@ function ScreenBasket(props) {
                                             /> */}
                                         <List.Item.Meta
                                             description={"Description : " + item.description}
-
+                                                
                                         />
 
-                                <List.Item.Meta
-                                          description={"Couleur sélectionnée : " + item.colors}
+                                        <List.Item.Meta
+                                            description={"Couleur sélectionnée : " + item.colors}
                                         />
                                    
- <List.Item.Meta
-description={"Qualité choisie : " + item.quality}
-/>
-<List.Item.Meta
-description={"Quantité : " + item.quantity}
-/>
+                                        <List.Item.Meta
+                                            description={"Qualité choisie : " + item.quality}
+                                        />
+                                        <List.Item.Meta
+                                            description={"Quantité : " + item.quantity}
+                                        />
 
-<List.Item.Meta
-style ={{fontWeight : 600}}
-description={"Total de cette commande : " + (item.priceUnit * item.quantity) + ' €'}
-/>
+                                        <List.Item.Meta
+                                            style ={{fontWeight : 600}}
+                                            description={"Total de cette commande : " + (item.priceUnit * item.quantity) + ' €'}
+                                        />
 
-</List.Item>
+                                    </List.Item>
                                 )}
 
                             />
@@ -166,8 +163,9 @@ description={"Total de cette commande : " + (item.priceUnit * item.quantity) + '
                             </div>
 
                         </div>
-                        <Link to="/fabricant/:id"><Button>Continuer la commande chez ce fabricant </Button></Link>
-                        <Link to="/map"><Button>Retourner à la liste des fabricants</Button></Link>
+                        
+                        <Link to="/fabricant/:id"><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>
+                        <Link to="/map"><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black',margin: '20px 10px' }} type="primary">Retourner à la liste des fabricants</Button></Link>
                     </Col>
 
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
@@ -190,6 +188,7 @@ description={"Total de cette commande : " + (item.priceUnit * item.quantity) + '
                             {/* Stripe */}
                             <StripeCheckout
                                 amount={totalFinal * 100} //TO DO --> Dynamiser
+                                currency= 'eur'
                                 billingAddress
                                 name="Masques.org"
                                 description="Masques personnalisés"
@@ -199,7 +198,7 @@ description={"Total de cette commande : " + (item.priceUnit * item.quantity) + '
                                 token={props.token}
                                 zipCode
                                 label="Payer avec Stripe 💳"
-                                panelLabel="Acheter pour {{amount}} €"
+                                panelLabel="Acheter pour {{amount}}"
                             />
 
                         </div>

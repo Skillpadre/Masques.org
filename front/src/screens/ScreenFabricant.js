@@ -81,7 +81,7 @@ function ScreenFabricant(props) {
                 </Row>
 
                 {/* images +  choix masques */}
-                <Row justify='center' align='middle'/* style={{marginTop: 30, display : 'flex', justify:'space-around'}} */>
+                <Row justify='center' align='middle' >
 
                     <Col md={{span : 12}} sm={{span : 24}}>
                         <Card style={{width: '70%'}}
@@ -91,10 +91,10 @@ function ScreenFabricant(props) {
 
 
                     </Col>
-                    <Col md={{ span: 12 }} sm={{ span: 14 }}>
+                    <Col md={{ span: 7 }} sm={{ span: 12 }}>
 
                         <Form style={{ textAlign: 'center' }}>
-                            <Form.Item><p style={{ fontSize: 20 }}>{articleId.description}</p></Form.Item>
+                    
                             <Form.Item style={{ width: 400 }} name="Modèle" label="Modèle" rules={[{ required: true }]}>
                                 <Select placeholder="Choisissez votre modèle"
                                     allowClear

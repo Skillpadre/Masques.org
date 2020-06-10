@@ -134,15 +134,15 @@ function ScreenProfil(props) {
 
                     <Input type='file' onChange={fileSelectedHandler} style={{margin: 20, width: '20%'}}/>
                     
-    <div><img style={{width: 150, height: 150, borderRadius: '50%'}} src={urlImg}/></div>
-                    <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickAvatar()}>
-                        Valider
-                    </Button>
+                    <div><img style={{width: 150, height: 150, borderRadius: '50%'}} src={urlImg}/></div>
 
                     {changAvatar}
+                    
+                    <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickAvatar()}>
+                        Télécharger
+                    </Button>
             
                     <div style={{width: '50%'}}>
-                        {changementOk}
 
                         <Input onChange={e => setInfoFN(e.target.value)} value={infoFN} placeholder='Votre prénom' style={{marginTop: 20}}/>
                         <Input onChange={e => setInfoLN(e.target.value)} value={infoLN} placeholder='Votre nom' style={{marginTop: 20}}/>
@@ -151,6 +151,7 @@ function ScreenProfil(props) {
                         <Input onChange={e => setInfoCity(e.target.value)} value={infoCity} placeholder='Votre ville' style={{marginTop: 20}}/>
                         <Input onChange={e => setInfoTel(e.target.value)} value={infoTel} placeholder='Votre numéro de téléphone' style={{marginTop: 20}}/>
 
+                        {changementOk}
 
                         <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickChangement()}>
                             Valider mes changement

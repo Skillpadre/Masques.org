@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
-import { Row, Col, Layout, Card, Button, List, Avatar} from 'antd';
+import { Row, Col, Layout, Card, Button, List, Avatar, Divider} from 'antd';
 import 'antd/dist/antd.css';
 
 import GoogleMapReact from 'google-map-react';
@@ -25,6 +25,7 @@ function ScreenMap() {
     async function loadData() {
       var rawResponse = await fetch('/article-list');
       var response = await rawResponse.json();
+
       setArticleList(response.articles);
       setSellerList(response.sellers);
       console.log(response.sellers);
@@ -44,14 +45,18 @@ function ScreenMap() {
     return (
 
       <List.Item key={i} style={{alignItems: 'flex-start'}}>
-        <Card hoverable title={item.title} bodyStyle={{width: 400}}>
+        <Card hoverable title={item.title} bodyStyle={{width: 400, height: 300}} style={{margin : '20px 10px'}}>
 
-          <Card.Meta title={username} description={item.description} avatar={<Avatar src={urlAvatar} />}>
-          </Card.Meta>
+          <Card.Meta title={username} description={item.description} avatar={<Avatar src={urlAvatar} />}/>
+        
+          <Divider/>
+          <Card.Meta description={"Prix unitaire: " + item.priceUnit + " €"}/>
+          <Card.Meta description={"Quantité dispo: " + item.stock}/>
+          <Card.Meta description={"Qualité: " + item.quality}/>
+          <Card.Meta description={"Couleur :" + item.colors.join()}/>
+          
 
-          <Card.Meta description={"Prix unitaire :" + item.priceUnit + " €"}>
-
-          </Card.Meta>
+        
           <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={`/fabricant/${item._id}`}>Choisir cet article</Link></Button>
         </Card>
       </List.Item>
@@ -68,24 +73,25 @@ function ScreenMap() {
       <Content style={{ padding: '0 50px', margin: '40px 0'}} className="Map" > 
       <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary">Chercher les fabricants autour de moi</Button>
         
-        <div style={{ height: '60vh', width: '70%', marginTop: 30}}>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: 'AIzaSyA6lFML5Gv6tvWgNl0X7kXn6X1uMQyzX8o' }}
-            defaultCenter={center}
-            defaultZoom={zoom}
+        <Row style={{width: '70%', height: '60vh', marginTop: 30}}>
+          
+            <GoogleMapReact
+              bootstrapURLKeys={{ key: 'AIzaSyA6lFML5Gv6tvWgNl0X7kXn6X1uMQyzX8o' }}
+              defaultCenter={center}
+              defaultZoom={zoom}
 
-          />
-
-        </div>
-
-
-        <div style={{width: '100%', marginTop: 25}}>
-
+            />
+        </Row>
+        <Row style={{marginTop: 25}}>
+            
           <h3 style={{fontWeight: 700, fontSize: 30}}>Liste des fabricants</h3>
-          <Row > {buyingList}</Row>
-         
+        
+        </Row>
+        <Row justify='center'>
+            
+          {buyingList}
 
-        </div>
+        </Row>
 
       </Content>
       <FooterComp/>

@@ -28,8 +28,9 @@ function ScreenHome() {
               <Card
                 hoverable
                 style={{
-                  width: 400,
-                  margin: '25px',
+                  width: 350,
+                  margin: '0 20px',
+                  borderColor: 'white'
                 }}
                 cover={
                   <img
@@ -45,8 +46,9 @@ function ScreenHome() {
               <Card
                 hoverable
                 style={{
-                  width: 400,
-                  margin: '25px',
+                  width: 350,
+                  margin: '0 20px',
+                  borderColor: 'white'
                 }}
                 cover={
                   <img
@@ -63,8 +65,9 @@ function ScreenHome() {
               <Card
                 hoverable
                 style={{
-                  width: 400,
-                  margin: '25px'
+                  width: 350,
+                  margin: '0 20px',
+                  borderColor: 'white'
                 }}
                 cover={
                   <img
@@ -76,13 +79,16 @@ function ScreenHome() {
               </Card>
               
             </Col>
+          </Row>
+          <Row>
 
             <Col md={{span :8}} sm={{span: 12}}>
               <Card
                 hoverable
                 style={{
-                  width: 400,
-                  margin: '25px',
+                  width: 350,
+                  margin: '0 20px',
+                  borderColor: 'white'
                 }}
                 cover={
                   <img
@@ -99,8 +105,9 @@ function ScreenHome() {
               <Card
                 hoverable
                 style={{
-                  width: 400,
-                  margin: '25px',
+                  width: 350,
+                  margin: '0 20px',
+                  borderColor: 'white'
                 }}
                 cover={
                   <img
@@ -117,8 +124,9 @@ function ScreenHome() {
               <Card
                 hoverable
                 style={{
-                  width: 400,
-                  margin: '25px',
+                  width: 350,
+                  margin: '0 20px',
+                  borderColor: 'white'
                 }}
                 cover={
                   <img

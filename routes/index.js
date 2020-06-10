@@ -43,9 +43,17 @@ router.post('/add-article/:token', async function (req, res, next) {
 
 router.get('/article-list', async function(req, res, next) {
 
-  var article = await articleModel.find()
+  var articles = await articleModel.find()
+  let sellers = [];
+  for(let i=0; i<articles.length; i++){
+    let user = await userModel.findById(articles[i].sellerId);
+    console.log(articles[i].sellerId)
+    sellers.push(user);
+  }
+  console.log(sellers)
+ 
 
-  res.json({article})
+  res.json({articles, sellers});
 });
 
 router.get('/articleId/:id', async function(req, res){

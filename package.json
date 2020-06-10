@@ -10,17 +10,20 @@
     "@ant-design/icons": "^4.2.1",
     "@craco/craco": "^5.6.4",
     "@stripe/stripe-js": "^1.7.0",
+    "cloudinary": "^1.22.0",
     "cookie-parser": "~1.4.4",
     "crypto-js": "^4.0.0",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-fileupload": "^1.1.7-alpha.3",
     "http-errors": "~1.6.3",
     "mongoose": "^5.9.10",
     "morgan": "~1.9.1",
     "react-stripe-checkout": "^2.6.3",
     "stripe": "^8.61.0",
     "sync-request": "^6.1.0",
-    "uid2": "0.0.3"
+    "uid2": "0.0.3",
+    "uniqid": "^5.2.0"
   }
 }

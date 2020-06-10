@@ -4,6 +4,17 @@ let uid2 = require("uid2");
 let SHA256 = require("crypto-js/sha256");
 let encBase64 = require("crypto-js/enc-base64");
 let userModel = require('../models/user');
+var cloudinary = require('cloudinary').v2;
+var uniqid = require('uniqid');
+var fs = require('fs');
+
+
+//CLOUDINARY
+cloudinary.config({ 
+  cloud_name: 'dwwdbvi9e', 
+  api_key: '756948762887978', 
+  api_secret: 'LaUNGqX_cqPTqDgOutrzmC_Y8YQ' 
+});
 
 
 /* GET users listing. */
@@ -118,13 +129,33 @@ router.get('/loadinfo/:token', async function(req, res){
 });
 
 router.post('/add-avatar/:token', async function(req, res){
+  
   let user = await userModel.findOne({token: req.params.token});
 
+  
+  //ENVOI TEMPORAIRE DE LA PHOTO DANS UN REPERTOIRE LOCAL
+  var pictureName = './tmp/'+uniqid()+'.jpg';
+  var resultCopy = await req.files.avatar.mv(pictureName);
+  console.log('test1')
+  
+  //SI LE RESULTAT EST VIDE LA SAUVEGARDE A BIEN ETE FAITE
+  if(!resultCopy) {
+    //ENVOI VERS CLOUDINARY
+    var resultCloudinary = await cloudinary.uploader.upload(pictureName);
+  
+    user.avatar = resultCloudinary.url;
+    user = await user.save();
+   
+    res.json({url : resultCloudinary.url, user : user});
+    
+  }else{
+    res.json({error: resultCopy, user});
+    console.log('error')
+  }
 
-  user.avatar = req.body.url;
+ //SUPPRESSION DE L'IMAGE STOCKER TEMPORAIREMENT
+ fs.unlinkSync(pictureName);
 
-  user = await user.save();
-  res.json({user});
 });
 
 

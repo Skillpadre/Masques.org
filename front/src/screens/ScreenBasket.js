@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import '../App.css';
-
-import { Row, Col, Layout, List, Avatar, Divider, Radio } from 'antd';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { Row, Col, Layout, List, Avatar, Divider, Radio, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
@@ -47,29 +46,30 @@ function ScreenBasket(props) {
         loadUser();
     }, [userToken]);
 
-    useEffect(() => {
-        async function basketList() {
+useEffect(() => {
+        async function articleList() {
             setArticleList(props.order)
+            console.log(articleList)
         }
-        basketList();
-    }, []);
+        articleList();
+}, [articleList]);
 
-    console.log(articleList)
+   
+let totalCommande = 0
 
-    let totalCommande = 0
-    for (let i = 0; i < articleList.length; i++) {
-
-        totalCommande = articleList[i].priceUnit * articleList[i].quantity
-
-    }
-
-    if (totalCommande == NaN) {
-
-        totalCommande = 0
-    }
+let totalFinal = 0
+for (let i = 0; i < articleList.length; i++) {
+   totalCommande = articleList[i].priceUnit * articleList[i].quantity
+   totalFinal += articleList[i].priceUnit * articleList[i].quantity
+}
 
 
-    const radioStyle = {
+if (totalCommande == NaN) {
+    totalCommande = 0
+ }
+
+console.log(totalFinal)
+const radioStyle = {
         display: 'block',
         height: '30px',
         lineHeight: '30px',
@@ -82,6 +82,14 @@ function ScreenBasket(props) {
         setRadioValue(e.target.value);
     };
 
+
+    var deleteArticle = index => {
+        var indexItem = articleList.indexOf(index)
+        console.log(indexItem)
+        setArticleList(articleList.splice(indexItem, 1));
+        console.log(index)
+    }
+  
     return (
 
         <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
@@ -107,11 +115,13 @@ function ScreenBasket(props) {
                                 style={{ margin: "10px 15px 0 10px" }}
                                 dataSource={articleList}
                                 renderItem={item => (
-                                    <List.Item>
+                                    <List.Item
+                                        actions={[<a key="list-delete"><DeleteOutlined style={{ size: 24 }} onClick={() => deleteArticle(item)} /></a>]}
+                                    >
                                         <List.Item.Meta
 
                                             title={item.title}
-                                            description={item.description + ' ' + item.quality + ' ' + item.colors + ' ' + item.quantity + ' ' + totalCommande + ' €'}
+                                            description={"Description : " + item.description + ' ' + "Qualité choisie : " + item.quality + ' ' + "Couleur sélectionnée : " + item.colors + ' ' + "Quantité : " + item.quantity + ' ' + "Total de cette commande : " + (item.priceUnit * item.quantity) + ' €'}
                                         />
                                     </List.Item>
                                 )}
@@ -120,10 +130,12 @@ function ScreenBasket(props) {
 
                             <Divider />
                             <div id="total">
-                                <p style={{ fontSize: 18, fontWeight: 700 }}>TOTAL : {totalCommande += totalCommande} €</p>
+                                <p style={{ fontSize: 18, fontWeight: 700 }}>TOTAL : {totalFinal} €</p>
                             </div>
 
                         </div>
+                        <Link to="/fabricant/:id"><Button>Continuer la commande chez ce fabricant </Button></Link>
+                        <Link to="/map"><Button>Retourner à la liste des fabricants</Button></Link>
                     </Col>
 
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
@@ -140,9 +152,12 @@ function ScreenBasket(props) {
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
+
+
+
                             {/* Stripe */}
                             <StripeCheckout
-                                amount="500" //TO DO --> Dynamiser
+                                amount={totalFinal * 100} //TO DO --> Dynamiser
                                 billingAddress
                                 name="Masques.org"
                                 description="Masques personnalisés"
@@ -152,7 +167,7 @@ function ScreenBasket(props) {
                                 token={props.token}
                                 zipCode
                                 label="Payer avec Stripe 💳"
-                                panelLabel="Acheter pour {{amount}}"
+                                panelLabel="Acheter pour {{amount}} €"
                             />
 
                         </div>
@@ -176,5 +191,11 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, null)(ScreenBasket)
+function mapDispatchToProps(dispatch) {
+    return {
+        delete: dispatch.userToken
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenBasket)
 

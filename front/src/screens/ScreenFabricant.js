@@ -16,7 +16,7 @@ function ScreenFabricant(props) {
 
     const [articleId, setArticleId] = useState('');
     const [colorsList, setColorsList] = useState([]);
-    const [color, setColor] = useState('');
+    const [color, setColor] = useState('noir');
     const [quantity, setQuantity] = useState(0)
 
 
@@ -89,7 +89,7 @@ function ScreenFabricant(props) {
                             <Form.Item style={{ width: 400 }} name="Modèle" label="Modèle" rules={[{ required: true }]}>
                                 <Select placeholder="Choisissez votre modèle"
                                     allowClear
-                                >
+                                         >
                                     <Option value={articleId.title}></Option>
                                     <Option value="female">Modèle 2</Option>
                                     <Option value="other">Modèle 3</Option>

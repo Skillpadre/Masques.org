@@ -82,7 +82,7 @@ function ScreenFabricant(props) {
 
 
                     </Col>
-                    <Col md={{ span: 7 }} sm={{ span: 14 }}>
+                    <Col md={{ span: 12 }} sm={{ span: 14 }}>
 
                         <Form style={{ textAlign: 'center' }}>
                             <Form.Item><p style={{ fontSize: 20 }}>{articleId.description}</p></Form.Item>
@@ -90,9 +90,9 @@ function ScreenFabricant(props) {
                                 <Select placeholder="Choisissez votre modèle"
                                     allowClear
                                          >
-                                    <Option value={articleId.title}></Option>
-                                    <Option value="female">Modèle 2</Option>
-                                    <Option value="other">Modèle 3</Option>
+                                    <Option value="chirurgical">Chirurgical</Option>
+                                    <Option value="anatomique">Anatomique</Option>
+                                    <Option value="ffp2">FFP2</Option>
                                 </Select>
 
                             </Form.Item>
@@ -118,24 +118,26 @@ function ScreenFabricant(props) {
                                 <Select placeholder="Choisissez la qualité du masque"
                                     allowClear
                                 >
-                                    <Option value={articleId.quality}></Option>
+                                    <Option value={articleId.quality}>{articleId.quality}</Option>
                                 </Select>
 
                             </Form.Item>
 
                             <Form.Item label="Personnalisation" name="Personnalisation"
                                 rules={[{ required: false }]}
+                                style={{ width: 300 }}
                             >
-                                <Input.TextArea placeholder='Entrez l’inscription souhaitée' />
+                                <Input.TextArea  placeholder='Entrez l’inscription souhaitée' />
                             </Form.Item>
 
-                            <Form.Item label="Quantité" name="Quantité"
+                            <Form.Item style={{ width: 300 }} label="Quantité" name="Quantité"
                                 rules={[{ required: true, message: 'Entrer la quantité de masque souhaitée' }]}
                             >
-                                <InputNumber min={1}
+                                <InputNumber
+                                    min={1}
                                     max={articleId.stock}
                                     placeholder='Entrez la quantité souhaitée'
-                                    style={{ margin: '0 16px' }}
+                                    style={{ margin: '0 16px', width: 150}}
                                     value={quantity}
                                     onChange={setQuantity}
                                 />

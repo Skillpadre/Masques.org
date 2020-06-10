@@ -6,12 +6,12 @@ import { DeleteOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
-
+import { loadStripe } from '@stripe/stripe-js';
 import StripeCheckout from 'react-stripe-checkout';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
-
+const stripePromise = loadStripe('pk_test_T60y6sAVREOC6Dq9Cixjjx6I00TSGd4n7j');
 const { Content } = Layout;
 
 
@@ -37,39 +37,51 @@ function ScreenBasket(props) {
                 if (response.user) {
                     setInfoUsername(response.user.username)
                 }
-
             } else {
                 return <Redirect to='/' />
             }
-
         }
         loadUser();
     }, [userToken]);
 
-useEffect(() => {
+
+    // var userBasket 
+
+    // useEffect(() => {
+    //     async function storage() {
+    //         localStorage.getItem("article", function (error, data) {
+    //             console.log(data);
+    //             userBasket = JSON.parse(data);
+    //             console.log(userBasket.article);
+    //         })
+    //     }
+    //     storage();
+    // }, []);
+
+    // console.log(userBasket)
+
+    useEffect(() => {
         async function articleList() {
             setArticleList(props.order)
-            console.log(articleList)
         }
         articleList();
-}, [articleList]);
-
-   
-let totalCommande = 0
-
-let totalFinal = 0
-for (let i = 0; i < articleList.length; i++) {
-   totalCommande = articleList[i].priceUnit * articleList[i].quantity
-   totalFinal += articleList[i].priceUnit * articleList[i].quantity
-}
+    }, [articleList]);
 
 
-if (totalCommande == NaN) {
-    totalCommande = 0
- }
+    let totalCommande = 0
 
-console.log(totalFinal)
-const radioStyle = {
+    let totalFinal = 0
+    for (let i = 0; i < articleList.length; i++) {
+        totalCommande = articleList[i].priceUnit * articleList[i].quantity
+        totalFinal += articleList[i].priceUnit * articleList[i].quantity
+    }
+
+
+    if (totalCommande == NaN) {
+        totalCommande = 0
+    }
+
+    const radioStyle = {
         display: 'block',
         height: '30px',
         lineHeight: '30px',
@@ -85,14 +97,13 @@ const radioStyle = {
 
     var deleteArticle = index => {
         var indexItem = articleList.indexOf(index)
-        console.log(indexItem)
         setArticleList(articleList.splice(indexItem, 1));
-        console.log(index)
+        localStorage.removeItem("article")
     }
-  
+
     return (
 
-        <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
+        <Layout className="layout" style={{ height: '100vh', backgroundColor: 'white' }}>
             <Nav />
 
             <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Basket-page">
@@ -118,12 +129,33 @@ const radioStyle = {
                                     <List.Item
                                         actions={[<a key="list-delete"><DeleteOutlined style={{ size: 24 }} onClick={() => deleteArticle(item)} /></a>]}
                                     >
-                                        <List.Item.Meta
+                                        {/* <List.Item.Meta
 
                                             title={item.title}
-                                            description={"Description : " + item.description + ' ' + "Qualité choisie : " + item.quality + ' ' + "Couleur sélectionnée : " + item.colors + ' ' + "Quantité : " + item.quantity + ' ' + "Total de cette commande : " + (item.priceUnit * item.quantity) + ' €'}
+                                        
+                                            /> */}
+                                        <List.Item.Meta
+                                            description={"Description : " + item.description}
+
                                         />
-                                    </List.Item>
+
+                                <List.Item.Meta
+                                          description={"Couleur sélectionnée : " + item.colors}
+                                        />
+                                   
+ <List.Item.Meta
+description={"Qualité choisie : " + item.quality}
+/>
+<List.Item.Meta
+description={"Quantité : " + item.quantity}
+/>
+
+<List.Item.Meta
+style ={{fontWeight : 600}}
+description={"Total de cette commande : " + (item.priceUnit * item.quantity) + ' €'}
+/>
+
+</List.Item>
                                 )}
 
                             />
@@ -191,11 +223,5 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        delete: dispatch.userToken
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ScreenBasket)
+export default connect(mapStateToProps, null)(ScreenBasket)
 

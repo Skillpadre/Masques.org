@@ -49,7 +49,7 @@ function ScreenMap() {
 
   return (
 
-    <Layout className="layout" style={{height: 'auto'}}>
+    <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
 
       <Nav />
 

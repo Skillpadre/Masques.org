@@ -21,6 +21,9 @@ function ScreenDashboard(props) {
     const [infoTel, setInfoTel] = useState();
     const [avatar, setAvatar] = useState();
 
+    const [listOrder, setListOrder] = useState([]);
+    const [listSale, setListSale] = useState([]);
+
 
     var user;
 
@@ -47,8 +50,10 @@ function ScreenDashboard(props) {
           setInfoZip(response.user.zip_code);
           setInfoCity(response.user.city);
           setInfoTel(response.user.tel);
-          setAvatar(response.user.avatar)
+          setAvatar(response.user.avatar);
 
+          setListOrder(response.user.orders);
+          setListSale(response.user.articles);
         }
 
       }else{
@@ -70,24 +75,24 @@ function ScreenDashboard(props) {
     finaliserCompte = <p>Vous pouvez finaliser votre compte en renseignant vos information <Link to='/profil'>ici</Link></p>
   }
 
-  const data = [
-    {
-      title: 'Commande n° 1',
-    },
-    {
-      title: 'Commande n° 2',
-    },
-    {
-      title: 'Commande n° 3',
-    },
-    {
-      title: 'Commande n° 4',
-    },
-  ];
+  let listPendingSale =  [];
 
-  /* if(!infoUsername){
-    return <Redirect to='/' />
-  } */
+  listSale.map((article, i) =>{
+    if(!article.sellout){
+      let date = new Date(article.date_insert);
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      article.date_insert = day + "/" + month + "/" + year;
+
+      listPendingSale.push(article);
+    }
+  });
+
+  //  if(!props.user){
+  //   return <Redirect to='/' />
+  // } 
  
   return (
     <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
@@ -122,18 +127,19 @@ function ScreenDashboard(props) {
         <Row style={{marginTop: 40}}>
           <Col md={{span: 12}} sm={{span: 24}}>
             <h2>Commandes en attente de validation</h2>
-            <div id="dashboard-box">
+            <div id="dashboard-box-pendingOrder" className="dashboard-box">
 
               <List
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={listPendingSale}
                 renderItem={item => (
                   <List.Item>
                     <List.Item.Meta
                       avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                      title={<a href="https://ant.design">{item.title}</a>}
-                      description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                      title={"Article n° " + item._id}
+                      description={"Créé le " + item.date_insert}
                     />
+                    {item.description}
                   </List.Item>
                 )}
               />,
@@ -141,11 +147,11 @@ function ScreenDashboard(props) {
           </Col>
           <Col md={{span: 12}} sm={{span: 24}}>
             <h2>Historique des commandes</h2>
-            <div id="dashboard-box">
+            <div id="dashboard-box-FinishOrder" className="dashboard-box">
 
               <List
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={listOrder}
                 renderItem={item => (
                   <List.Item>
                     <List.Item.Meta

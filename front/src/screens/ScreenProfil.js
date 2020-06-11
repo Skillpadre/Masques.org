@@ -69,6 +69,7 @@ function ScreenProfil(props) {
         setInfoZip(response.user.zip_code);
         setInfoCity(response.user.city);
         setInfoTel(response.user.tel);
+        setInfoTel(response.user.avatar);
 
         setChangementOk(<p style={{color: '#52C41A', margin: 20}}>Vos changement on bien été pris en compte !</p>)
 

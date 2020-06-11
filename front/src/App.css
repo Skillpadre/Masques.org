@@ -87,7 +87,7 @@ header{
   flex-direction: column;
   }
 
-#dashboard-box{
+.dashboard-box{
   border: 1px solid black ;
   width: auto;
   height: auto;
@@ -120,4 +120,11 @@ header{
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+#confirm-box{
+  border: 1px solid black ;
+  width: auto;
+  height: auto;
+
 }

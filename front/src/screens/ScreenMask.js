@@ -20,6 +20,8 @@ function ScreenMasks(props) {
     const [inputStock, setInputStock] = useState(1)
     const [qualité, setQualité] = useState('')
     const [couleurs, setCouleurs] = useState([])
+    const [matiere, setMatiere] = useState([])
+    const [model, setModel] = useState([])
 
     const [isVisible, setIsVisible] = useState(false)
     const [isCreated, setIsCreated] = useState(false);
@@ -33,6 +35,8 @@ function ScreenMasks(props) {
         setInputStock(values.stock);
         setQualité(values.quality);
         setCouleurs(values.colors);
+        setMatiere(values.matiere);
+        setModel(values.model);
     
         handleNewOrder(values); 
     }
@@ -86,12 +90,54 @@ function ScreenMasks(props) {
                         'stock': 1,
                         'priceUnit': 1,
                         'colors': ['bleu'],
+                        'matieres': ['tissu'],
+                        'model': ['anatomique']
                     }}
                 >
 
+
+                    <p>Indiquez les types de masques que vous pouvez fabriquer.</p>
+                    <Form.Item name="model" label="Modèle">
+                        <Checkbox.Group>
+                        <Row>
+                            <Col span={8}>
+                            <Checkbox
+                                value="anatomique"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Anatomique
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="ffp2"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                FFP2
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="chirurgical"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Chirurgical
+                            </Checkbox>
+                            </Col>
+                        </Row>
+                        </Checkbox.Group>
+                    </Form.Item>
+
+
                     <p>Indiquez le nombre de masques que vous pouvez réaliser.</p>
 
-                    <Form.Item label="Quantitée"
+                    <Form.Item label="Quantité"
                             name="stock"
                     >
 
@@ -187,6 +233,45 @@ function ScreenMasks(props) {
                         </Row>
                         </Checkbox.Group>
                     </Form.Item>
+                    
+
+                    <p>Indiquez les matières que vous possedez.</p>
+                    <Form.Item name="matiere" label="Matières disponibles">
+                        <Checkbox.Group>
+                        <Row>
+                            <Col span={8}>
+                            <Checkbox
+                                value="tissu"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Tissu
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="noir"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Noir
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="rouge"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Rouge
+                            </Checkbox>
+                            </Col>
+                        </Row>
+                        </Checkbox.Group>
+                    </Form.Item>
 
 
                     <Form.Item label="Qualité"
@@ -217,6 +302,8 @@ function ScreenMasks(props) {
                     <p>Nombre de masques : {inputStock}</p>
                     <p>Prix d'un masque : {inputPrice}</p>
                     <p>Couleurs disponibles : {couleurs.join(', ')}</p>
+                    <p>Matières disponibles : {matiere.join(', ')}</p>
+                    <p>Modèles disponibles : {model.join(', ')}</p>
                     <p>Qualitée : {qualité}</p>
 
                 </Modal>

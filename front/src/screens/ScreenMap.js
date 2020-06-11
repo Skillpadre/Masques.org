@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
-import { Row, Col, Layout, Card, Button, List, Avatar, Divider} from 'antd';
+import {connect} from 'react-redux'
+
+import { Row, Col, Layout, Card, Button, List, Avatar, Divider, Spin, Space} from 'antd';
 import 'antd/dist/antd.css';
 
 import GoogleMapReact from 'google-map-react';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
+import { LineChartOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 
 
-function ScreenMap() {
+function ScreenMap(props) {
 
   const [center, setCenter] = useState({ lat: 11.0168, lng: 76.9558 });
   const [zoom, setZoom] = useState(11);
@@ -34,13 +37,31 @@ function ScreenMap() {
     loadData()
   }, []);
 
-  let buyingList = articleList.map((item, i) => {
+
+  var buyingList;
+  //Si articleList est vide je met un spinner en attendant le chargement
+  if (articleList.length<1){
+    buyingList= <Space style={{marginTop: 10, display: 'flex', width : '100%', flexDirection: 'column', textAlign: 'center'}}>
+      <Spin size="large" />
+      <p style={{color:' #E23D70'}}>Chargement ...</p>
+      </Space>
+  }else{
+  buyingList = articleList.map((item, i) => {
     let urlAvatar = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png";
     let username;
     if(sellerList[i]){
       urlAvatar = sellerList[i].avatar;
       username = sellerList[i].username;
     }
+
+    var lien;
+    //Si le user existe je l'autorise à allez sur la page fabricant
+    if(props.user){
+      lien=`/fabricant/${item._id}`
+    }else{
+      lien=`/login`
+    }
+
 
     return (
 
@@ -57,12 +78,13 @@ function ScreenMap() {
           
 
         
-          <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={`/fabricant/${item._id}`}>Choisir cet article</Link></Button>
+          <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={lien}>Choisir cet article</Link></Button>
         </Card>
       </List.Item>
 
     )
   })
+  }
 
   return (
 
@@ -99,4 +121,13 @@ function ScreenMap() {
   );
 }
 
-export default ScreenMap;
+
+function mapStateToProps(state) {
+  return { user: state.user }
+}
+
+
+export default connect(
+  mapStateToProps,
+  null )(ScreenMap);
+

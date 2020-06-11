@@ -35,14 +35,14 @@ function Nav(props) {
     if(user){
 
         let itemLogout = 
-            <Menu.Item key="4" style={{float: 'right'}}>
+            <Menu.Item key="8" style={{float: 'right'}}>
 
                     <Link onClick={()=>{props.deleteUser(); localStorage.clear()}} to='/'>Deconnexion</Link>
                 
             </Menu.Item>
         
         let itemCompte = 
-            <Menu.Item key="5" style={{float: 'right'}}>
+            <Menu.Item key="7" style={{float: 'right'}}>
                 
                 <Avatar style={{marginRight: 10}} size={30} src={avatar} />
                 <Link to='/dashboard'>Mon Compte</Link>
@@ -61,7 +61,7 @@ function Nav(props) {
             
     } else {
         items = 
-            <Menu.Item key="4" style={{float: 'right'}}>
+            <Menu.Item key="5" style={{float: 'right'}}>
                 <Link to='/login'>S'inscrire / Se connecter</Link>
             </Menu.Item>
     }
@@ -70,14 +70,17 @@ function Nav(props) {
  
     <Menu className='Menu' theme="dark" style={{backgroundColor: '#1e272e'}} mode="horizontal" defaultSelectedKeys={['2']}>
 
-        <Menu.Item className='logo' key="1">
+        <Menu.Item className='logo' key="1" icon={<img src='../logo.png' style={{width: 30, margin: '0 10px 5px'}}/>}>
             <Link to='/' style={{fontSize: 20}}>Masques.org</Link>
         </Menu.Item>
-        <Menu.Item key="2" className="menuItem">
+        <Menu.Item key="2">
             <Link to='/'>Accueil</Link> 
         </Menu.Item>
         <Menu.Item key="3">
             <Link to='/map'>Fabricants</Link>
+        </Menu.Item>
+        <Menu.Item key="4">
+            <Link to='/quisommesnous'>Qui sommes nous?</Link>
         </Menu.Item>
         
         {items}

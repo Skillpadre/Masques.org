@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
-import { Row, Col, Layout, Card, Button, List, Avatar, Divider} from 'antd';
+import { Row, Col, Layout, Card, Button, List, Avatar, Divider, Spin, Space} from 'antd';
 import 'antd/dist/antd.css';
 
 import GoogleMapReact from 'google-map-react';
@@ -34,7 +34,14 @@ function ScreenMap() {
     loadData()
   }, []);
 
-  let buyingList = articleList.map((item, i) => {
+  var buyingList;
+  if (articleList.length<1){
+    buyingList= <Space style={{marginTop: 10, display: 'flex', width : '100%', flexDirection: 'column', textAlign: 'center'}}>
+      <Spin size="large" />
+      <p style={{color:' #E23D70'}}>Chargement ...</p>
+      </Space>
+  }else{
+  buyingList = articleList.map((item, i) => {
     let urlAvatar = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png";
     let username;
     if(sellerList[i]){
@@ -63,6 +70,7 @@ function ScreenMap() {
 
     )
   })
+  }
 
   return (
 

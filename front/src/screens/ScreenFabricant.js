@@ -71,7 +71,6 @@ function ScreenFabricant(props) {
         order.matiere = matiere
         order.model = modele
         props.sendOrder(order)
-        console.log(order)
     }
 
     return (

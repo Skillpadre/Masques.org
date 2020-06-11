@@ -4,6 +4,8 @@ var router = express.Router();
 let articleModel = require('../models/articles');
 let userModel = require('../models/user')
 
+const stripe = require('stripe')('sk_test_fPEUR0HzUgzfHM8jCQzMKPD600ffNP4cbh');
+
 
 
 /* GET home page. */
@@ -46,10 +48,8 @@ router.post('/add-article/:token', async function (req, res, next) {
     result = true;
   }
 
-  res.json({ article, result });
+      res.json({ article, result });
 });
-
-
 
 router.get('/article-list', async function(req, res, next) {
 
@@ -73,5 +73,22 @@ router.get('/articleId/:id', async function(req, res){
   console.log(seller);
   res.json({article, seller});
 });
+
+
+
+router.get('/new-basket', async function(req, res){
+ const product = await stripe.products.create({
+  name: 'Masque',
+  });
+  console.log(product)
+console.log(req.query)
+  const price = await stripe.prices.create({
+   product: product.id,
+   unit_amount: req.query.price,
+      currency: 'EUR',
+   });
+  console.log(price)
+res.json({price})
+  })
 
 module.exports = router;

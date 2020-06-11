@@ -1,6 +1,7 @@
 var fileUpload = require('express-fileupload');
 var createError = require('http-errors');
 var express = require('express');
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -11,6 +12,21 @@ var usersRouter = require('./routes/users');
 require('./models/connection');
 
 var app = express();
+
+app.use((req, res, next) => {
+
+  res.header("Access-Control-Allow-Origin", '*');
+ 
+  res.header("Access-Control-Allow-Credentials", true);
+ 
+  res.header('Access-Control-Allow-Methods', '*');
+ 
+  res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+ 
+  next();
+ 
+ });
+ 
 app.use(fileUpload());
 
 // view engine setup

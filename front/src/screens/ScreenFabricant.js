@@ -20,6 +20,12 @@ function ScreenFabricant(props) {
     const [stock, setStock] = useState();
     const [description, setDescription] = useState('')
 
+    const [matiere, SetMatiere] = useState('tissu');
+    const [matiereList, SetMatiereList] = useState([]);
+
+    const [modele, setModele] = useState('Anatomique');
+    const [modelList, setModelList] = useState([]);
+
     const [quantity, setQuantity] = useState(0);
 
     const [username, setUsername] = useState('');
@@ -33,6 +39,9 @@ function ScreenFabricant(props) {
             setArticleId(response.article);
             // récuperation spécifique du tableau de couleur
             setColorsList(response.article.colors);
+            setModelList(response.article.model);
+            SetMatiereList(response.article.material);
+
             setDescription(response.article.description);
             setStock(response.article.stock)
 
@@ -46,12 +55,21 @@ function ScreenFabricant(props) {
     const onChangeColor = async (value) => {
         setColor(value)
     };
-    console.log(color)
+
+    const onChangeMatiere = async (value) => {
+        SetMatiere(value)
+    };
+
+    const onChangeModel = async (value) => {
+        setModele(value);
+    };
 
     // Envoie de l'odre au reducer
     let handleOrder = async (order) => {
         order.colors = color
         order.quantity = quantity
+        order.matiere = matiere
+        order.model = modele
         props.sendOrder(order)
         console.log(order)
     }
@@ -68,7 +86,7 @@ function ScreenFabricant(props) {
                 <Row justify='start'/* style={{display: 'flex', justify: 'start', marginTop: 25}} */>
                     {/* Profil fabricant */}
                     <Col offset={1} md={{ span: 2 }} sm={{ span: 3 }}>
-                        <Avatar size={64} icon={<UserOutlined />} />
+                        <Avatar size={64} src={avatar} />
                     </Col>
                     <Col md={{ span: 10 }} sm={{ span: 16 }}>
                         <div style={{ marginLeft: 10 }}>
@@ -95,17 +113,25 @@ function ScreenFabricant(props) {
 
                         <Form style={{ textAlign: 'center' }}>
                     
-                            <Form.Item style={{ width: 400 }} name="Modèle" label="Modèle" rules={[{ required: true }]}>
-                                <Select placeholder="Choisissez votre modèle"
+                    {/* Modele */}
+                        <Form.Item style={{ width: 400 }} name="model" label="Modèle" rules={[{ required: true }]}>
+                                <Select
+                                    onChange={onChangeModel}
+                                    placeholder="Choisissez votre modèle"
                                     allowClear
-                                         >
-                                    <Option value="chirurgical">Chirurgical</Option>
-                                    <Option value="anatomique">Anatomique</Option>
-                                    <Option value="ffp2">FFP2</Option>
-                                </Select>
 
+                                >
+                                    {/* Map sur le tableau de modèles  */}
+                                    {
+                                        modelList.map((model, i) => {
+                                            return <Option key={i} value={model}>{model}</Option>
+                                        })
+                                    }
+
+                                </Select>
                             </Form.Item>
 
+                            {/* Couleur */}
                             <Form.Item style={{ width: 400 }} name="Couleur" label="Couleur" rules={[{ required: true }]}>
                                 <Select
                                     onChange={onChangeColor}
@@ -117,6 +143,24 @@ function ScreenFabricant(props) {
                                     {
                                         colorsList.map((color, i) => {
                                             return <Option key={i} value={color}>{color}</Option>
+                                        })
+                                    }
+
+                                </Select>
+                            </Form.Item>
+
+                            {/* Matiere */}
+                            <Form.Item style={{ width: 400 }} name="matiere" label="Matière" rules={[{ required: true }]}>
+                                <Select
+                                    onChange={onChangeMatiere}
+                                    placeholder="Choisissez votre matière"
+                                    allowClear
+
+                                >
+                                    {/* Map sur le tableau de matière  */}
+                                    {
+                                        matiereList.map((mat, i) => {
+                                            return <Option key={i} value={mat}>{mat}</Option>
                                         })
                                     }
 
@@ -138,16 +182,21 @@ function ScreenFabricant(props) {
                                 <InputNumber
                                     min={1}
                                     max={articleId.stock}
-                                    placeholder='Entrez la quantité souhaitée'
+                                    placeholder={`Max. ${articleId.stock}`}
                                     style={{ margin: '0 16px', width: 150}}
                                     value={quantity}
                                     onChange={setQuantity}
+                                    
                                 />
 
                             </Form.Item>
 
                             <Form.Item label="Prix Unitaire" name="Prix">
                                 <p>{articleId.priceUnit} € (c'est cher hein ?)</p>
+                            </Form.Item>
+
+                            <Form.Item label="total" name="Total">
+                                <p>{articleId.priceUnit * quantity} € </p>
                             </Form.Item>
 
                             <Link to='/basket'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter au panier</Button></Link>

@@ -82,7 +82,7 @@ function ScreenProfil(props) {
     const handleClickAvatar = async () =>{
 
         var data = new FormData();
-        data.append('avatar', avatar, 'blabla.jpg');
+        data.append('avatar', avatar);
 
         var rawResponse = await fetch('/users/add-avatar/'+ props.user.token, {
             method: 'POST',
@@ -90,14 +90,10 @@ function ScreenProfil(props) {
         });
 
         var response = await rawResponse.json();
-
-        console.log('data =' + data)
-        console.log(response.user);
         
         let newAvatarUser = props.user;
-        newAvatarUser.urlAvatar = response.user.avatar;
+        newAvatarUser.urlAvatar = response.user.avatar;//J'ajoute un nouveau Url à l'avatar du user
 
-        console.log(newAvatarUser)
         props.addUser(newAvatarUser);
         setAvatar(response.user.avatar)
 

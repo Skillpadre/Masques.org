@@ -14,7 +14,7 @@ import ScreenMask from './screens/ScreenMask';
 import Footer from './screens/Footer';
 import ScreenContact from './screens/ScreenContact'
 import ScreenAPropos from './screens/ScreenAPropos'
-import Error404 from './Error404'
+import ScreenError404 from './screens/ScreenError404'
 
 import user from './reducer/user';
 import basketList from './reducer/order';
@@ -39,7 +39,7 @@ function App() {
           <Route component={ScreenMask} path="/mask"/>
           <Route component={ScreenContact} path="/contact"/>
           <Route component={ScreenAPropos} path="/apropos"/>
-          <Route component={Error404} path="*"/> {/* LAISSER EN DERNIERE ROUTE */}
+          <Route component={ScreenError404} path="*"/> {/* LAISSER EN DERNIERE ROUTE */}
         </Switch>
       </Router>
     </Provider>

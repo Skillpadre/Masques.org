@@ -53,7 +53,6 @@ function ScreenFabricant(props) {
         order.colors = color
         order.quantity = quantity
         props.sendOrder(order)
-        console.log(order)
     }
 
     return (

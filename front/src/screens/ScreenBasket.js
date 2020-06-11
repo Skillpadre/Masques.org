@@ -44,7 +44,6 @@ function ScreenBasket(props) {
         loadUser();
     }, [userToken]);
 
-
     // var userBasket 
 
     // useEffect(() => {
@@ -68,14 +67,14 @@ function ScreenBasket(props) {
     }, [articleList]);
 
 
+    let idCommande = props.order[0]._id
     let totalCommande = 0
 
     let totalFinal = 0
     for (let i = 0; i < articleList.length; i++) {
         totalCommande = articleList[i].priceUnit * articleList[i].quantity
-        totalFinal += articleList[i].priceUnit * articleList[i].quantity
+        totalFinal += (articleList[i].priceUnit * articleList[i].quantity) * 100
     }
-
 
     if (totalCommande == NaN) {
         totalCommande = 0
@@ -101,6 +100,30 @@ function ScreenBasket(props) {
         localStorage.removeItem("article")
     }
 
+    const handleClick = async (event) => {
+            const rawResponse = await fetch(`/new-basket?price=${totalFinal}`);;
+            const response = await rawResponse.json();
+                console.log(response.price.id)
+            const priceId = response.price.id 
+            // When the customer clicks on the button, redirect them to Checkout.
+            const stripe = await stripePromise;
+            const { error } = await stripe.redirectToCheckout({
+              lineItems: [
+                // Replace with the ID of your price
+                {price: priceId, quantity: 1}
+              ],
+              mode: 'payment',
+              successUrl: 'http://localhost:3001/confirm',
+              cancelUrl: 'http://localhost:3001/basket',
+            }
+            );
+           
+            // If `redirectToCheckout` fails due to a browser or network
+            // error, display the localized error message to your customer
+            // using `error.message`.
+          
+      };
+
     return (
 
         <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
@@ -109,12 +132,12 @@ function ScreenBasket(props) {
             <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Basket-page">
 
                 <Row justify='center'>
-                   
-                        <h1 style={{ fontWeight: 700, fontSize: 40 }}>Panier</h1>
-                
+
+                    <h1 style={{ fontWeight: 700, fontSize: 40 }}>Panier</h1>
+
                 </Row>
 
-                <Row style={{ marginTop: 40, textAlign: 'center'}} justify='center' align='middle'>
+                <Row style={{ marginTop: 40, textAlign: 'center' }} justify='center' align='middle'>
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
                         <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
@@ -124,7 +147,7 @@ function ScreenBasket(props) {
                                 dataSource={articleList}
                                 renderItem={item => (
                                     <List.Item
-                                        actions={[<a key="list-delete"><DeleteOutlined style={{ size: 25, color: '#E23D70'}} onClick={() => deleteArticle(item)} /></a>]}
+                                        actions={[<a key="list-delete"><DeleteOutlined style={{ size: 25, color: '#E23D70' }} onClick={() => deleteArticle(item)} /></a>]}
                                     >
                                         {/* <List.Item.Meta
 
@@ -133,13 +156,13 @@ function ScreenBasket(props) {
                                             /> */}
                                         <List.Item.Meta
                                             description={"Description : " + item.description}
-                                                
+
                                         />
 
                                         <List.Item.Meta
                                             description={"Couleur sélectionnée : " + item.colors}
                                         />
-                                   
+
                                         <List.Item.Meta
                                             description={"Qualité choisie : " + item.quality}
                                         />
@@ -148,7 +171,7 @@ function ScreenBasket(props) {
                                         />
 
                                         <List.Item.Meta
-                                            style ={{fontWeight : 600}}
+                                            style={{ fontWeight: 600 }}
                                             description={"Total de cette commande : " + (item.priceUnit * item.quantity) + ' €'}
                                         />
 
@@ -163,9 +186,9 @@ function ScreenBasket(props) {
                             </div>
 
                         </div>
-                        
-                        <Link to="/fabricant/:id"><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>
-                        <Link to="/map"><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black',margin: '20px 10px' }} type="primary">Retourner à la liste des fabricants</Button></Link>
+
+                        <Link to={`/fabricant/${idCommande}`}><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>
+                        <Link to="/map"><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Retourner à la liste des fabricants</Button></Link>
                     </Col>
 
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
@@ -182,13 +205,10 @@ function ScreenBasket(props) {
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-
-
-
                             {/* Stripe */}
                             <StripeCheckout
                                 amount={totalFinal * 100} //TO DO --> Dynamiser
-                                currency= 'eur'
+                                currency='eur'
                                 billingAddress
                                 name="Masques.org"
                                 description="Masques personnalisés"
@@ -201,26 +221,27 @@ function ScreenBasket(props) {
                                 panelLabel="Acheter pour {{amount}}"
                             />
 
+
+
+    <button role="link" onClick={handleClick}>
+      Checkout
+    </button>
+
+
                         </div>
                     </Col>
                 </Row>
-
-
-
             </Content>
 
             <FooterComp />
         </Layout>
     );
 }
-
-
 function mapStateToProps(state) {
     return {
         token: state.userToken,
         order: state.basketList
     }
 }
-
 export default connect(mapStateToProps, null)(ScreenBasket)
 

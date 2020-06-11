@@ -2,7 +2,6 @@ import React from 'react';
 import '../App.css';
 
 import { Layout, Form, Input, Select, Button } from 'antd';
-import { FacebookFilled, TwitterSquareFilled } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import Nav from './Nav';
 import FooterComp from './Footer';
@@ -49,7 +48,7 @@ function ScreenContact() {
         <Form {...layout} name="nest-messages" style={{width: '60%', textAlign: 'center', margin: 20}}>
           
           <Form.Item name={['user', 'name']}
-                    label="Name"
+                    label="Nom"
                     rules={[
                       {
                         required: true,
@@ -76,8 +75,8 @@ function ScreenContact() {
             <Input />
           </Form.Item>
 
-          <Form.Item name="phone"
-                    label="Phone Number"
+          <Form.Item name="Téléphone"
+                    label="Téléphone"
                     rules={[
                       {
                         required: false,
@@ -132,8 +131,9 @@ function ScreenContact() {
         <h3 style={{fontWeight: 700, fontSize: 20}}>Et suivez-nous sur les réseaux sociaux !</h3>
           
         <div style={{margin: 20}}>
-          <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' target="_blank"><FacebookFilled style={{color: '#0C87EF', fontSize: 50}}/></a>
-          <a href='https://twitter.com/MasquesOrg' target="_blank" ><TwitterSquareFilled style={{color: '#1DA1F2', fontSize: 50}}/></a>
+          <a href= '#' target="_blank"><img src= './assets/icones/instagram.png' style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
+          <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' target="_blank"><img src='./assets/icones/facebook.png' style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
+          <a href='https://twitter.com/MasquesOrg' target="_blank" ><img src='./assets/icones/twitter.png' style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
         </div>
           
       </Content>

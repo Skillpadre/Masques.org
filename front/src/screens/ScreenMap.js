@@ -68,7 +68,7 @@ function ScreenMap(props) {
       <List.Item key={i} style={{alignItems: 'flex-start'}}>
         <Card hoverable title={item.title} bodyStyle={{width: 400, height: 300}} style={{margin : '20px 10px'}}>
 
-          <Card.Meta title={username} description={item.description} avatar={<Avatar src={urlAvatar} />}/>
+          <Card.Meta title={username} description={item.description} avatar={<Avatar src={urlAvatar} style={{padding:0}}/>}/>
         
           <Divider/>
           <Card.Meta description={"Prix unitaire: " + item.priceUnit + " €"}/>

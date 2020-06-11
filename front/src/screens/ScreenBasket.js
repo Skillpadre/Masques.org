@@ -66,12 +66,15 @@ function ScreenBasket(props) {
         articleList();
     }, [articleList]);
 
-
-    let idCommande = props.order[0]._id
+    let idCommande;
+    if(props.order.length !== 0){
+        idCommande = props.order[0]._id
+    }
+    
     let totalCommande = 0
 
     let totalFinal = 0
-    for (let i = 0; i < articleList.length; i++) {
+    for (let i = 0; i <articleList.length; i++) {
         totalCommande = articleList[i].priceUnit * articleList[i].quantity
         totalFinal += (articleList[i].priceUnit * articleList[i].quantity) * 100
     }

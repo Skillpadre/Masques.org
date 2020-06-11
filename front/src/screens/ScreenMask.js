@@ -90,7 +90,7 @@ function ScreenMasks(props) {
                         'stock': 1,
                         'priceUnit': 1,
                         'colors': ['bleu'],
-                        'matieres': ['tissu'],
+                        'matiere': ['tissu'],
                         'model': ['anatomique']
                     }}
                 >

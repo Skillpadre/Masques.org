@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
+
 let uid2 = require("uid2");
 let SHA256 = require("crypto-js/sha256");
 let encBase64 = require("crypto-js/enc-base64");
+
 let userModel = require('../models/user');
+let articleModel = require('../models/articles');
+let orderModel = require('../models/orders');
+
 var cloudinary = require('cloudinary').v2;
 var uniqid = require('uniqid');
 var fs = require('fs');
@@ -125,7 +130,10 @@ router.post('/update-info/:token', async function(req, res){
 
 
 router.get('/loadinfo/:token', async function(req, res){
-  let user = await userModel.findOne({token: req.params.token});
+  let user = await userModel.findOne({token: req.params.token})
+                            .populate('articles')
+                            .populate('orders')
+                            .exec();
   res.json({user});
 });
 
@@ -137,7 +145,6 @@ router.post('/add-avatar/:token', async function(req, res){
   //ENVOI TEMPORAIRE DE LA PHOTO DANS UN REPERTOIRE LOCAL
   var pictureName = './tmp/'+uniqid()+'.jpg';
   var resultCopy = await req.files.avatar.mv(pictureName);
-  console.log('test1')
   
   //SI LE RESULTAT EST VIDE LA SAUVEGARDE A BIEN ETE FAITE
   if(!resultCopy) {
@@ -151,7 +158,6 @@ router.post('/add-avatar/:token', async function(req, res){
     
   }else{
     res.json({error: resultCopy, user});
-    console.log('error')
   }
 
  //SUPPRESSION DE L'IMAGE STOCKER TEMPORAIREMENT

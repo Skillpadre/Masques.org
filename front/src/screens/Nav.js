@@ -70,7 +70,7 @@ function Nav(props) {
  
     <Menu className='Menu' theme="dark" style={{backgroundColor: '#1e272e'}} mode="horizontal" defaultSelectedKeys={['2']}>
 
-        <Menu.Item className='logo' key="1">
+  <Menu.Item className='logo' key="1" icon={<img src='../logo.png' style={{width: 30, margin: '0 7px 5px'}}/>}>
             <Link to='/' style={{fontSize: 20}}>Masques.org</Link>
         </Menu.Item>
         <Menu.Item key="2" className="menuItem">

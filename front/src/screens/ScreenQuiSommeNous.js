@@ -16,7 +16,7 @@ function ScreenAPropos() {
     <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
 
       <Nav />
-      <Header className='headerAPropos' style={{backgroundImage: "url('https://images.pexels.com/photos/3985187/pexels-photo-3985187.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')", height: 350, backgroundPosition: '75% 35%'}} />
+      <Header className='headerAPropos' style={{backgroundImage: "url('https://images.pexels.com/photos/4127601/pexels-photo-4127601.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')", height: 350, backgroundPosition: '35% 35%'}} />
       <Content style={{padding: '0 50px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '40px 0', textAlign: 'center', fontSize: 25}}>
 
         <h1 style={{fontWeight: 700, fontSize: 35, color: '#E23D70'}}>Masques.org</h1>

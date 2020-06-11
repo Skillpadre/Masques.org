@@ -21,18 +21,26 @@ router.post('/add-article/:token', async function (req, res, next) {
   console.log(req.body);
   let article;
   let result = false;
+  let date = new Date();
 
   let newArticle = new articleModel({
     description: req.body.description,
     priceUnit: req.body.priceUnit,
     stock: req.body.stock,
     colors: req.body.colors,
+    material: req.body.matiere,
+    model: req.body.model,
     img: req.body.image,
     quality: req.body.quality,
+    date_insert: date,
+    sellout: false,
     sellerId: user._id
 
   });
   article = await newArticle.save();
+
+  user.articles.push(article);
+  await user.save();
 
   if(article.stock) {
     result = true;

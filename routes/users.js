@@ -58,7 +58,8 @@ router.post('/signup', async function(req, res) {
       salt: salt,
       password: SHA256(req.body.password + salt).toString(encBase64),
       token: uid2(32),
-      avatar: '',
+      avatar: "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png",
+      date_inscription: new Date(),
     });
     user = await newUser.save();
     if(user)

@@ -6,8 +6,13 @@ const articleSchema = new mongoose.Schema({
     priceUnit: Number,
     stock: Number,
     colors: Array,
+    material: Array,
+    model: Array,
     img: String,
     quality: String,
+    date_insert: Date,
+    date_end: Date,
+    sellout: Boolean,
     sellerId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
 });
 

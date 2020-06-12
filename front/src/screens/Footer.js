@@ -21,7 +21,7 @@ function FooterComp() {
             </Col>
 
             <Col span={6}>
-                <Link to='/quisommesnous'><p style={{color: 'white'}}>Qui sommes nous</p></Link>
+                <Link to='/quisommesnous'><p style={{color: 'white'}}>Qui sommes nous ?</p></Link>
                 <Link to='/actualités'><p style={{color: 'white'}}>Actualité</p></Link>
             </Col>
       

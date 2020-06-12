@@ -7,6 +7,7 @@ import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
 import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import StripeCheckout from 'react-stripe-checkout';
 
 import Nav from './Nav'
@@ -22,24 +23,30 @@ function ScreenBasket(props) {
   
     
     //Récupération du token dans localStorage
-    var userPanier = localStorage.getItem('panier', (err, value) => {})
-
+    /* var userPanier = JSON.parse(localStorage.getItem('panier'))
+    console.log(articleList) */
+   
+    var userPanier = JSON.parse(localStorage.getItem('panier'))
     useEffect(() => {
-        function articleList() {
-            setArticleList([(userPanier)])
+        function readArticleList() {
+            
+            setArticleList(userPanier)
         }
-        articleList();
+        readArticleList();
     }, []);
 
 
 
 
-    useEffect(() => {
+   /*  useEffect(() => {
         async function articleList() {
             setArticleList(props.order)
         }
         articleList();
-    }, [articleList]);
+    }, []);
+
+
+    }, [articleList]); */
 
     let idCommande;
     if(props.order.length !== 0){
@@ -47,17 +54,18 @@ function ScreenBasket(props) {
     }
     
     let totalCommande = 0
-
     let totalFinal = 0
-    for (let i = 0; i <articleList.length; i++) {
+    let totalQuantity = 0
+    for (let i = 0; i < articleList.length; i++) {
         totalCommande = articleList[i].priceUnit * articleList[i].quantity
-        totalFinal += (articleList[i].priceUnit * articleList[i].quantity) * 100
+        totalFinal += (articleList[i].priceUnit * articleList[i].quantity)
+        totalQuantity += articleList[i].quantity
     }
-
+    console.log(totalQuantity)
     if (totalCommande == NaN) {
         totalCommande = 0
     }
-
+    console.log(idCommande)
     const radioStyle = {
         display: 'block',
         height: '30px',
@@ -73,35 +81,42 @@ function ScreenBasket(props) {
 
 
     var deleteArticle = index => {
-        var indexItem = articleList.indexOf(index)
+        var indexItem = articleList.indexOf(index);
         setArticleList(articleList.splice(indexItem, 1));
-        localStorage.removeItem("article")
+        //setArticleList(newArticleList)
+        //setArticleList(articleList.splice(indexItem, 1));
+        localStorage.removeItem('panier');
+        localStorage.setItem("panier", JSON.stringify(articleList));
+        /* localStorage.setItem("panier", JSON.stringify(articleList)); */
+        console.log(articleList)
     }
 
     const handleClick = async (event) => {
-        const rawResponse = await fetch(`/new-basket?price=${totalFinal}`);;
+        const rawResponse = await fetch(`/new-basket?id=${idCommande}&price=${totalFinal}`);
         const response = await rawResponse.json();
-            console.log(response.price.id)
-        const priceId = response.price.id 
+        const priceId = response.price.id
         // When the customer clicks on the button, redirect them to Checkout.
         const stripe = await stripePromise;
         const { error } = await stripe.redirectToCheckout({
             lineItems: [
-            // Replace with the ID of your price
-            {price: priceId, quantity: 1}
+                // Replace with the ID of your price
+                { price: priceId, quantity: 1 }
             ],
             mode: 'payment',
-            successUrl: 'http://localhost:3001/confirm',
+            successUrl: `http://localhost:3001/confirm`,
             cancelUrl: 'http://localhost:3001/basket',
-        }
-        );
-        
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer
-        // using `error.message`.
-          
+        })
+            .then(async function (result) {
+                console.log(result.error.message)
+            });
     };
-    
+
+    const majStock = async () => {
+
+        const rawResponse = await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
+        const response = await rawResponse.json();
+        console.log(response)
+    };
 
   
     return (
@@ -122,9 +137,9 @@ function ScreenBasket(props) {
                         <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
                             
-                            <List 
+                            <List bordered
                                 locale={{emptyText : 'Votre panier est vide.'}}
-                                style={{ margin: "10px 15px 0 10px" }}
+                                style={{ margin: "10px 15px 0 10px"}}
                                 dataSource={articleList}
                                 renderItem={item => (
                                     <List.Item
@@ -187,30 +202,13 @@ function ScreenBasket(props) {
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-                            {/* Stripe */}
-                            <StripeCheckout
-                                amount={totalFinal * 100} //TO DO --> Dynamiser
-                                currency='EUR'
-                                billingAddress
-                                name="Masques.org"
-                                description="Masques personnalisés"
-                                /* image= '../images/logo.png'  */
-                                locale="auto"
-                                stripeKey="pk_test_coUidDoFWymEAbFlak3JlqPf00PqNkwObW"//TO DO --> Changer
-                                token={props.token}
-                                zipCode
-                                label="Payer avec Stripe 💳"
-                                panelLabel="Acheter pour {{amount}}"
-                            />
-
-
-
-    <button role="link" onClick={handleClick}>
-      Checkout
-    </button>
+                            <Button role="link" onClick={() => {handleClick();majStock()}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                                Paiement
+                            </Button>
 
 
                         </div>
+
                     </Col>
                 </Row>
             </Content>
@@ -227,5 +225,14 @@ function mapStateToProps(state) {
         order: state.basketList
     }
 }
-export default connect(mapStateToProps, null)(ScreenBasket)
+
+function mapDispatchToProps(dispatch) {
+    return {
+        sendQuantity: function (quantity) {
+            dispatch({ type: 'sendQuantity', userQuantity: quantity })
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenBasket)
 

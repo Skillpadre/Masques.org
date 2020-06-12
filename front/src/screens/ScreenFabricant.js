@@ -31,7 +31,7 @@ function ScreenFabricant(props) {
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
 
-    var panier = localStorage.getItem('panier', (err, value) => {console.log('value = ' + value)  });   
+    //var panierUser = localStorage.getItem('panier', (err, value) => {console.log('value = ' + value)  });   
     
     useEffect(() => {
         var data = async () => {
@@ -67,15 +67,26 @@ function ScreenFabricant(props) {
  
     // Envoie de l'odre au reducer
     let handleOrder = async (order) => {
+        console.log(order)
         order.colors = color
         order.quantity = quantity
         order.matiere = matiere
         order.model = modele
         props.sendOrder(order)
 
-       /*  var newPanier=[...JSON.parse(panier), order];
-        console.log('newpanier= '+ newPanier)
-        localStorage.setItem('panier', JSON.stringify(order)); //envoi */
+        /* var newPanier=[...JSON.parse(panier), order];
+        console.log('newpanier= '+ newPanier)  */
+        
+        var panier=[];
+        if(JSON.parse(localStorage.getItem('panier')) !== null){
+            panier=JSON.parse(localStorage.getItem('panier'));
+            panier.push(order);
+            localStorage.setItem('panier', JSON.stringify(panier)); //envoi 
+        }else{
+            localStorage.setItem('panier', JSON.stringify([order])); //envoi 
+        }
+        
+        
     }
     
 
@@ -200,7 +211,7 @@ function ScreenFabricant(props) {
                                 <p>{articleId.priceUnit} € (c'est cher hein ?)</p>
                             </Form.Item>
 
-                            <Form.Item label="total" name="Total">
+                            <Form.Item label="Total" name="Total">
                                 <p>{articleId.priceUnit * quantity} € </p>
                             </Form.Item>
 
@@ -224,7 +235,6 @@ function mapDispatchToProps(dispatch) {
     return {
         sendOrder: function (order) {
             dispatch({ type: 'addBasket', userOrder: order })
-
         }
     }
 }

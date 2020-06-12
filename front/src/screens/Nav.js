@@ -80,7 +80,7 @@ function Nav(props) {
             <Link to='/map'>Fabricants</Link>
         </Menu.Item>
         <Menu.Item key="4">
-            <Link to='/quisommesnous'>Qui sommes nous?</Link>
+            <Link to='/quisommesnous'>Qui sommes nous ?</Link>
         </Menu.Item>
         
         {items}

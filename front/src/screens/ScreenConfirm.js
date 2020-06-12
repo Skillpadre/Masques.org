@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import '../App.css';
-
+import { connect } from 'react-redux'
 import Nav from './Nav'
 import FooterComp from './Footer';
 
@@ -12,9 +12,11 @@ import 'antd/dist/antd.css';
 const { Content } = Layout;
 
 
-function LayoutDesign (){
+function ScreenConfirm (props){
 
     const [infoUsername, setInfoUsername] = useState();
+    const [quantity, setQuantity] = useState()
+    const [order, setOrder] = useState([])
 
     //Tableau Récapitulatif
     //Titre Colonne
@@ -92,6 +94,9 @@ function LayoutDesign (){
         loadUser();
       }, [user]);
 
+console.log(quantity)
+console.log(order)
+      
     return(
             
 
@@ -134,4 +139,11 @@ function LayoutDesign (){
     
 }
 
-export default LayoutDesign;
+
+function mapStateToProps(state) {
+  return {
+       quantity: state.quantityFromBasket,
+       order: state.basketList
+  }
+}
+export default connect(mapStateToProps, null)(ScreenConfirm)

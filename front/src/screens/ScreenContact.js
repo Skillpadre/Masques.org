@@ -104,6 +104,7 @@ function ScreenContact() {
               <Select.Option value="1">Demande d'information</Select.Option>
               <Select.Option value="2">Question sur une commande</Select.Option>
               <Select.Option value="3">Problème sur le site</Select.Option>
+              <Select.Option value="3">Suggestion</Select.Option>
               <Select.Option value="4">Autre</Select.Option>
             </Select>
           </Form.Item>

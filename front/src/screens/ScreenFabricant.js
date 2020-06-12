@@ -211,7 +211,7 @@ function ScreenFabricant(props) {
                                 <p>{articleId.priceUnit} € (c'est cher hein ?)</p>
                             </Form.Item>
 
-                            <Form.Item label="total" name="Total">
+                            <Form.Item label="Total" name="Total">
                                 <p>{articleId.priceUnit * quantity} € </p>
                             </Form.Item>
 

@@ -102,17 +102,47 @@ function ScreenMasks(props) {
                         <Row>
                             <Col span={8}>
                             <Checkbox
-                                value="anatomique"
+                                value="Grand public"
                                 style={{
                                 lineHeight: '32px',
                                 }}
                             >
-                                Anatomique
+                                Grand public
                             </Checkbox>
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="ffp2"
+                                value="Barrière"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Barrière
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="Chrirugical"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Chrirugical
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="FFP1"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                FFP1
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="FFP2"
                                 style={{
                                 lineHeight: '32px',
                                 }}
@@ -122,12 +152,12 @@ function ScreenMasks(props) {
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="chirurgical"
+                                value="FFP3"
                                 style={{
                                 lineHeight: '32px',
                                 }}
                             >
-                                Chirurgical
+                                FFP3
                             </Checkbox>
                             </Col>
                         </Row>
@@ -241,32 +271,32 @@ function ScreenMasks(props) {
                         <Row>
                             <Col span={8}>
                             <Checkbox
-                                value="tissu"
+                                value="Coton"
                                 style={{
                                 lineHeight: '32px',
                                 }}
                             >
-                                Tissu
+                                Coton
                             </Checkbox>
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="noir"
+                                value="Coton Bio"
                                 style={{
                                 lineHeight: '32px',
                                 }}
                             >
-                                Noir
+                                Coton Bio
                             </Checkbox>
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="rouge"
+                                value="Autre"
                                 style={{
                                 lineHeight: '32px',
                                 }}
                             >
-                                Rouge
+                                Autre
                             </Checkbox>
                             </Col>
                         </Row>
@@ -280,7 +310,7 @@ function ScreenMasks(props) {
                         <Input onChange={e => setQualité(e.target.value)} value={qualité} placeholder='moyenne, supérieure ...' />
                     </Form.Item>
                       
-                    <p>Vous pouvez modifiez la description comme vous le souhaitez.</p>
+                    <p>Vous pouvez ajouter la description que vous souhaitez.</p>
                     <Form.Item label="Description"
                             name="description"
                     >
@@ -300,7 +330,7 @@ function ScreenMasks(props) {
                 >
                     <h3>Récapitulatif</h3>
                     <p>Nombre de masques : {inputStock}</p>
-                    <p>Prix d'un masque : {inputPrice}</p>
+                    <p>Prix d'un masque : {inputPrice}€</p>
                     <p>Couleurs disponibles : {couleurs.join(', ')}</p>
                     <p>Matières disponibles : {matiere.join(', ')}</p>
                     <p>Modèles disponibles : {model.join(', ')}</p>

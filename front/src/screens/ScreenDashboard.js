@@ -7,7 +7,7 @@ import Nav from './Nav'
 import FooterComp from './Footer';
 import {connect} from 'react-redux'
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 
 function ScreenDashboard(props) {
@@ -20,6 +20,9 @@ function ScreenDashboard(props) {
     const [infoCity, setInfoCity] = useState();
     const [infoTel, setInfoTel] = useState();
     const [avatar, setAvatar] = useState();
+
+    const [listOrder, setListOrder] = useState([]);
+    const [listSale, setListSale] = useState([]);
 
 
     var user;
@@ -47,12 +50,12 @@ function ScreenDashboard(props) {
           setInfoZip(response.user.zip_code);
           setInfoCity(response.user.city);
           setInfoTel(response.user.tel);
-          setAvatar(response.user.avatar)
+          setAvatar(response.user.avatar);
 
+          setListOrder(response.user.orders);
+          setListSale(response.user.articles);
         }
 
-      }else{
-        return <Redirect to='/' />
       }
     
     }
@@ -70,24 +73,21 @@ function ScreenDashboard(props) {
     finaliserCompte = <p>Vous pouvez finaliser votre compte en renseignant vos information <Link to='/profil'>ici</Link></p>
   }
 
-  const data = [
-    {
-      title: 'Commande n° 1',
-    },
-    {
-      title: 'Commande n° 2',
-    },
-    {
-      title: 'Commande n° 3',
-    },
-    {
-      title: 'Commande n° 4',
-    },
-  ];
+  let listPendingSale =  [];
 
-  /* if(!infoUsername){
-    return <Redirect to='/' />
-  } */
+  listSale.map((article, i) =>{
+    if(!article.sellout){
+      let date = new Date(article.date_insert);
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      article.date_insert = day + "/" + month + "/" + year;
+
+      listPendingSale.push(article);
+    }
+  });
+
  
   return (
     <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
@@ -99,19 +99,19 @@ function ScreenDashboard(props) {
         {finaliserCompte}
       </Row>
         
-        <Row justify='space-between' align='middle'>
-          <Col md={{span: 6}} sm={{span: 24}}>
+        <Row justify='center' align='middle'>
+          <Col md={{span: 8}} sm={{span: 24}}>
 
             <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue {afficherNom} !</h2>
     
           </Col>
-          <Col md={{span: 10}} sm={{span: 12}} xs={{span: 24}}> 
+          <Col align= 'center' md={{span: 8}} sm={{span: 12}} xs={{span: 24}}> 
 
           <h1 style={{fontWeight: 700, fontSize: 40}}>Tableau de bord</h1>
 
           </Col>
 
-          <Col md={{span: 3}} sm={{span: 12}} xs={{span: 24}} style={{display: 'flex', flexDirection: 'column'}}>
+          <Col align= 'right' md={{span: 8}} sm={{span: 12}} xs={{span: 24}} style={{display: 'flex', flexDirection: 'column'}}>
             <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/mask'>Vendre des articles</Link></Button>
             <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/map'>Passer une commande</Link></Button>
             <Button style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type='primary'><Link to='/profil'>Modifier mes infos</Link></Button>
@@ -122,18 +122,20 @@ function ScreenDashboard(props) {
         <Row style={{marginTop: 40}}>
           <Col md={{span: 12}} sm={{span: 24}}>
             <h2>Commandes en attente de validation</h2>
-            <div id="dashboard-box">
+            <div id="dashboard-box-pendingOrder" className="dashboard-box">
 
               <List
+                locale={{emptyText : 'Aucune commande en attente.'}}
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={listPendingSale}
                 renderItem={item => (
-                  <List.Item>
+                  <List.Item style={{margin: '2px 8px'}}>
                     <List.Item.Meta
                       avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                      title={<a href="https://ant.design">{item.title}</a>}
-                      description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                      title={"Article n° " + item._id}
+                      description={"Créé le " + item.date_insert}
                     />
+                    {item.description}
                   </List.Item>
                 )}
               />,
@@ -141,11 +143,12 @@ function ScreenDashboard(props) {
           </Col>
           <Col md={{span: 12}} sm={{span: 24}}>
             <h2>Historique des commandes</h2>
-            <div id="dashboard-box">
+            <div id="dashboard-box-FinishOrder" className="dashboard-box">
 
               <List
+                locale={{emptyText : "Vous n'avez pas encore passé de commande."}}
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={listOrder}
                 renderItem={item => (
                   <List.Item>
                     <List.Item.Meta

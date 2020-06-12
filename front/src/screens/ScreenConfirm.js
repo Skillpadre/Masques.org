@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Nav from './Nav'
 import FooterComp from './Footer';
 
-import { Layout, Button, List, Row, Col, Table, Tag, Space} from 'antd';
+import { Layout, Button, Table } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
@@ -19,12 +19,12 @@ function ScreenConfirm (props){
     const [order, setOrder] = useState([])
 
     //Tableau Récapitulatif
+    //Titre Colonne
     const columns = [
         {
-          title: 'Description',
-          dataIndex: 'Description',
-          key: 'Description',
-          render: text => <a>{text}</a>,
+          title: 'Titre',
+          dataIndex: 'Titre',
+          key: 'Titre',
         },
         {
           title: 'Couleur',
@@ -50,8 +50,22 @@ function ScreenConfirm (props){
           }
        
       ];
-      
 
+    
+    //Data Colonne
+    const dataSource = [
+        /* {
+        key: '1',
+        Titre: 'Masque personnalisé',
+        Couleur: 'Bleu',
+        Qualité: 'Supérieure',
+        Quantité: 18,
+        Total: 24 + '€'
+
+        }, */
+    ];
+
+    
     var user;
     useEffect(() => {
         async function loadUser() {
@@ -103,7 +117,12 @@ console.log(order)
                 <p style={{fontWeight : 700, margin: '10px 30px 50px'}}>Votre commande à bien été prise en compte !</p>
                 
                 <p>Récapitulatif</p>
-                <Table bordered columns={columns} style={{margin: '20px 0 20px', width: '70%'}}/>
+                <Table bordered 
+                  dataSource={dataSource} 
+                  columns={columns} 
+                  style={{margin: '20px 0 20px', width: '70%'}} 
+                  locale={{emptyText : 'Aucun article.'}}
+                />
                 <p>Merci pour votre confiance.</p>
 
                 <Link to='/'><Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: 20}} type="primary">Retour à l'accueil</Button></Link>

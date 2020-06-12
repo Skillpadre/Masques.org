@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import '../App.css';
 import { Row, Col, Layout, List, Avatar, Divider, Radio, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, SmileOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
@@ -20,32 +20,25 @@ function ScreenBasket(props) {
 
     const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
-
-    var userToken;
-
+  
+    
+    //Récupération du token dans localStorage
+    /* var userPanier = JSON.parse(localStorage.getItem('panier'))
+    console.log(articleList) */
+   
+    var userPanier = JSON.parse(localStorage.getItem('panier'))
     useEffect(() => {
-        async function loadUser() {
-
-            //Récupération du token dans localStorage
-            userToken = localStorage.getItem('token', (err, value) => {
-            })
-
-            if (userToken) {
-
-                const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
-                const response = await rawResponse.json();
-
-                if (response.user) {
-                    setInfoUsername(response.user.username)
-                }
-            } else {
-                return <Redirect to='/' />
-            }
+        function readArticleList() {
+            
+            setArticleList(userPanier)
         }
-        loadUser();
-    }, [userToken]);
+        readArticleList();
+    }, []);
 
-    useEffect(() => {
+
+
+
+   /*  useEffect(() => {
         async function articleList() {
             setArticleList(props.order)
         }
@@ -53,8 +46,13 @@ function ScreenBasket(props) {
     }, []);
 
 
+    }, [articleList]); */
 
-    let idCommande = props.order[0]._id
+    let idCommande;
+    if(props.order.length !== 0){
+        idCommande = props.order[0]._id
+    }
+    
     let totalCommande = 0
     let totalFinal = 0
     let totalQuantity = 0
@@ -83,9 +81,14 @@ function ScreenBasket(props) {
 
 
     var deleteArticle = index => {
-        var indexItem = articleList.indexOf(index)
+        var indexItem = articleList.indexOf(index);
         setArticleList(articleList.splice(indexItem, 1));
-        localStorage.removeItem("article")
+        //setArticleList(newArticleList)
+        //setArticleList(articleList.splice(indexItem, 1));
+        localStorage.removeItem('panier');
+        localStorage.setItem("panier", JSON.stringify(articleList));
+        /* localStorage.setItem("panier", JSON.stringify(articleList)); */
+        console.log(articleList)
     }
 
     const handleClick = async (event) => {
@@ -115,6 +118,7 @@ function ScreenBasket(props) {
         console.log(response)
     };
 
+  
     return (
 
         <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
@@ -132,9 +136,10 @@ function ScreenBasket(props) {
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
                         <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
-
-                            <List
-                                style={{ margin: "10px 15px 0 10px" }}
+                            
+                            <List bordered
+                                locale={{emptyText : 'Votre panier est vide.'}}
+                                style={{ margin: "10px 15px 0 10px"}}
                                 dataSource={articleList}
                                 renderItem={item => (
                                     <List.Item
@@ -170,6 +175,7 @@ function ScreenBasket(props) {
                                 )}
 
                             />
+                            
 
                             <Divider />
                             <div id="total">
@@ -210,7 +216,9 @@ function ScreenBasket(props) {
             <FooterComp />
         </Layout>
     );
+    
 }
+
 function mapStateToProps(state) {
     return {
         token: state.userToken,

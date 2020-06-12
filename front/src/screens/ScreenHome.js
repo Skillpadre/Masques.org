@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import '../App.css';
 import { Layout, Row, Col, Card } from 'antd';
 
@@ -6,7 +6,7 @@ import 'antd/dist/antd.css';
 import Nav from './Nav';
 import FooterComp from './Footer';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 function ScreenHome() {
 
@@ -24,7 +24,7 @@ function ScreenHome() {
 
         <Row style={{marginTop: 50}}> 
 
-            <Col md={{span :8}} sm={{span: 12}}>
+            <Col md={{span :8}} sm={{span: 20}}>
               <Card
                 hoverable
                 style={{
@@ -42,7 +42,7 @@ function ScreenHome() {
               </Card>
             </Col>
 
-            <Col md={{span :8}} sm={{span: 12}}>
+            <Col md={{span :8}} sm={{span: 20}}>
               <Card
                 hoverable
                 style={{
@@ -61,7 +61,7 @@ function ScreenHome() {
               </Card>
             </Col>
 
-            <Col md={{span :8}} sm={{span: 12}}>
+            <Col md={{span :8}} sm={{span: 20}}>
               <Card
                 hoverable
                 style={{
@@ -82,7 +82,7 @@ function ScreenHome() {
           </Row>
           <Row>
 
-            <Col md={{span :8}} sm={{span: 12}}>
+            <Col md={{span :8}} sm={{span: 20}}>
               <Card
                 hoverable
                 style={{
@@ -101,7 +101,7 @@ function ScreenHome() {
               </Card>
             </Col>
 
-            <Col md={{span :8}} sm={{span: 12}}>
+            <Col md={{span :8}} sm={{span: 20}}>
               <Card
                 hoverable
                 style={{
@@ -120,7 +120,7 @@ function ScreenHome() {
               </Card>
             </Col>
 
-            <Col md={{span :8}} sm={{span: 12}}>
+            <Col md={{span :8}} sm={{span: 20}}>
               <Card
                 hoverable
                 style={{

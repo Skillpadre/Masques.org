@@ -22,24 +22,27 @@ function ScreenBasket(props) {
   
     
     //Récupération du token dans localStorage
-    var userPanier = localStorage.getItem('panier', (err, value) => {})
-
+    /* var userPanier = JSON.parse(localStorage.getItem('panier'))
+    console.log(articleList) */
+   
+    var userPanier = JSON.parse(localStorage.getItem('panier'))
     useEffect(() => {
-        function articleList() {
-            setArticleList([(userPanier)])
+        function readArticleList() {
+            
+            setArticleList(userPanier)
         }
-        articleList();
+        
+        readArticleList();
     }, []);
 
 
 
-
-    useEffect(() => {
+   /*  useEffect(() => {
         async function articleList() {
             setArticleList(props.order)
         }
         articleList();
-    }, [articleList]);
+    }, [articleList]); */
 
     let idCommande;
     if(props.order.length !== 0){
@@ -73,9 +76,14 @@ function ScreenBasket(props) {
 
 
     var deleteArticle = index => {
-        var indexItem = articleList.indexOf(index)
+        var indexItem = articleList.indexOf(index);
         setArticleList(articleList.splice(indexItem, 1));
-        localStorage.removeItem("article")
+        //setArticleList(newArticleList)
+        //setArticleList(articleList.splice(indexItem, 1));
+        localStorage.removeItem('panier');
+        localStorage.setItem("panier", JSON.stringify(articleList));
+        /* localStorage.setItem("panier", JSON.stringify(articleList)); */
+        console.log(articleList)
     }
 
     const handleClick = async (event) => {
@@ -122,9 +130,9 @@ function ScreenBasket(props) {
                         <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
                             
-                            <List 
+                            <List bordered
                                 locale={{emptyText : 'Votre panier est vide.'}}
-                                style={{ margin: "10px 15px 0 10px" }}
+                                style={{ margin: "10px 15px 0 10px"}}
                                 dataSource={articleList}
                                 renderItem={item => (
                                     <List.Item

@@ -31,7 +31,7 @@ function ScreenFabricant(props) {
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
 
-    var panier = localStorage.getItem('panier', (err, value) => {console.log('value = ' + value)  });   
+    //var panierUser = localStorage.getItem('panier', (err, value) => {console.log('value = ' + value)  });   
     
     useEffect(() => {
         var data = async () => {
@@ -73,9 +73,19 @@ function ScreenFabricant(props) {
         order.model = modele
         props.sendOrder(order)
 
-       /*  var newPanier=[...JSON.parse(panier), order];
-        console.log('newpanier= '+ newPanier)
-        localStorage.setItem('panier', JSON.stringify(order)); //envoi */
+        /* var newPanier=[...JSON.parse(panier), order];
+        console.log('newpanier= '+ newPanier)  */
+        
+        var panier=[];
+        if(JSON.parse(localStorage.getItem('panier')) !== null){
+            panier=JSON.parse(localStorage.getItem('panier'));
+            panier.push(order);
+            localStorage.setItem('panier', JSON.stringify(panier)); //envoi 
+        }else{
+            localStorage.setItem('panier', JSON.stringify([order])); //envoi 
+        }
+        
+        
     }
     
 

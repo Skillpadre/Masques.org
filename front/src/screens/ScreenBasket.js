@@ -202,9 +202,9 @@ function ScreenBasket(props) {
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-                            <button role="link" onClick={() => {handleClick();majStock()}}>
-                                Checkout
-                                </button>
+                            <Button role="link" onClick={() => {handleClick();majStock()}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                                Paiement
+                            </Button>
 
 
                         </div>

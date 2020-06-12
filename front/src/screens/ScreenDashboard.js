@@ -7,7 +7,7 @@ import Nav from './Nav'
 import FooterComp from './Footer';
 import {connect} from 'react-redux'
 
-const { Content } = Layout;
+const { Content, Footer } = Layout;
 
 
 function ScreenDashboard(props) {
@@ -23,6 +23,8 @@ function ScreenDashboard(props) {
 
     const [listOrder, setListOrder] = useState([]);
     const [listSale, setListSale] = useState([]);
+
+    //const [disabled, setDisabled] = useState(true)
 
 
     var user;
@@ -56,6 +58,8 @@ function ScreenDashboard(props) {
           setListSale(response.user.articles);
         }
 
+      }else{
+        return <Redirect to='/' />
       }
     
     }
@@ -70,7 +74,7 @@ function ScreenDashboard(props) {
 
   let finaliserCompte;
   if(!infoFN || !infoLN || !infoAddress || !infoCity || !infoZip || !infoTel || avatar === ''){
-    finaliserCompte = <p>Vous pouvez finaliser votre compte en renseignant vos information <Link to='/profil'>ici</Link></p>
+    finaliserCompte = <p>Pour vendre des articles, veuillez finalisez votre compte <Link to='/profil'>ici</Link></p>;
   }
 
   let listPendingSale =  [];
@@ -88,6 +92,9 @@ function ScreenDashboard(props) {
     }
   });
 
+  //  if(!props.user){
+  //   return <Redirect to='/' />
+  // } 
  
   return (
     <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
@@ -99,20 +106,20 @@ function ScreenDashboard(props) {
         {finaliserCompte}
       </Row>
         
-        <Row justify='center' align='middle'>
-          <Col md={{span: 8}} sm={{span: 24}}>
+        <Row justify='space-between' align='middle'>
+          <Col md={{span: 6}} sm={{span: 24}}>
 
             <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue {afficherNom} !</h2>
     
           </Col>
-          <Col align= 'center' md={{span: 8}} sm={{span: 12}} xs={{span: 24}}> 
+          <Col md={{span: 10}} sm={{span: 12}} xs={{span: 24}}> 
 
           <h1 style={{fontWeight: 700, fontSize: 40}}>Tableau de bord</h1>
 
           </Col>
 
-          <Col align= 'right' md={{span: 8}} sm={{span: 12}} xs={{span: 24}} style={{display: 'flex', flexDirection: 'column'}}>
-            <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/mask'>Vendre des articles</Link></Button>
+          <Col md={{span: 3}} sm={{span: 12}} xs={{span: 24}} style={{display: 'flex', flexDirection: 'column'}}>
+            <Button disabled={finaliserCompte? true : false} style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/mask'>Vendre des articles</Link></Button>
             <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/map'>Passer une commande</Link></Button>
             <Button style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type='primary'><Link to='/profil'>Modifier mes infos</Link></Button>
           </Col>
@@ -124,14 +131,13 @@ function ScreenDashboard(props) {
             <h2>Commandes en attente de validation</h2>
             <div id="dashboard-box-pendingOrder" className="dashboard-box">
 
-              <List
-                locale={{emptyText : 'Aucune commande en attente.'}}
+              <List locale={{emptyText : "Aucune commande en attente de validation."}}
                 itemLayout="horizontal"
                 dataSource={listPendingSale}
                 renderItem={item => (
-                  <List.Item style={{margin: '2px 8px'}}>
+                  <List.Item style={{marginLeft: 7}}>
                     <List.Item.Meta
-                      avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                      //avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                       title={"Article n° " + item._id}
                       description={"Créé le " + item.date_insert}
                     />
@@ -145,8 +151,7 @@ function ScreenDashboard(props) {
             <h2>Historique des commandes</h2>
             <div id="dashboard-box-FinishOrder" className="dashboard-box">
 
-              <List
-                locale={{emptyText : "Vous n'avez pas encore passé de commande."}}
+              <List locale={{emptyText : "Vous n'avez pas encore passé de commande."}}
                 itemLayout="horizontal"
                 dataSource={listOrder}
                 renderItem={item => (

@@ -3,7 +3,7 @@ import '../App.css';
 
 import {connect} from 'react-redux'
 
-import { Layout, Row, Col, Input, Button} from 'antd';
+import { Layout, Row, Col, Input, AutoComplete, Button} from 'antd';
 import 'antd/dist/antd.css';
 
 import Nav from './Nav'
@@ -13,17 +13,23 @@ const { Content } = Layout;
 
 function ScreenProfil(props) {
 
+    const [value, setValue] = useState('');
+
     const [infoLN, setInfoLN] = useState('');
     const [infoFN, setInfoFN] = useState('');
     const [infoAddress, setInfoAddress] = useState('');
     const [infoZip, setInfoZip] = useState('');
     const [infoCity, setInfoCity] = useState('');
     const [infoTel, setInfoTel] = useState('');
+    const [infoCoord, setInfoCoord] = useState([]); // [longitude, latitude]
 
     const [changementOk, setChangementOk] = useState();
 
     const [avatar, setAvatar] = useState('');
     const [changAvatar, setChangAvatar] = useState();
+
+    const [option, setOption] = useState([]);
+
 
 
     useEffect(() => {
@@ -41,6 +47,11 @@ function ScreenProfil(props) {
                 setInfoCity(response.user.city);
                 setInfoTel(response.user.tel);
                 setAvatar(response.user.avatar);
+
+                if(response.user.coordinates){
+                    setInfoCoord(response.user.coordinates);
+                }
+                
             }
             
             
@@ -52,7 +63,7 @@ function ScreenProfil(props) {
 
     
     const handleClickChangement = async () => {
-        let values = {nom : infoLN, prenom: infoFN, telephone: infoTel, adresse: infoAddress, zipcode: infoZip, city: infoCity};
+        let values = {nom : infoLN, prenom: infoFN, telephone: infoTel, adresse: infoAddress, zipcode: infoZip, city: infoCity, coord: infoCoord};
 
         const data = await fetch('/users/update-info/' + props.user.token, {
             method: 'POST',
@@ -68,7 +79,7 @@ function ScreenProfil(props) {
         setInfoZip(response.user.zip_code);
         setInfoCity(response.user.city);
         setInfoTel(response.user.tel);
-        setInfoTel(response.user.avatar);
+        setAvatar(response.user.avatar);
 
         setChangementOk(<p style={{color: '#52C41A', margin: 20}}>Vos changement on bien été pris en compte !</p>)
 
@@ -103,6 +114,73 @@ function ScreenProfil(props) {
        
     }
 
+    // Fonction au changement de l'input adresse
+    function onChangeAddress(text){
+        //setInfoAddress(text);
+        search(text)
+    }
+    // Fonction de recherche pour autocomplétion
+    async function search(text) {
+        let rawResponse = await fetch('https://api-adresse.data.gouv.fr/search/?q=' + text)
+        let response = await rawResponse.json();
+        console.log(response.features);
+
+        let responseList = [];
+
+        response.features.map((item, i)=>{
+            let type;
+            if(item.properties.type === 'municipality'){
+                type = 'Commune'
+            } else if(item.properties.type === 'housenumber'){
+                type = 'Numéro'
+            } else if(item.properties.type === 'street'){
+                type = 'Rue'
+            } else if(item.properties.type === 'locality'){
+                type = 'Lieu-dit'
+            }
+            responseList.push(renderItem(item.properties.context, item.properties.label, type, item.geometry.coordinates, item.properties.city, item.properties.postcode ,i));
+        });
+        setOption(responseList);
+    }
+
+
+    const renderItem = (context, label, type, coord, city, zipcode, i) => ({
+        label: (
+            
+          <div
+            id={'AC-div1-' + i}
+            className={'AC-div1'}
+            onClick={e=>handleClickAutoComplet(e, label, coord, city, zipcode, i)}
+            style={{
+            display: 'flex',
+            flexDirection: 'column',
+              
+            }}
+          >
+              <div id={'AC-div2-' + i} className={'AC-div2'} style={{display: 'flex', justifyContent:'space-between'}}>
+                  <h3 id={'AC-label-' + i} className={'AC-label'}>{label}</h3> 
+                  <h3 id={'AC-type-' + i} className={'AC-type'}>{type}</h3>
+              </div>
+            
+            <h4 id={'AC-h4-' + i} className={'AC-h4'}>{context}</h4>
+          
+          </div>
+        ),
+      });
+
+      // Selection de la bonne adresse dans l'autocomplétion
+      function handleClickAutoComplet(e, label, coord, city, zipcode, i) {
+        console.log('click')
+        
+        console.log(label);
+        console.log(coord)
+        setInfoAddress(label);
+        setInfoCoord(coord)  
+        setInfoCity(city)
+        setInfoZip(zipcode)      
+    }
+
+
     let urlImg;
 
     if(avatar === ''){
@@ -110,6 +188,7 @@ function ScreenProfil(props) {
     } else {
         urlImg = avatar;
     }
+    
     
 
     return (
@@ -141,11 +220,26 @@ function ScreenProfil(props) {
 
                         <Input onChange={e => setInfoFN(e.target.value)} value={infoFN} placeholder='Votre prénom' style={{marginTop: 20}}/>
                         <Input onChange={e => setInfoLN(e.target.value)} value={infoLN} placeholder='Votre nom' style={{marginTop: 20}}/>
-                        <Input onChange={e => setInfoAddress(e.target.value)} value={infoAddress} placeholder='Votre addresse' style={{marginTop: 20}}/>
-                        <Input onChange={e => setInfoZip(e.target.value)} value={infoZip} placeholder='Votre code postal' style={{marginTop: 20}}/>
-                        <Input onChange={e => setInfoCity(e.target.value)} value={infoCity} placeholder='Votre ville' style={{marginTop: 20}}/>
                         <Input onChange={e => setInfoTel(e.target.value)} value={infoTel} placeholder='Votre numéro de téléphone' style={{marginTop: 20}}/>
+                        <Input readOnly={true} value={infoAddress} placeholder='Votre adresse' style={{marginTop: 20}}/>
 
+                        {/* {infoAddress} */}
+
+                        <AutoComplete
+                            dropdownClassName="certain-category-search-dropdown"
+                            dropdownMatchSelectWidth={500}
+                            style={{
+                            width: '100%',
+                            }}
+                            options={option}
+                        >
+                            <Input.Search onChange={e => onChangeAddress(e.target.value)} value={infoAddress} placeholder='Chercher une adresse' style={{marginTop: 20}}/>
+                            {/* <Input.Search allowClear={true} size="large" placeholder="Entrez votre adresse" value={infoAddress} onChange={e=>onChangeAddress(e.target.value)} /> */}
+                        </AutoComplete>
+
+
+                        {/* <Input onChange={e => setInfoAddress(e.target.value)} value={infoAddress} placeholder='Votre addresse' style={{marginTop: 20}}/> */}
+                        
                         {changementOk}
 
                         <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickChangement()}>

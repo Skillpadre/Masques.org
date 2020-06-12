@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
 
-const locationSchema = new mongoose.Schema({
-    latitude: Number,
-    longitude: Number
-});
-
 const userSchema = new mongoose.Schema({
     email: String,
     username: String,
@@ -19,7 +14,7 @@ const userSchema = new mongoose.Schema({
     zip_code: String,
     tel: String,
     avatar: String,
-    location: locationSchema,
+    coordinates: Array, // [longitude, latitude]
     orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'orders'}],
     articles: [{type: mongoose.Schema.Types.ObjectId, ref: 'articles'}],
 });

@@ -20,10 +20,11 @@ import ScreenError404 from './screens/ScreenError404'
 
 import user from './reducer/user';
 import basketList from './reducer/order';
+import quantity from './reducer/stock';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 
-const store = createStore(combineReducers({ user, basketList }))
+const store = createStore(combineReducers({ user, basketList, quantity }))
 
 function App() {
   return (

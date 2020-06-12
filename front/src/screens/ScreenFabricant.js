@@ -64,8 +64,9 @@ function ScreenFabricant(props) {
         setModele(value);
     };
 
-    // Envoie de l'odre au reducer
+    // Envoie de l'ordre au reducer
     let handleOrder = async (order) => {
+        console.log(order)
         order.colors = color
         order.quantity = quantity
         order.matiere = matiere
@@ -218,7 +219,6 @@ function mapDispatchToProps(dispatch) {
     return {
         sendOrder: function (order) {
             dispatch({ type: 'addBasket', userOrder: order })
-
         }
     }
 }

@@ -7,6 +7,7 @@ import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
 import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import StripeCheckout from 'react-stripe-checkout';
 
 import Nav from './Nav'
@@ -44,42 +45,29 @@ function ScreenBasket(props) {
         loadUser();
     }, [userToken]);
 
-    // var userBasket 
-
-    // useEffect(() => {
-    //     async function storage() {
-    //         localStorage.getItem("article", function (error, data) {
-    //             console.log(data);
-    //             userBasket = JSON.parse(data);
-    //             console.log(userBasket.article);
-    //         })
-    //     }
-    //     storage();
-    // }, []);
-
-    // console.log(userBasket)
-
     useEffect(() => {
         async function articleList() {
             setArticleList(props.order)
         }
         articleList();
-    }, [articleList]);
+    }, []);
+
 
 
     let idCommande = props.order[0]._id
     let totalCommande = 0
-
     let totalFinal = 0
+    let totalQuantity = 0
     for (let i = 0; i < articleList.length; i++) {
         totalCommande = articleList[i].priceUnit * articleList[i].quantity
-        totalFinal += (articleList[i].priceUnit * articleList[i].quantity) * 100
+        totalFinal += (articleList[i].priceUnit * articleList[i].quantity)
+        totalQuantity += articleList[i].quantity
     }
-
+    console.log(totalQuantity)
     if (totalCommande == NaN) {
         totalCommande = 0
     }
-
+    console.log(idCommande)
     const radioStyle = {
         display: 'block',
         height: '30px',
@@ -101,28 +89,31 @@ function ScreenBasket(props) {
     }
 
     const handleClick = async (event) => {
-            const rawResponse = await fetch(`/new-basket?price=${totalFinal}`);;
-            const response = await rawResponse.json();
-                console.log(response.price.id)
-            const priceId = response.price.id 
-            // When the customer clicks on the button, redirect them to Checkout.
-            const stripe = await stripePromise;
-            const { error } = await stripe.redirectToCheckout({
-              lineItems: [
+        const rawResponse = await fetch(`/new-basket?id=${idCommande}&price=${totalFinal}`);
+        const response = await rawResponse.json();
+        const priceId = response.price.id
+        // When the customer clicks on the button, redirect them to Checkout.
+        const stripe = await stripePromise;
+        const { error } = await stripe.redirectToCheckout({
+            lineItems: [
                 // Replace with the ID of your price
-                {price: priceId, quantity: 1}
-              ],
-              mode: 'payment',
-              successUrl: 'http://localhost:3001/confirm',
-              cancelUrl: 'http://localhost:3001/basket',
-            }
-            );
-           
-            // If `redirectToCheckout` fails due to a browser or network
-            // error, display the localized error message to your customer
-            // using `error.message`.
-          
-      };
+                { price: priceId, quantity: 1 }
+            ],
+            mode: 'payment',
+            successUrl: `http://localhost:3001/confirm`,
+            cancelUrl: 'http://localhost:3001/basket',
+        })
+            .then(async function (result) {
+                console.log(result.error.message)
+            });
+    };
+
+    const majStock = async () => {
+
+        const rawResponse = await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
+        const response = await rawResponse.json();
+        console.log(response)
+    };
 
     return (
 
@@ -205,30 +196,13 @@ function ScreenBasket(props) {
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-                            {/* Stripe */}
-                            <StripeCheckout
-                                amount={totalFinal * 100} //TO DO --> Dynamiser
-                                currency='eur'
-                                billingAddress
-                                name="Masques.org"
-                                description="Masques personnalisés"
-                                /* image= '../images/logo.png'  */
-                                locale="auto"
-                                stripeKey="pk_test_coUidDoFWymEAbFlak3JlqPf00PqNkwObW"//TO DO --> Changer
-                                token={props.token}
-                                zipCode
-                                label="Payer avec Stripe 💳"
-                                panelLabel="Acheter pour {{amount}}"
-                            />
-
-
-
-    <button role="link" onClick={handleClick}>
-      Checkout
-    </button>
+                            <button role="link" onClick={() => {handleClick();majStock()}}>
+                                Checkout
+                                </button>
 
 
                         </div>
+
                     </Col>
                 </Row>
             </Content>
@@ -243,5 +217,14 @@ function mapStateToProps(state) {
         order: state.basketList
     }
 }
-export default connect(mapStateToProps, null)(ScreenBasket)
+
+function mapDispatchToProps(dispatch) {
+    return {
+        sendQuantity: function (quantity) {
+            dispatch({ type: 'sendQuantity', userQuantity: quantity })
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenBasket)
 

@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
 // route qui ajoute un nouvel article créé par le fabricant
 
 router.post('/add-article/:token', async function (req, res, next) {
-  let user = await userModel.findOne({token: req.params.token})
+  let user = await userModel.findOne({ token: req.params.token })
 
   console.log(req.params.token);
   console.log(req.body);
@@ -44,51 +44,64 @@ router.post('/add-article/:token', async function (req, res, next) {
   user.articles.push(article);
   await user.save();
 
-  if(article.stock) {
+  if (article.stock) {
     result = true;
   }
 
-      res.json({ article, result });
+  res.json({ article, result });
 });
 
-router.get('/article-list', async function(req, res, next) {
+router.get('/article-list', async function (req, res, next) {
 
   var articles = await articleModel.find()
   let sellers = [];
-  for(let i=0; i<articles.length; i++){
+  for (let i = 0; i < articles.length; i++) {
     let user = await userModel.findById(articles[i].sellerId);
     console.log(articles[i].sellerId)
     sellers.push(user);
   }
   console.log(sellers)
- 
 
-  res.json({articles, sellers});
+
+  res.json({ articles, sellers });
 });
 
-router.get('/articleId/:id', async function(req, res){
+router.get('/articleId/:id', async function (req, res) {
   let article = await articleModel.findById(req.params.id);
   let seller = await userModel.findById(article.sellerId)
   console.log(article);
   console.log(seller);
-  res.json({article, seller});
+  res.json({ article, seller });
 });
 
 
 
-router.get('/new-basket', async function(req, res){
- const product = await stripe.products.create({
-  name: 'Masque',
+router.get('/new-basket', async function (req, res) {
+  const product = await stripe.products.create({
+    name: "Article id : " + req.query.id,
   });
-  console.log(product)
-console.log(req.query)
   const price = await stripe.prices.create({
-   product: product.id,
-   unit_amount: req.query.price,
-      currency: 'EUR',
-   });
-  console.log(price)
-res.json({price})
-  })
+    product: product.id,
+    unit_amount_decimal: req.query.price * 100,
+    currency: 'EUR',
+  });
+  res.json({ product, price })
+})
+
+router.get('/valid-order', async function (req, res) {
+
+  var lessQuantity = req.query.quantity
+  console.log(lessQuantity)
+  var article = await articleModel.findById(req.query.id)
+  console.log(article.stock)
+  var stock = article.stock
+  var newStock = stock - lessQuantity
+console.log(newStock)
+  var updateStock = await article.updateOne(
+    { stock: newStock },
+  );
+  res.json({stock, newStock })
+})
+
 
 module.exports = router;

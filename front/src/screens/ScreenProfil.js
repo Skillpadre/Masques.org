@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { Redirect } from 'react-router-dom';
 import '../App.css';
 
 import {connect} from 'react-redux'
 
-import { Layout, Row, Input, Button} from 'antd';
+import { Layout, Row, Col, Input, Button} from 'antd';
 import 'antd/dist/antd.css';
 
 import Nav from './Nav'
@@ -14,17 +13,18 @@ const { Content } = Layout;
 
 function ScreenProfil(props) {
 
-    const [infoLN, setInfoLN] = useState();
-    const [infoFN, setInfoFN] = useState();
-    const [infoAddress, setInfoAddress] = useState();
-    const [infoZip, setInfoZip] = useState();
-    const [infoCity, setInfoCity] = useState();
-    const [infoTel, setInfoTel] = useState();
+    const [infoLN, setInfoLN] = useState('');
+    const [infoFN, setInfoFN] = useState('');
+    const [infoAddress, setInfoAddress] = useState('');
+    const [infoZip, setInfoZip] = useState('');
+    const [infoCity, setInfoCity] = useState('');
+    const [infoTel, setInfoTel] = useState('');
 
     const [changementOk, setChangementOk] = useState();
 
     const [avatar, setAvatar] = useState('');
     const [changAvatar, setChangAvatar] = useState();
+
 
     useEffect(() => {
         // On charge les info pour les afficher
@@ -33,23 +33,22 @@ function ScreenProfil(props) {
             const rawResponse = await fetch(`/users/loadinfo/${props.user.token}`);
             const response = await rawResponse.json();
 
-            setInfoLN(response.user.lastName);
-            setInfoFN(response.user.firstName);
-            setInfoAddress(response.user.address);
-            setInfoZip(response.user.zip_code);
-            setInfoCity(response.user.city);
-            setInfoTel(response.user.tel);
-            setAvatar(response.user.avatar);
+            if(response.user){
+                setInfoLN(response.user.lastName);
+                setInfoFN(response.user.firstName);
+                setInfoAddress(response.user.address);
+                setInfoZip(response.user.zip_code);
+                setInfoCity(response.user.city);
+                setInfoTel(response.user.tel);
+                setAvatar(response.user.avatar);
+            }
+            
+            
         }
         loadInfo();
-    }, [props.user]);
+    }, [props.user.token]);
 
-    const tailLayout = {
-        wrapperCol: {
-            offset: 8,
-            span: 16,
-        },
-    };
+    
 
     
     const handleClickChangement = async () => {
@@ -112,10 +111,6 @@ function ScreenProfil(props) {
         urlImg = avatar;
     }
     
- 
-    /* if(!props.user.token){
-        return <Redirect to='/' />
-    } */
 
     return (
         <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
@@ -126,20 +121,23 @@ function ScreenProfil(props) {
 
                 <Row><h1 style={{fontWeight: 700}}>Mon Compte</h1></Row>
 
+                <Row justify= 'center' align='middle'>
+                    <Col md={{span: 6}} sm={{span: 22}} offset={-3}>
+                        <h3 style={{fontSize: 20, fontWeight: 700}}>Mon avatar</h3>
 
-                    <h3 style={{fontSize: 20, fontWeight: 700}}>Avatar</h3>
+                        <Input type='file' onChange={fileSelectedHandler} style={{margin: 20}}/>
+                        
+                        <div><img style={{width: 150, height: 150, borderRadius: '50%'}} src={urlImg}/></div>
 
-                    <Input type='file' onChange={fileSelectedHandler} style={{margin: 20, width: '20%'}}/>
-                    
-                    <div><img style={{width: 150, height: 150, borderRadius: '50%'}} src={urlImg}/></div>
-
-                    {changAvatar}
-                    
-                    <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickAvatar()}>
-                        Télécharger
-                    </Button>
-            
-                    <div style={{width: '50%'}}>
+                        {changAvatar}
+                        
+                        <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickAvatar()}>
+                            Télécharger
+                        </Button>
+                    </Col>
+                    <Col md={{span: 8}} sm={{span: 22}}offset={3}>
+                        
+                        <h3 style={{fontSize: 20, fontWeight: 700}}>Mes informations</h3>
 
                         <Input onChange={e => setInfoFN(e.target.value)} value={infoFN} placeholder='Votre prénom' style={{marginTop: 20}}/>
                         <Input onChange={e => setInfoLN(e.target.value)} value={infoLN} placeholder='Votre nom' style={{marginTop: 20}}/>
@@ -153,7 +151,9 @@ function ScreenProfil(props) {
                         <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 40}} type="primary" onClick={() => handleClickChangement()}>
                             Valider mes changement
                         </Button>
-                    </div>
+                   
+                    </Col>
+                </Row>
 
            
 

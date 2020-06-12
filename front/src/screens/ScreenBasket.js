@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import '../App.css';
 import { Row, Col, Layout, List, Avatar, Divider, Radio, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, SmileOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
@@ -19,45 +19,20 @@ function ScreenBasket(props) {
 
     const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
-
-    var userToken;
+  
+    
+    //Récupération du token dans localStorage
+    var userPanier = localStorage.getItem('panier', (err, value) => {})
 
     useEffect(() => {
-        async function loadUser() {
-
-            //Récupération du token dans localStorage
-            userToken = localStorage.getItem('token', (err, value) => {
-            })
-
-            if (userToken) {
-
-                const rawResponse = await fetch(`/users/loadinfo/${userToken}`);
-                const response = await rawResponse.json();
-
-                if (response.user) {
-                    setInfoUsername(response.user.username)
-                }
-            } else {
-                return <Redirect to='/' />
-            }
+        function articleList() {
+            setArticleList([(userPanier)])
         }
-        loadUser();
-    }, [userToken]);
+        articleList();
+    }, []);
 
-    // var userBasket 
 
-    // useEffect(() => {
-    //     async function storage() {
-    //         localStorage.getItem("article", function (error, data) {
-    //             console.log(data);
-    //             userBasket = JSON.parse(data);
-    //             console.log(userBasket.article);
-    //         })
-    //     }
-    //     storage();
-    // }, []);
 
-    // console.log(userBasket)
 
     useEffect(() => {
         async function articleList() {
@@ -104,29 +79,31 @@ function ScreenBasket(props) {
     }
 
     const handleClick = async (event) => {
-            const rawResponse = await fetch(`/new-basket?price=${totalFinal}`);;
-            const response = await rawResponse.json();
-                console.log(response.price.id)
-            const priceId = response.price.id 
-            // When the customer clicks on the button, redirect them to Checkout.
-            const stripe = await stripePromise;
-            const { error } = await stripe.redirectToCheckout({
-              lineItems: [
-                // Replace with the ID of your price
-                {price: priceId, quantity: 1}
-              ],
-              mode: 'payment',
-              successUrl: 'http://localhost:3001/confirm',
-              cancelUrl: 'http://localhost:3001/basket',
-            }
-            );
-           
-            // If `redirectToCheckout` fails due to a browser or network
-            // error, display the localized error message to your customer
-            // using `error.message`.
+        const rawResponse = await fetch(`/new-basket?price=${totalFinal}`);;
+        const response = await rawResponse.json();
+            console.log(response.price.id)
+        const priceId = response.price.id 
+        // When the customer clicks on the button, redirect them to Checkout.
+        const stripe = await stripePromise;
+        const { error } = await stripe.redirectToCheckout({
+            lineItems: [
+            // Replace with the ID of your price
+            {price: priceId, quantity: 1}
+            ],
+            mode: 'payment',
+            successUrl: 'http://localhost:3001/confirm',
+            cancelUrl: 'http://localhost:3001/basket',
+        }
+        );
+        
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer
+        // using `error.message`.
           
-      };
+    };
+    
 
+  
     return (
 
         <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
@@ -144,8 +121,9 @@ function ScreenBasket(props) {
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
                         <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
-
-                            <List
+                            
+                            <List 
+                                locale={{emptyText : 'Votre panier est vide.'}}
                                 style={{ margin: "10px 15px 0 10px" }}
                                 dataSource={articleList}
                                 renderItem={item => (
@@ -182,6 +160,7 @@ function ScreenBasket(props) {
                                 )}
 
                             />
+                            
 
                             <Divider />
                             <div id="total">
@@ -211,7 +190,7 @@ function ScreenBasket(props) {
                             {/* Stripe */}
                             <StripeCheckout
                                 amount={totalFinal * 100} //TO DO --> Dynamiser
-                                currency='eur'
+                                currency='EUR'
                                 billingAddress
                                 name="Masques.org"
                                 description="Masques personnalisés"
@@ -239,7 +218,9 @@ function ScreenBasket(props) {
             <FooterComp />
         </Layout>
     );
+    
 }
+
 function mapStateToProps(state) {
     return {
         token: state.userToken,

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 import {Menu, Avatar} from 'antd';
-import {ShoppingFilled, UserOutlined } from '@ant-design/icons';
+import {ShoppingFilled } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import {connect} from 'react-redux'
@@ -68,7 +68,7 @@ function Nav(props) {
 
   return (
  
-    <Menu className='Menu' theme="dark" style={{backgroundColor: '#1e272e'}} mode="horizontal" defaultSelectedKeys={['2']}>
+    <Menu className='Menu' theme="dark" style={{backgroundColor: '#1e272e'}} mode="horizontal" defaultSelectedKeys={['1']}>
 
         <Menu.Item className='logo' key="1" icon={<img src='../logo.png' style={{width: 30, margin: '0 10px 5px'}}/>}>
             <Link to='/' style={{fontSize: 20}}>Masques.org</Link>

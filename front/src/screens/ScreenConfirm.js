@@ -52,7 +52,7 @@ function LayoutDesign (){
     
     //Data Colonne
     const dataSource = [
-        {
+        /* {
         key: '1',
         Titre: 'Masque personnalisé',
         Couleur: 'Bleu',
@@ -60,7 +60,7 @@ function LayoutDesign (){
         Quantité: 18,
         Total: 24 + '€'
 
-        },
+        }, */
     ];
 
     
@@ -112,7 +112,12 @@ function LayoutDesign (){
                 <p style={{fontWeight : 700, margin: '10px 30px 50px'}}>Votre commande à bien été prise en compte !</p>
                 
                 <p>Récapitulatif</p>
-                <Table bordered dataSource={dataSource} columns={columns} style={{margin: '20px 0 20px', width: '70%'}}/>
+                <Table bordered 
+                  dataSource={dataSource} 
+                  columns={columns} 
+                  style={{margin: '20px 0 20px', width: '70%'}} 
+                  locale={{emptyText : 'Aucun article.'}}
+                />
                 <p>Merci pour votre confiance.</p>
 
                 <Link to='/'><Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: 20}} type="primary">Retour à l'accueil</Button></Link>

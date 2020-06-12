@@ -7,7 +7,7 @@ import Nav from './Nav'
 import FooterComp from './Footer';
 import {connect} from 'react-redux'
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 
 function ScreenDashboard(props) {
@@ -56,8 +56,6 @@ function ScreenDashboard(props) {
           setListSale(response.user.articles);
         }
 
-      }else{
-        return <Redirect to='/' />
       }
     
     }
@@ -90,9 +88,6 @@ function ScreenDashboard(props) {
     }
   });
 
-  //  if(!props.user){
-  //   return <Redirect to='/' />
-  // } 
  
   return (
     <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
@@ -104,19 +99,19 @@ function ScreenDashboard(props) {
         {finaliserCompte}
       </Row>
         
-        <Row justify='space-between' align='middle'>
-          <Col md={{span: 6}} sm={{span: 24}}>
+        <Row justify='center' align='middle'>
+          <Col md={{span: 8}} sm={{span: 24}}>
 
             <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue {afficherNom} !</h2>
     
           </Col>
-          <Col md={{span: 10}} sm={{span: 12}} xs={{span: 24}}> 
+          <Col align= 'center' md={{span: 8}} sm={{span: 12}} xs={{span: 24}}> 
 
           <h1 style={{fontWeight: 700, fontSize: 40}}>Tableau de bord</h1>
 
           </Col>
 
-          <Col md={{span: 3}} sm={{span: 12}} xs={{span: 24}} style={{display: 'flex', flexDirection: 'column'}}>
+          <Col align= 'right' md={{span: 8}} sm={{span: 12}} xs={{span: 24}} style={{display: 'flex', flexDirection: 'column'}}>
             <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/mask'>Vendre des articles</Link></Button>
             <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/map'>Passer une commande</Link></Button>
             <Button style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type='primary'><Link to='/profil'>Modifier mes infos</Link></Button>
@@ -130,10 +125,11 @@ function ScreenDashboard(props) {
             <div id="dashboard-box-pendingOrder" className="dashboard-box">
 
               <List
+                locale={{emptyText : 'Aucune commande en attente.'}}
                 itemLayout="horizontal"
                 dataSource={listPendingSale}
                 renderItem={item => (
-                  <List.Item>
+                  <List.Item style={{margin: '2px 8px'}}>
                     <List.Item.Meta
                       avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                       title={"Article n° " + item._id}
@@ -150,6 +146,7 @@ function ScreenDashboard(props) {
             <div id="dashboard-box-FinishOrder" className="dashboard-box">
 
               <List
+                locale={{emptyText : "Vous n'avez pas encore passé de commande."}}
                 itemLayout="horizontal"
                 dataSource={listOrder}
                 renderItem={item => (

@@ -45,14 +45,16 @@ function ScreenMap(props) {
       <Spin size="large" />
       <p style={{color:' #E23D70'}}>Chargement ...</p>
       </Space>
+      
   }else{
-  buyingList = articleList.map((item, i) => {
-    let urlAvatar = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png";
-    let username;
-    if(sellerList[i]){
-      urlAvatar = sellerList[i].avatar;
-      username = sellerList[i].username;
-    }
+
+    buyingList = articleList.map((item, i) => {
+      let urlAvatar = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png";
+      let username;
+      if(sellerList[i]){
+        urlAvatar = sellerList[i].avatar;
+        username = sellerList[i].username;
+      }
 
     var lien;
     //Si le user existe je l'autorise à allez sur la page fabricant
@@ -95,14 +97,15 @@ function ScreenMap(props) {
       <Content style={{ padding: '0 50px', margin: '40px 0'}} className="Map" > 
       <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary">Chercher les fabricants autour de moi</Button>
         
-        <Row style={{width: '70%', height: '60vh', marginTop: 30}}>
-          
+        <Row style={{width: '80%',height: '60vh', marginTop: 30}}>
+    
             <GoogleMapReact
               bootstrapURLKeys={{ key: 'AIzaSyA6lFML5Gv6tvWgNl0X7kXn6X1uMQyzX8o' }}
               defaultCenter={center}
               defaultZoom={zoom}
 
             />
+     
         </Row>
         <Row style={{marginTop: 25}}>
             

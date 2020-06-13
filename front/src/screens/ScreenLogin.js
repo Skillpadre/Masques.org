@@ -48,7 +48,8 @@ function ScreenLogin(props) {
           urlAvatar: response.user.avatar
         }
         props.addUser(user);// add user reducer
-        localStorage.setItem('user', JSON.stringify(user));//envoi dans le localStorage
+        localStorage.setItem('user', JSON.stringify(user));//envoi des infos user dans le localStorage
+        localStorage.setItem('panier', JSON.stringify([])); //création du panier dans le local storage
         setUserExist(true);
       } else {                  // Si pas de user
         setErrorSignup(response.error)
@@ -84,7 +85,8 @@ function ScreenLogin(props) {
         urlAvatar: response.user.avatar
       }
       props.addUser(user);// add user reducer
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(user));//envoi des infos user dans le localStorage
+      localStorage.setItem('panier', JSON.stringify([])); //création du panier dans le local storage
       setUserExist(true);
     } else {                  // Si pas de user
       setErrorSignin(response.error)

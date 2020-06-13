@@ -78,14 +78,10 @@ function ScreenFabricant(props) {
         console.log('newpanier= '+ newPanier)  */
         
         var panier=[];
-        if(JSON.parse(localStorage.getItem('panier')) !== null){
-            panier=JSON.parse(localStorage.getItem('panier'));
-            panier.push(order);
-            localStorage.setItem('panier', JSON.stringify(panier)); //envoi 
-        }else{
-            localStorage.setItem('panier', JSON.stringify([order])); //envoi 
-        }
-        
+       //je récupère ce qu'il y a dans le local storage panier et je push le nouveau produit
+        panier=JSON.parse(localStorage.getItem('panier'));
+        panier.push(order);
+        localStorage.setItem('panier', JSON.stringify(panier)); //envoi 
         
     }
     

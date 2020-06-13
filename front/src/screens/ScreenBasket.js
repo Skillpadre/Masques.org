@@ -21,32 +21,19 @@ function ScreenBasket(props) {
     const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
   
-    
-    //Récupération du token dans localStorage
-    /* var userPanier = JSON.parse(localStorage.getItem('panier'))
-    console.log(articleList) */
-   
-    var userPanier = JSON.parse(localStorage.getItem('panier'))
+
     useEffect(() => {
         function readArticleList() {
+            //Récupération du panier dans localStorage
+            var userPanier = JSON.parse(localStorage.getItem('panier'))
             
             setArticleList(userPanier)
         }
         readArticleList();
     }, []);
 
+    
 
-
-
-   /*  useEffect(() => {
-        async function articleList() {
-            setArticleList(props.order)
-        }
-        articleList();
-    }, []);
-
-
-    }, [articleList]); */
 
     let idCommande;
     if(props.order.length !== 0){
@@ -79,16 +66,16 @@ function ScreenBasket(props) {
         setRadioValue(e.target.value);
     };
 
+    
 
     var deleteArticle = index => {
         var indexItem = articleList.indexOf(index);
-        setArticleList(articleList.splice(indexItem, 1));
-        //setArticleList(newArticleList)
-        //setArticleList(articleList.splice(indexItem, 1));
-        localStorage.removeItem('panier');
-        localStorage.setItem("panier", JSON.stringify(articleList));
-        /* localStorage.setItem("panier", JSON.stringify(articleList)); */
-        console.log(articleList)
+        var panier=articleList; //je récupère les produits
+        panier.splice(indexItem,1); //je supprime celui choisi
+       
+        //console.log(panier)
+        localStorage.setItem("panier", JSON.stringify(panier)); //je renvoi le nouveau tableau dans le local storage
+       
     }
 
     const handleClick = async (event) => {

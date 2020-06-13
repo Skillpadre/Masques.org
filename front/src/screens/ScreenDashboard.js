@@ -97,22 +97,22 @@ function ScreenDashboard(props) {
   // } 
  
   return (
-    <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
+    <Layout className="layout" style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}>
       <Nav />
 
-      <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Dashboard-page">
+      <Content style={{ height: '100%', padding: '0 50px', margin: '40px 0' }} className="Dashboard-page">
 
       <Row justify='center' align='middle'>
         {finaliserCompte}
       </Row>
         
         <Row justify='space-between' align='middle'>
-          <Col md={{span: 6}} sm={{span: 24}}>
+          <Col md={{span: 8}} sm={{span: 24}}>
 
             <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue {afficherNom} !</h2>
     
           </Col>
-          <Col md={{span: 10}} sm={{span: 12}} xs={{span: 24}}> 
+          <Col md={{span: 8}} sm={{span: 12}} xs={{span: 24}}> 
 
           <h1 style={{fontWeight: 700, fontSize: 40}}>Tableau de bord</h1>
 

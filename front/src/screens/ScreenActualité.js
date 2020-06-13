@@ -12,7 +12,7 @@ function ScreenActualité() {
 
 
   return (
-    <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+    <Layout style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}className="layout">
 
       <Nav />
       <Header style={{backgroundImage: "url('https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_1280.jpg')",backgroundSize: 'cover',  height: 350, backgroundPosition: '0 55%'}} />

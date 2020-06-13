@@ -192,7 +192,7 @@ function ScreenProfil(props) {
     
 
     return (
-        <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+        <Layout style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}className="layout">
            
             <Nav />
 

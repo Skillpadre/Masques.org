@@ -13,7 +13,7 @@ function ScreenAPropos() {
 
 
   return (
-    <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+    <Layout style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}className="layout">
 
       <Nav />
       <Header className='headerAPropos' style={{backgroundImage: "url('https://images.pexels.com/photos/4127601/pexels-photo-4127601.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')", height: 350, backgroundPosition: '35% 35%'}} />

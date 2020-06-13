@@ -79,10 +79,10 @@ function ScreenMap(props) {
 
     return (
 
-      <List.Item key={i} style={{alignItems: 'flex-start'}}>
-        <Card hoverable title={item.title} bodyStyle={{width: 400, height: 300}} style={{margin : '20px 10px'}}>
+      <List.Item key={i} style={{textAlign: 'center'}}>
+        <Card hoverable title={item.title} bodyStyle={{width: 300, height: 290}} style={{margin : '20px 10px'}}>
 
-          <Card.Meta title={username} avatar={<Avatar src={urlAvatar} style={{padding:0}}/>}/>
+          <Card.Meta title={username} avatar={<Avatar src={urlAvatar}/>}/>
 
           <Button onClick={showModal} style={{color: '#E23D70', border: 'white'}}>Description</Button>
 
@@ -111,7 +111,7 @@ function ScreenMap(props) {
 
   return (
 
-    <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
+    <Layout className="layout" style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}>
 
       <Nav />
 

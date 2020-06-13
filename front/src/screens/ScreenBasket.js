@@ -105,7 +105,7 @@ function ScreenBasket(props) {
   
     return (
 
-        <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
+        <Layout className="layout" style={{ minHeight: '100vh', height: 'auto', backgroundColor: 'white' }}>
             <Nav />
 
             <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Basket-page">

@@ -114,7 +114,7 @@ function ScreenLogin(props) {
     return <Redirect to='/' />
 
   return (
-    <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+    <Layout style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}className="layout">
 
       <Nav/>
 

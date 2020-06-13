@@ -100,7 +100,7 @@ console.log(order)
     return(
             
 
-    <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
+    <Layout className="layout" style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}>
         
         <Nav />
     

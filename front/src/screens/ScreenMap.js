@@ -4,14 +4,13 @@ import '../App.css';
 
 import {connect} from 'react-redux'
 
-import { Row, Col, Layout, Card, Button, List, Avatar, Divider, Spin, Space} from 'antd';
+import { Row, Col, Layout, Card, Button, List, Avatar, Divider, Spin, Space, Modal} from 'antd';
 import 'antd/dist/antd.css';
 
 import GoogleMapReact from 'google-map-react';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
-import { LineChartOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 
@@ -23,6 +22,8 @@ function ScreenMap(props) {
 
   const [articleList, setArticleList] = useState([]);
   const [sellerList, setSellerList] = useState([]);
+
+  const [visible, setVisible] = useState(false) //modal
 
   useEffect(() => {
     async function loadData() {
@@ -37,6 +38,18 @@ function ScreenMap(props) {
     loadData()
   }, []);
 
+  //MODAL
+  let showModal = () => {
+    setVisible(true)
+  };
+
+  let handleOk = () => {
+   setVisible(false)
+  };
+
+  let handleCancel = () => {
+    setVisible(false)
+   };
 
   var buyingList;
   //Si articleList est vide je met un spinner en attendant le chargement
@@ -64,24 +77,32 @@ function ScreenMap(props) {
       lien=`/login`
     }
 
-
     return (
 
       <List.Item key={i} style={{alignItems: 'flex-start'}}>
         <Card hoverable title={item.title} bodyStyle={{width: 400, height: 300}} style={{margin : '20px 10px'}}>
 
-          <Card.Meta title={username} description={item.description} avatar={<Avatar src={urlAvatar} style={{padding:0}}/>}/>
-        
+          <Card.Meta title={username} avatar={<Avatar src={urlAvatar} style={{padding:0}}/>}/>
+
+          <Button onClick={showModal} style={{color: '#E23D70', border: 'white'}}>Description</Button>
+
           <Divider/>
           <Card.Meta description={"Prix unitaire: " + item.priceUnit + " €"}/>
           <Card.Meta description={"Quantité dispo: " + item.stock}/>
           <Card.Meta description={"Qualité: " + item.quality}/>
-          <Card.Meta description={"Couleur :" + item.colors.join()}/>
-          
-
-        
+          <Card.Meta description={"Couleurs: " + item.colors.join()}/>
+          <Card.Meta description={"Matières: " + item.material.join()}/>
+      
           <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={lien}>Choisir cet article</Link></Button>
         </Card>
+        <Modal title="Description de l'offre :"
+                visible={visible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+        >
+          <p>{item.description}</p>
+        
+        </Modal>
       </List.Item>
 
     )

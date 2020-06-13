@@ -74,8 +74,6 @@ function ScreenFabricant(props) {
         order.model = modele
         props.sendOrder(order)
 
-        /* var newPanier=[...JSON.parse(panier), order];
-        console.log('newpanier= '+ newPanier)  */
         
         var panier=[];
        //je récupère ce qu'il y a dans le local storage panier et je push le nouveau produit

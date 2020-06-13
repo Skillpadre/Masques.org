@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import '../App.css';
 import { Row, Col, Layout, List, Avatar, Divider, Radio, Button } from 'antd';
-import { DeleteOutlined, SmileOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
@@ -20,7 +20,7 @@ function ScreenBasket(props) {
 
     const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
-  
+    const [radioValue, setRadioValue] = useState('')
 
     useEffect(() => {
         function readArticleList() {
@@ -48,26 +48,24 @@ function ScreenBasket(props) {
         totalFinal += (articleList[i].priceUnit * articleList[i].quantity)
         totalQuantity += articleList[i].quantity
     }
-    console.log(totalQuantity)
+   
     if (totalCommande == NaN) {
         totalCommande = 0
     }
-    console.log(idCommande)
+   
     const radioStyle = {
         display: 'block',
         height: '30px',
         lineHeight: '30px',
     };
 
-    const [radioValue, setRadioValue] = useState('')
 
     var onChange = e => {
         console.log('radio checked', e.target.value);
         setRadioValue(e.target.value);
     };
-
     
-
+    //supression article panier
     var deleteArticle = index => {
         var indexItem = articleList.indexOf(index);
         var panier=articleList; //je récupère les produits
@@ -104,7 +102,6 @@ function ScreenBasket(props) {
         const response = await rawResponse.json();
         console.log(response)
     };
-
   
     return (
 
@@ -119,8 +116,8 @@ function ScreenBasket(props) {
 
                 </Row>
 
-                <Row style={{ marginTop: 40, textAlign: 'center' }} justify='center' align='middle'>
-                    <Col md={{ span: 12 }} sm={{ span: 24 }}>
+                <Row style={{ marginTop: 40, textAlign: 'center' }} justify='center' align= 'top'>
+                    <Col md={{ span: 14 }} sm={{ span: 24 }}>
                         <h2>Produit(s) en attente</h2>
                         <div id="dashboard-box">
                             
@@ -130,24 +127,24 @@ function ScreenBasket(props) {
                                 dataSource={articleList}
                                 renderItem={item => (
                                     <List.Item
-                                        actions={[<a key="list-delete"><DeleteOutlined style={{ size: 25, color: '#E23D70' }} onClick={() => deleteArticle(item)} /></a>]}
+                                        actions={[<a key="list-delete"><CloseCircleOutlined style={{ size: 25, color: '#E23D70' }} onClick={() => deleteArticle(item)} /></a>]}
                                     >
-                                        {/* <List.Item.Meta
-
-                                            title={item.title}
-                                        
-                                            /> */}
+                                    
                                         <List.Item.Meta
-                                            description={"Description : " + item.description}
+                                            description={"Modèle : " + item.model}
 
                                         />
 
                                         <List.Item.Meta
-                                            description={"Couleur sélectionnée : " + item.colors}
+                                            description={"Couleur  : " + item.colors}
                                         />
 
                                         <List.Item.Meta
-                                            description={"Qualité choisie : " + item.quality}
+                                            description={"Matière : " + item.colors}
+                                        />
+
+                                        <List.Item.Meta
+                                            description={"Qualité : " + item.quality}
                                         />
                                         <List.Item.Meta
                                             description={"Quantité : " + item.quantity}
@@ -155,7 +152,7 @@ function ScreenBasket(props) {
 
                                         <List.Item.Meta
                                             style={{ fontWeight: 600 }}
-                                            description={"Total de cette commande : " + (item.priceUnit * item.quantity) + ' €'}
+                                            description={"Prix : " + (item.priceUnit * item.quantity) + ' €'}
                                         />
 
                                     </List.Item>
@@ -171,11 +168,11 @@ function ScreenBasket(props) {
 
                         </div>
 
-                        <Link to={`/fabricant/${idCommande}`}><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>
+                        { props.order.length !== 0? <Link to={`/fabricant/${idCommande}`}><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>: null}
                         <Link to="/map"><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Retourner à la liste des fabricants</Button></Link>
                     </Col>
 
-                    <Col md={{ span: 12 }} sm={{ span: 24 }}>
+                    <Col md={{ span: 9 }} sm={{ span: 24 }}>
 
                         <div id="retrait">
                             <h2>Moyen de retrait</h2>

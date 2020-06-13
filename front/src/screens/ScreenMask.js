@@ -202,7 +202,7 @@ function ScreenMasks(props) {
                         <Row>
                             <Col span={8}>
                             <Checkbox
-                                value="bleu"
+                                value="Bleu"
                                 style={{
                                 lineHeight: '32px',
                                 }}
@@ -212,7 +212,7 @@ function ScreenMasks(props) {
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="noir"
+                                value="Noir"
                                 style={{
                                 lineHeight: '32px',
                                 }}
@@ -222,7 +222,7 @@ function ScreenMasks(props) {
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="rouge"
+                                value="Rouge"
                                 style={{
                                 lineHeight: '32px',
                                 }}
@@ -232,7 +232,7 @@ function ScreenMasks(props) {
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="vert"
+                                value="Vert"
                                 style={{
                                 lineHeight: '32px',
                                 }}
@@ -242,7 +242,7 @@ function ScreenMasks(props) {
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="jaune"
+                                value="Jaune"
                                 style={{
                                 lineHeight: '32px',
                                 }}
@@ -252,12 +252,52 @@ function ScreenMasks(props) {
                             </Col>
                             <Col span={8}>
                             <Checkbox
-                                value="blanc"
+                                value="Blanc"
                                 style={{
                                 lineHeight: '32px',
                                 }}
                             >
                                 Blanc
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="Gris"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Gris
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="Orange"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Orange
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="Rose"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Rose
+                            </Checkbox>
+                            </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="Violet"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Violet
                             </Checkbox>
                             </Col>
                         </Row>

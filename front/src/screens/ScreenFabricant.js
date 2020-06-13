@@ -16,7 +16,7 @@ function ScreenFabricant(props) {
 
     const [articleId, setArticleId] = useState('');
     const [colorsList, setColorsList] = useState([]);
-    const [color, setColor] = useState('noir');
+    const [color, setColor] = useState('blanc');
     const [stock, setStock] = useState();
     const [description, setDescription] = useState('')
 
@@ -28,10 +28,13 @@ function ScreenFabricant(props) {
 
     const [quantity, setQuantity] = useState(0);
 
+    const [inscription, setInscription] = useState('')
+
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
 
-    //var panierUser = localStorage.getItem('panier', (err, value) => {console.log('value = ' + value)  });   
+    const [colorInscription, setColorInscription] = useState('black')
+    const [image, setImage] = useState('');
     
     useEffect(() => {
         var data = async () => {
@@ -64,6 +67,11 @@ function ScreenFabricant(props) {
     const onChangeModel = async (value) => {
         setModele(value);
     };
+
+    const onChangeColorInscription = async (value) => {
+        setColorInscription(value)
+    };
+    console.log(colorInscription)
  
     // Envoie de l'odre au reducer
     let handleOrder = async (order) => {
@@ -82,7 +90,29 @@ function ScreenFabricant(props) {
         localStorage.setItem('panier', JSON.stringify(panier)); //envoi 
         
     }
+
+    //Téléchargement image/logo
+    var fileSelectedHandler= event =>{
+        console.log(event.target.files[0]);
+        setImage(event.target.files[0])
+    }
+
+    const handleClickImage = async () =>{
+
+        var data = new FormData();
+        data.append('image', image);
+
+        var rawResponse = await fetch('/add-image', {
+            method: 'POST',
+            body: data
+        });
+
+        var response = await rawResponse.json();
+        console.log(response.url)
+        setImage(response.url)
+    }
     
+    var urlImg=`http://localhost:3001/assets/masques/masque-${color}.png`;
 
     return (
 
@@ -112,10 +142,16 @@ function ScreenFabricant(props) {
                 <Row justify='center' align='middle' >
 
                     <Col md={{span : 12}} sm={{span : 24}}>
-                        <Card style={{width: '70%'}}
+
+                        <div className='masque' style={{backgroundImage: `url(${urlImg})`/* "url('http://localhost:3001/assets/masques/masque-noir.png')" */}}>
+                            <p style={{ marginTop: 90, fontSize: 25, color: colorInscription, maxWidth: '270px'}}>{inscription}</p>
+                            {image!== ''?<img style={{/* marginTop: 40, */ width: 100, height: 100}} src={image} alt='image sur masque'/> :null}
+                        </div>
+
+                        {/* <Card style={{width: '70%'}}
                             cover={<img alt="masque" src={`../assets/masques/masque-${color}.png`} />}
                         >
-                        </Card>
+                        </Card> */}
 
 
                     </Col>
@@ -179,12 +215,21 @@ function ScreenFabricant(props) {
 
                             
 
-                            {/* <Form.Item label="Personnalisation" name="Personnalisation"
+                             <Form.Item label="Inscription" name="Inscription"
                                 rules={[{ required: false }]}
-                                style={{ width: 300 }}
+                                style={{ width: 400 }}
                             >
-                                <Input.TextArea placeholder='Entrez l’inscription souhaitée' />
-                            </Form.Item> */}
+                                <Input.TextArea 
+                                    placeholder='Entrez l’inscription souhaitée'
+                                    value={inscription}
+                                    onChange={e=>setInscription(e.target.value)} 
+                                />
+                            </Form.Item> 
+
+                            <Form.Item style={{ width: 300 }} label="Image" name="Image">
+                                <Input type='file' onChange={fileSelectedHandler} style={{margin: 20}}/>
+                                <Button style={{ borderRadius: 5}} onClick={handleClickImage}>Télécharger</Button>
+                            </Form.Item>
 
                             <Form.Item style={{ width: 300 }} label="Quantité" name="Quantité"
                                 rules={[{ required: true, message: 'Entrer la quantité de masque souhaitée' }]}

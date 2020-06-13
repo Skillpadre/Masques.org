@@ -128,3 +128,13 @@ header{
   height: auto;
 
 }
+
+.masque{
+  background-size: cover;
+  width: 400px;
+  height: 286px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+} 

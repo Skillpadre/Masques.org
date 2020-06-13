@@ -74,7 +74,7 @@ function ScreenDashboard(props) {
 
   let finaliserCompte;
   if(!infoFN || !infoLN || !infoAddress || !infoCity || !infoZip || !infoTel || avatar === ''){
-    finaliserCompte = <p>Pour vendre des articles, veuillez finalisez votre compte <Link to='/profil'>ici</Link></p>;
+    finaliserCompte = <p style={{fontSize: 15}}>Pour vendre des articles, veuillez finalisez votre compte <Link to='/profil'>ICI</Link> !</p>;
   }
 
   let listPendingSale =  [];

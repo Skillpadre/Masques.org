@@ -254,7 +254,7 @@ function ScreenFabricant(props) {
                                 <p>{articleId.priceUnit * quantity} € </p>
                             </Form.Item>
 
-                            <Link to='/basket'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter au panier</Button></Link>
+                            <Link to='/basket'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter a votre panier solidaire !</Button></Link>
 
                         </Form>
 

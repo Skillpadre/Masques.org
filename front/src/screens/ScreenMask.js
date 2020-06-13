@@ -339,6 +339,46 @@ function ScreenMasks(props) {
                                 Autre
                             </Checkbox>
                             </Col>
+                            <Col span={8}>
+                            <Checkbox
+                                value="Lin"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Lin
+                            </Checkbox>
+                            </Col>
+                            <Col>
+                            <Checkbox
+                                value="Autre matière organique/végétale"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Autre matière organique/végétale
+                            </Checkbox>
+                            </Col>
+                            <Col>
+                            <Checkbox
+                                value="Cuir (upcycling)"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Cuir (upcycling)
+                            </Checkbox>
+                            </Col>
+                            <Col>
+                            <Checkbox
+                                value="Jean (upcycling)"
+                                style={{
+                                lineHeight: '32px',
+                                }}
+                            >
+                                Jean (upcycling)
+                            </Checkbox>
+                            </Col>
                         </Row>
                         </Checkbox.Group>
                     </Form.Item>

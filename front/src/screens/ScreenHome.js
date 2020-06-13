@@ -7,6 +7,7 @@ import Nav from './Nav';
 import FooterComp from './Footer';
 
 const { Content } = Layout;
+const { Meta } = Card;
 
 function ScreenHome() {
 
@@ -16,9 +17,9 @@ function ScreenHome() {
 
       <Nav />
 
-      <Content style={{padding: '0 50px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '40px 0'}}>
+      <Content style={{padding: '0 50px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '40px 0', textAlign: 'center', fontSize: 20}}>
 
-        <h1 id="title">Masques personnalisés</h1>
+        <h1 id="title">Masques personnalisables | Vos achats solidaires</h1>
 
         <h3 id="choix">Entreprises | Collectivités | Grand Public</h3>
 
@@ -39,6 +40,7 @@ function ScreenHome() {
                   />
                 }
               >
+                <Meta title="Culture et Evènementiel"/>
               </Card>
             </Col>
 
@@ -57,7 +59,7 @@ function ScreenHome() {
                   />
                 }
               >
-                
+                <Meta title="Vie quotidienne"/>
               </Card>
             </Col>
 
@@ -76,6 +78,7 @@ function ScreenHome() {
                   />
                 }
               >
+                <Meta title="Logistique"/>
               </Card>
               
             </Col>
@@ -97,7 +100,7 @@ function ScreenHome() {
                   />
                 }
               >
-               
+               <Meta title="Commerce et Restauration"/>
               </Card>
             </Col>
 
@@ -116,7 +119,7 @@ function ScreenHome() {
                   />
                 }
               >
-              
+                <Meta title="Personnel de santé"/>
               </Card>
             </Col>
 
@@ -135,7 +138,7 @@ function ScreenHome() {
                   />
                 }
               >
-               
+                <Meta title="Transport en commun"/>
               </Card>
             </Col>
           </Row>

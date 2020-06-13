@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../App.css';
-import { Row, Col, Layout, List, Avatar, Divider, Radio, Button } from 'antd';
+import { Row, Col, Layout, List, Divider, Radio, Button } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import StripeCheckout from 'react-stripe-checkout';
 
 import Nav from './Nav'
 import FooterComp from './Footer';

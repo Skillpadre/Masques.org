@@ -26,9 +26,9 @@ function FooterComp() {
       
             <Col span={6} style={{color : 'white'}}>
                 <p>Suivez nous !</p>
-                <a href= '#' target="_blank" style={{color: '#92D050'}}><InstagramFilled style={{fontSize: 25, marginRight: 3}}/></a>
-                <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' target="_blank" style={{color: '#92D050'}}><FacebookFilled style={{fontSize: 25, marginRight: 3}}/></a>
-                <a href='https://twitter.com/MasquesOrg' target="_blank" style={{color: '#92D050'}}><TwitterSquareFilled style={{fontSize: 25}}/></a>
+                <a href= '#' target="_blank" rel="noopener noreferrer" style={{color: '#92D050'}}><InstagramFilled style={{fontSize: 25, marginRight: 3}}/></a>
+                <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' target="_blank" rel="noopener noreferrer" style={{color: '#92D050'}}><FacebookFilled style={{fontSize: 25, marginRight: 3}}/></a>
+                <a href='https://twitter.com/MasquesOrg' target="_blank" rel="noopener noreferrer" style={{color: '#92D050'}}><TwitterSquareFilled style={{fontSize: 25}}/></a>
             </Col>
           </Row>
 

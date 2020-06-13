@@ -5,8 +5,7 @@ import { connect } from 'react-redux'
 import Nav from './Nav'
 import FooterComp from './Footer';
 
-import { Row, Col, Layout, Avatar, Card, Form, Select, Input, InputNumber, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Row, Col, Layout, Avatar, Form, Select, Input, InputNumber, Button } from 'antd';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -112,7 +111,7 @@ function ScreenFabricant(props) {
         setImage(response.url)
     }
     
-    var urlImg=`http://localhost:3001/assets/masques/masque-${color}.png`;
+    var urlImg=`/assets/masques/masque-${color}.png`;
 
     return (
 

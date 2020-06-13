@@ -206,7 +206,7 @@ function ScreenProfil(props) {
 
                         <Input type='file' onChange={fileSelectedHandler} style={{margin: 20}}/>
                         
-                        <div><img style={{width: 150, height: 150, borderRadius: '50%'}} src={urlImg}/></div>
+                        <div><img alt='avatar' style={{width: 150, height: 150, borderRadius: '50%'}} src={urlImg}/></div>
 
                         {changAvatar}
                         

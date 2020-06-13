@@ -4,7 +4,7 @@ import '../App.css';
 
 import {connect} from 'react-redux'
 
-import { Row, Col, Layout, Card, Button, List, Avatar, Divider, Spin, Space, Modal} from 'antd';
+import { Row, Layout, Card, Button, List, Avatar, Divider, Spin, Space, Modal} from 'antd';
 import 'antd/dist/antd.css';
 
 import GoogleMapReact from 'google-map-react';

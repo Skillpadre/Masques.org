@@ -7,7 +7,7 @@ import Nav from './Nav'
 import FooterComp from './Footer';
 import {connect} from 'react-redux'
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 
 function ScreenDashboard(props) {

@@ -4,7 +4,7 @@ import '../App.css';
 
 import {connect} from 'react-redux'
 
-import { Layout, Form, Checkbox, Row, Col, Card, Input, Button} from 'antd';
+import { Layout, Form, Row, Col, Input, Button} from 'antd';
 import 'antd/dist/antd.css';
 
 import Nav from './Nav'

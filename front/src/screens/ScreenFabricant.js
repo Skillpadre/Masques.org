@@ -54,6 +54,15 @@ function ScreenFabricant(props) {
         data();
     }, []);
 
+    //Disposition form
+    const layout = {
+        labelCol: {
+        span: 4,
+        },
+        wrapperCol: {
+        span: 20,
+        },
+    };
 
     const onChangeColor = async (value) => {
         setColor(value)
@@ -113,6 +122,7 @@ function ScreenFabricant(props) {
     
     var urlImg=`/assets/masques/masque-${color}.png`;
 
+
     return (
 
 
@@ -138,13 +148,13 @@ function ScreenFabricant(props) {
                 </Row>
 
                 {/* images +  choix masques */}
-                <Row justify='center' align='middle' >
+                <Row justify='center' align='start' >
 
                     <Col md={{span : 12}} sm={{span : 24}}>
 
                         <div className='masque' style={{backgroundImage: `url(${urlImg})`/* "url('http://localhost:3001/assets/masques/masque-noir.png')" */}}>
                             <p style={{ marginTop: 90, fontSize: 25, color: colorInscription, maxWidth: '270px'}}>{inscription}</p>
-                            {image!== ''?<img style={{/* marginTop: 40, */ width: 100, height: 100}} src={image} alt='image sur masque'/> :null}
+                            {image!== ''?<img style={{ width: 150, height: 100}} src={image} alt='image sur masque'/> :null}
                         </div>
 
                         {/* <Card style={{width: '70%'}}
@@ -156,10 +166,10 @@ function ScreenFabricant(props) {
                     </Col>
                     <Col md={{ span: 7 }} sm={{ span: 12 }}>
 
-                        <Form style={{ textAlign: 'center' }}>
+                        <Form {...layout} style={{ textAlign: 'center' }}>
                     
                     {/* Modele */}
-                        <Form.Item style={{ width: 400 }} name="model" label="Modèle" rules={[{ required: true }]}>
+                        <Form.Item name="model" label="Modèle" rules={[{ required: true }]}>
                                 <Select
                                     onChange={onChangeModel}
                                     placeholder="Choisissez votre modèle"
@@ -177,7 +187,7 @@ function ScreenFabricant(props) {
                             </Form.Item>
 
                             {/* Couleur */}
-                            <Form.Item style={{ width: 400 }} name="Couleur" label="Couleur" rules={[{ required: true }]}>
+                            <Form.Item name="Couleur" label="Couleur" rules={[{ required: true }]}>
                                 <Select
                                     onChange={onChangeColor}
                                     placeholder="Choisissez votre couleur"
@@ -195,7 +205,7 @@ function ScreenFabricant(props) {
                             </Form.Item>
 
                             {/* Matiere */}
-                            <Form.Item style={{ width: 400 }} name="matiere" label="Matière" rules={[{ required: true }]}>
+                            <Form.Item name="matiere" label="Matière" rules={[{ required: true }]}>
                                 <Select
                                     onChange={onChangeMatiere}
                                     placeholder="Choisissez votre matière"
@@ -216,7 +226,6 @@ function ScreenFabricant(props) {
 
                              <Form.Item label="Inscription" name="Inscription"
                                 rules={[{ required: false }]}
-                                style={{ width: 400 }}
                             >
                                 <Input.TextArea 
                                     placeholder='Entrez l’inscription souhaitée'
@@ -225,19 +234,19 @@ function ScreenFabricant(props) {
                                 />
                             </Form.Item> 
 
-                            <Form.Item style={{ width: 300 }} label="Image" name="Image">
-                                <Input type='file' onChange={fileSelectedHandler} style={{margin: 20}}/>
-                                <Button style={{ borderRadius: 5}} onClick={handleClickImage}>Télécharger</Button>
+                            <Form.Item label="Image" name="Image">
+                                <Input type='file' accept="image/png, image/jpeg" onChange={fileSelectedHandler}/>
+                                <Button style={{ borderRadius: 5, marginTop: 5 }} onClick={handleClickImage}>Télécharger</Button>
                             </Form.Item>
 
-                            <Form.Item style={{ width: 300 }} label="Quantité" name="Quantité"
+                            <Form.Item label="Quantité" name="Quantité"
                                 rules={[{ required: true, message: 'Entrer la quantité de masque souhaitée' }]}
                             >
                                 <InputNumber
                                     min={1}
                                     max={articleId.stock}
                                     placeholder={`Max. ${articleId.stock}`}
-                                    style={{ margin: '0 16px', width: 150}}
+                                    style={{width: 100}}
                                     value={quantity}
                                     onChange={setQuantity}
                                     
@@ -246,15 +255,16 @@ function ScreenFabricant(props) {
                             </Form.Item>
 
                             <Form.Item label="Prix Unitaire" name="Prix">
-                                <p>{articleId.priceUnit} € (c'est cher hein ?)</p>
+                                <p>{articleId.priceUnit} €</p>
                             </Form.Item>
 
                             <Form.Item label="Total" name="Total">
-                                <p>{articleId.priceUnit * quantity} € </p>
+                                <p>{articleId.priceUnit * quantity} €</p>
                             </Form.Item>
 
-                            <Link to='/basket'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter a votre panier solidaire !</Button></Link>
-
+                            <p style={{color: '#92D050'}}>Une partie reversée à nos ONG partenaires!</p>
+                            <Link to='/basket'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter à votre panier solidaire !</Button></Link>
+                            
                         </Form>
 
                     </Col>
@@ -277,7 +287,11 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
+function mapStateToProps(state){
+    return { user: state.user}
+  }
+
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(ScreenFabricant);

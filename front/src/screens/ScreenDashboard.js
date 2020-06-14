@@ -24,7 +24,7 @@ function ScreenDashboard(props) {
     const [listOrder, setListOrder] = useState([]);
     const [listSale, setListSale] = useState([]);
 
-    //const [disabled, setDisabled] = useState(true)
+    const[isLogin, setIsLogin]=useState(true);
 
 
     var user;
@@ -59,7 +59,7 @@ function ScreenDashboard(props) {
         }
 
       }else{
-        return <Redirect to='/' />
+        setIsLogin(false)
       }
     
     }
@@ -92,9 +92,9 @@ function ScreenDashboard(props) {
     }
   });
 
-  //  if(!props.user){
-  //   return <Redirect to='/' />
-  // } 
+  if(!isLogin){
+    return (<Redirect to='/' />)
+  } 
  
   return (
     <Layout className="layout" style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}>

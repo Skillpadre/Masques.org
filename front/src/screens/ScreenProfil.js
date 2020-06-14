@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
 
 import {connect} from 'react-redux'
@@ -30,34 +31,37 @@ function ScreenProfil(props) {
 
     const [option, setOption] = useState([]);
 
+    const[isLogin, setIsLogin]=useState(true);
 
 
     useEffect(() => {
         // On charge les info pour les afficher
         console.log(props.user);
         async function loadInfo() {
-            const rawResponse = await fetch(`/users/loadinfo/${props.user.token}`);
-            const response = await rawResponse.json();
+            if(props.user){
+                const rawResponse = await fetch(`/users/loadinfo/${props.user.token}`);
+                const response = await rawResponse.json();
 
-            if(response.user){
-                setInfoLN(response.user.lastName);
-                setInfoFN(response.user.firstName);
-                setInfoAddress(response.user.address);
-                setInfoZip(response.user.zip_code);
-                setInfoCity(response.user.city);
-                setInfoTel(response.user.tel);
-                setAvatar(response.user.avatar);
+                if(response.user){
+                    setInfoLN(response.user.lastName);
+                    setInfoFN(response.user.firstName);
+                    setInfoAddress(response.user.address);
+                    setInfoZip(response.user.zip_code);
+                    setInfoCity(response.user.city);
+                    setInfoTel(response.user.tel);
+                    setAvatar(response.user.avatar);
 
-                if(response.user.coordinates){
-                    setInfoCoord(response.user.coordinates);
+                    if(response.user.coordinates){
+                        setInfoCoord(response.user.coordinates);
+                    }
                 }
-                
+            }else{
+                setIsLogin(false)
             }
-            
             
         }
         loadInfo();
-    }, [props.user.token]);
+    }, [props.user]);
 
     
 
@@ -111,7 +115,6 @@ function ScreenProfil(props) {
         localStorage.setItem('user', JSON.stringify(newAvatarUser));
         setChangAvatar(<p style={{color: '#52C41A', margin : 20}}>Le changement de votre avatar à bien été effectué !</p>)
 
-       
     }
 
     // Fonction au changement de l'input adresse
@@ -189,7 +192,9 @@ function ScreenProfil(props) {
         urlImg = avatar;
     }
     
-    
+    if(!isLogin){
+        return (<Redirect to='/' />)
+    } 
 
     return (
         <Layout style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}className="layout">
@@ -204,7 +209,7 @@ function ScreenProfil(props) {
                     <Col md={{span: 6}} sm={{span: 22}} offset={-3}>
                         <h3 style={{fontSize: 20, fontWeight: 700}}>Mon avatar</h3>
 
-                        <Input type='file' onChange={fileSelectedHandler} style={{margin: 20}}/>
+                        <Input type='file' accept="image/png, image/jpeg" onChange={fileSelectedHandler} style={{margin: 20}}/>
                         
                         <div><img alt='avatar' style={{width: 150, height: 150, borderRadius: '50%'}} src={urlImg}/></div>
 

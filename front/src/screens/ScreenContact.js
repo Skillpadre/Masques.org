@@ -118,7 +118,7 @@ function ScreenContact() {
                       },
                     ]}
           >
-            <Input.TextArea />
+            <Input.TextArea rows={6}/>
           </Form.Item>
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>

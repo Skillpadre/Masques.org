@@ -20,6 +20,7 @@ function ScreenBasket(props) {
 
     const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
+    const [userToken, setUserToken] = useState('')
   
     
     //Récupération du token dans localStorage
@@ -34,19 +35,9 @@ function ScreenBasket(props) {
         }
         readArticleList();
     }, []);
+    console.log(articleList)
 
-
-
-
-   /*  useEffect(() => {
-        async function articleList() {
-            setArticleList(props.order)
-        }
-        articleList();
-    }, []);
-
-
-    }, [articleList]); */
+console.log(props.token)
 
     let idCommande;
     if(props.order.length !== 0){
@@ -116,9 +107,29 @@ function ScreenBasket(props) {
         const rawResponse = await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
         const response = await rawResponse.json();
         console.log(response)
-    };
 
-  
+    };
+// Route pour add panier en sous doc
+   const addOrder = async (orders, total) => {
+
+       console.log(orders)
+        console.log(total)
+
+
+
+        const body = {orders : orders, total : total}
+     const bodyString =   JSON.stringify(body)
+    
+let data = await fetch('/add-order/' + props.token, {
+    method: 'POST',
+    headers: {'Content-Type':'application/Json'},
+    body: bodyString
+    });
+    let response = await data.json();
+console.log(response);
+         }
+
+
     return (
 
         <Layout className="layout" style={{ height: 'auto', backgroundColor: 'white' }}>
@@ -202,9 +213,14 @@ function ScreenBasket(props) {
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-                            <button role="link" onClick={() => {handleClick();majStock()}}>
+                                                 {/* Bouton pour route add panier en sous doc */}
+                            <button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalFinal)}}>
                                 Checkout
-                                </button>
+                                </button> 
+
+                                {/* <button role="link" onClick={() => {handleClick();majStock()}}>
+                                Checkout
+                                </button> */}
 
 
                         </div>
@@ -221,7 +237,7 @@ function ScreenBasket(props) {
 
 function mapStateToProps(state) {
     return {
-        token: state.userToken,
+        token: state.user.token,
         order: state.basketList
     }
 }

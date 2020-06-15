@@ -25,17 +25,53 @@ function ScreenMap(props) {
 
   const [visible, setVisible] = useState(false) //modal
 
-  useEffect(() => {
+  function geo_success(position) {
+    console.log('geoloc succes')
+    console.log(position.coords.latitude, position.coords.longitude);
+  
+    setCenter({lat: position.coords.latitude, lng: position.coords.longitude})
+  
     async function loadData() {
       var rawResponse = await fetch('/article-list');
       var response = await rawResponse.json();
-
-      setArticleList(response.articles);
-      setSellerList(response.sellers);
-      console.log(response.sellers);
-      console.log(response.articles)
+  
+      let sellers = [];
+      let articles = [];
+  
+      response.sellers.map((seller, i) => {
+       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 100) { // Rayon de 100 Km
+        sellers.push(seller);
+        articles.push(response.articles[i]);
+       }
+      })
+  
+      setArticleList(articles);
+      setSellerList(sellers);
+      console.log(sellers);
+      console.log(articles)
     }
     loadData()
+  }
+  
+  function geo_error() {
+    console.log("Sorry, no position available.");
+  }
+  
+  var geo_options = {
+    enableHighAccuracy: true, 
+    maximumAge        : 30000, 
+    timeout           : 27000
+  };
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      /* la géolocalisation est disponible */
+      navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+    } else {
+          /* la géolocalisation n'est pas disponible */
+          console.log('pas de geoloc')
+    }
+
   }, []);
 
   //MODAL
@@ -76,6 +112,8 @@ function ScreenMap(props) {
     }else{
       lien=`/login`
     }
+
+    
 
     return (
 
@@ -145,6 +183,20 @@ function ScreenMap(props) {
   );
 }
 
+
+
+
+function radian(degrees) { // transformer degrés en radians
+  let pi = Math.PI;
+  return degrees * (pi/180);
+}
+
+function calculDistance(lat1, lon1, lat2, lon2){ // calcul de distance entre 2 points, valeur retournée en Km
+  let distance = Math.acos(Math.sin(radian(lat1))*Math.sin(radian(lat2)) + Math.cos(radian(lat1))*Math.cos(radian(lat2))*Math.cos(radian(lon1-lon2)))*6371;
+  console.log('distance')
+  console.log(distance);
+  return distance;
+}
 
 function mapStateToProps(state) {
   return { user: state.user }

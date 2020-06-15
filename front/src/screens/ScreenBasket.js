@@ -114,12 +114,12 @@ function ScreenBasket(props) {
 
     };
 // Route pour add panier en sous doc
-   const addOrder = async (orders, total) => {
+   const addOrder = async (orders, quantity, total) => {
        console.log(orders)
         console.log(total)
 
-        const body = {orders : orders, total : total}
-     const bodyString =   JSON.stringify(body)
+    const body = {orders : orders, quantity : quantity, total : total}
+     const bodyString = JSON.stringify(body)
     
 let data = await fetch('/add-order/' + props.token, {
     method: 'POST',
@@ -128,7 +128,11 @@ let data = await fetch('/add-order/' + props.token, {
     });
     let response = await data.json();
 console.log(response);
-         }
+
+   }
+   const confirmBasket = async (orders, quantity, total) => {
+props.sendOrder(orders, quantity, total)
+   }
 
 
     return (
@@ -214,7 +218,10 @@ console.log(response);
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-                            <Button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                                                      {/* <button role="link" onClick={() => {handleClick();majStock()}}>
+                                Checkout
+                                </button> */}
+                            <Button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal); confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Paiement
                             </Button>
 
@@ -242,6 +249,9 @@ function mapDispatchToProps(dispatch) {
     return {
         sendQuantity: function (quantity) {
             dispatch({ type: 'sendQuantity', userQuantity: quantity })
+        },
+        sendOrder:function(orders, quantity, total) {
+            dispatch({type: "addBasket", userOrder: orders, userQuantity : quantity, userTotal : total})
         }
     }
 }

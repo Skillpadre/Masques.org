@@ -4,7 +4,8 @@ export default function(basketList= [], action){
         console.log('add basket ' + action.userOrder)
         var basketListCopy = [...basketList];
         basketListCopy.push(action.userOrder);
-  
+        basketListCopy.push(action.userQuantity);
+        basketListCopy.push(action.userTotal);
   console.log(basketListCopy)
         return basketListCopy;
     } else {

@@ -113,8 +113,10 @@ console.log(order)
             <div style={{display: 'flex', flexDirection: 'column', alignItems : 'center', color : '#1E272E', fontSize: 20, marginTop: 40}}>
 
 
-                <CheckCircleFilled style={{color: '#5CCF33', fontSize: 100}}/>
+                <CheckCircleFilled style={{color: '#92D050', fontSize: 100}}/>
                 <p style={{fontWeight : 700, margin: '10px 30px 50px'}}>Votre commande à bien été prise en compte !</p>
+                <p style={{color: '#92D050'}}>Merci pour votre merci pour votre achat responsable et solidaire !</p>
+
                 
                 <p>Récapitulatif</p>
                 <Table bordered
@@ -123,8 +125,7 @@ console.log(order)
                   style={{margin: '20px 0 20px', width: '70%'}} 
                   locale={{emptyText : 'Aucun article.'}}
                 />
-                <p>Merci pour votre confiance.</p>
-
+                
                 <Link to='/'><Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: 20}} type="primary">Retour à l'accueil</Button></Link>
 
             </div>

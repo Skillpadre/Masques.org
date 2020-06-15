@@ -94,28 +94,6 @@ router.get('/new-basket', async function (req, res) {
   res.json({ product, price })
 })
 
-router.post('/add-order/:token', async function (req, res, next) {
-   let user = await userModel.findOne({ token: req.params.token })
-    var articles = []     
- console.log(req.body.quantity)
-    for(var i =0; i < req.body.orders.length; i++){
-         articles.push(req.body.orders[i])
-        //  console.log(req.body.orders[i])
-   }
-user.commandes.push(
- {
-   articles: articles,
-   quantity: req.body.quantity,
-   totalPrice: req.body.total
-  }
-
-)
-await user.save();
-
-// // console.log("Première commande : " + user.commandes[0].articles[0].colors)
-console.log(user)
- res.json({user});
- });
 
 router.get('/valid-order', async function (req, res) {
 
@@ -143,7 +121,7 @@ router.post('/add-image', async function(req, res){
     //ENVOI VERS CLOUDINARY
     var resultCloudinary = await cloudinary.uploader.upload(pictureName);
   
-   console.log(resultCloudinary.url)
+   
     res.json({url : resultCloudinary.url});
   }else{
     res.json({error: resultCopy, article});
@@ -153,5 +131,35 @@ router.post('/add-image', async function(req, res){
  fs.unlinkSync(pictureName);
 
 });
+
+router.post('/add-order/:token', async function (req, res, next) {
+  let acheteur = await userModel.findOne({ token: req.params.token })
+   var articles = []     
+  
+   for(var i =0; i < req.body.orders.length; i++){
+      var vendeur= await userModel.findById(req.body.orders[i].sellerId)
+      console.log(vendeur)
+      vendeur.orders.push({
+        articles: req.body.orders[i],
+        quantity: req.body.quantity,
+        totalPrice: req.body.total,
+      })
+      await vendeur.save();
+        articles.push(req.body.orders[i])
+      //console.log(vendeur.orders)
+  }
+acheteur.commandes.push(
+{
+  articles: articles,
+  quantity: req.body.quantity,
+  totalPrice: req.body.total,
+ }
+
+)
+await acheteur.save();
+
+res.json({acheteur, vendeur});
+});
+
 
 module.exports = router;

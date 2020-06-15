@@ -99,7 +99,10 @@ function ScreenDashboard(props) {
 
   listSale.map((article, i) => {
     if (!article.sellout) {
+      console.log('test' + i)
+      console.log(article.date_insert);
       let date = new Date(article.date_insert);
+      console.log(date);
       let day = date.getDate();
       let month = date.getMonth() + 1;
       let year = date.getFullYear();

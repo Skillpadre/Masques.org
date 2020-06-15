@@ -26,16 +26,19 @@ function ScreenFabricant(props) {
     const [modele, setModele] = useState('');
     const [modelList, setModelList] = useState([]);
 
-    const [quantity, setQuantity] = useState(0);
+    const [inscription, setInscription] = useState('');
+    const [inscriptionList, setInscriptionList] = useState([]);
 
-    const [inscription, setInscription] = useState('')
+    const [quantity, setQuantity] = useState(0);
 
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
 
     const [colorInscription, setColorInscription] = useState('black')
+
     const [image, setImage] = useState('');
-    
+    const [logoList, setLogoList] = useState([]);
+
     useEffect(() => {
         var data = async () => {
             var rawResponse = await fetch(`/articleId/${props.match.params.id}`);
@@ -45,6 +48,8 @@ function ScreenFabricant(props) {
             setColorsList(response.article.colors);
             setModelList(response.article.model);
             SetMatiereList(response.article.material);
+            setInscriptionList(response.article.inscription);
+            setLogoList(response.article.logo);
 
             setDescription(response.article.description);
             setStock(response.article.stock)
@@ -126,6 +131,29 @@ function ScreenFabricant(props) {
     
     var urlImg=`/assets/masques/masque-${color}.png`;
 
+    let inscriptionDisplay;
+    let logoDisplay;
+
+    if(inscriptionList[0]){
+        inscriptionDisplay = 
+        <Form.Item label="Inscription" name="Inscription"
+            rules={[{ required: false }]}
+        >
+            <Input.TextArea 
+                placeholder='Entrez l’inscription souhaitée'
+                value={inscription}
+                onChange={e=>setInscription(e.target.value)} 
+            />
+        </Form.Item> 
+    }
+
+    if(logoList[0]){
+        logoDisplay = 
+        <Form.Item label="Image" name="Image">
+            <Input type='file' accept="image/png, image/jpeg" onChange={fileSelectedHandler}/>
+             <Button style={{ borderRadius: 5, marginTop: 5 }} onClick={handleClickImage}>Télécharger</Button>
+        </Form.Item>
+    }
 
     return (
 
@@ -222,20 +250,9 @@ function ScreenFabricant(props) {
 
                             
 
-                             <Form.Item label="Inscription" name="Inscription"
-                                rules={[{ required: false }]}
-                            >
-                                <Input.TextArea 
-                                    placeholder='Entrez l’inscription souhaitée'
-                                    value={inscription}
-                                    onChange={e=>setInscription(e.target.value)} 
-                                />
-                            </Form.Item> 
+                             {inscriptionDisplay}
 
-                            <Form.Item label="Image" name="Image">
-                                <Input type='file' accept="image/png, image/jpeg" onChange={fileSelectedHandler}/>
-                                <Button style={{ borderRadius: 5, marginTop: 5 }} onClick={handleClickImage}>Télécharger</Button>
-                            </Form.Item>
+                            {logoDisplay}
 
                             <Form.Item label="Quantité" name="Quantité"
                                 rules={[{ required: true, message: 'Entrer la quantité de masque souhaitée' }]}

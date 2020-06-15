@@ -1,5 +1,17 @@
 const mongoose = require('mongoose');
 
+const locationSchema = new mongoose.Schema({
+    latitude: Number,
+    longitude: Number
+});
+
+const commandeSchema = new mongoose.Schema({
+    articles: Array,
+    totalPrice: Number,
+    sellerId: String
+    });
+
+
 const userSchema = new mongoose.Schema({
     email: String,
     username: String,
@@ -16,6 +28,7 @@ const userSchema = new mongoose.Schema({
     avatar: String,
     coordinates: Array, // [longitude, latitude]
     orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'orders'}],
+    commandes: [commandeSchema],
     articles: [{type: mongoose.Schema.Types.ObjectId, ref: 'articles'}],
 });
 

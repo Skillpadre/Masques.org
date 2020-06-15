@@ -10,7 +10,6 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
-import { set } from 'mongoose';
 const stripePromise = loadStripe('pk_test_T60y6sAVREOC6Dq9Cixjjx6I00TSGd4n7j');
 const { Content } = Layout;
 
@@ -29,19 +28,18 @@ function ScreenBasket(props) {
     var userPanier = JSON.parse(localStorage.getItem('panier'))
     const [radioValue, setRadioValue] = useState('')
 
-    //Récupération du panier dans localStorage
-    var userPanier = JSON.parse(localStorage.getItem('panier'));
-
     useEffect(() => {
         function readArticleList() {
+            //Récupération du panier dans localStorage
+            var userPanier = JSON.parse(localStorage.getItem('panier'))
             
             setArticleList(userPanier)
-
         }
         readArticleList();
     }, []);
     console.log(articleList)
 
+console.log(props.token)
 
     let idCommande;
     if(props.order.length !== 0){
@@ -81,8 +79,6 @@ function ScreenBasket(props) {
        
         //console.log(panier)
         localStorage.setItem("panier", JSON.stringify(panier)); //je renvoi le nouveau tableau dans le local storage
-        userPanier= JSON.parse(localStorage.getItem('panier'));
-        setArticleList(userPanier)
        
     }
 
@@ -171,7 +167,7 @@ console.log(response);
                                         />
 
                                         <List.Item.Meta
-                                            description={"Matière : " + item.material}
+                                            description={"Matière : " + item.colors}
                                         />
 
                                         <List.Item.Meta

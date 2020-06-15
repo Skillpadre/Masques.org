@@ -8,6 +8,7 @@ let encBase64 = require("crypto-js/enc-base64");
 let userModel = require('../models/user');
 let articleModel = require('../models/articles');
 let orderModel = require('../models/orders');
+let commandeModel = require('../models/commandes');
 
 var cloudinary = require('cloudinary').v2;
 var uniqid = require('uniqid');

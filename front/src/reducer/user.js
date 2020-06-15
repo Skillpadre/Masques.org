@@ -6,7 +6,6 @@ export default function(user = {}, action){
     } else if (action.type === 'deleteUser') {
         let resetUser = {};
         return resetUser;
-
     } else {
         return user;
     }

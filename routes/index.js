@@ -3,6 +3,8 @@ var router = express.Router();
 
 let articleModel = require('../models/articles');
 let userModel = require('../models/user')
+let orderModel = require('../models/orders')
+let commandeModel = require('../models/commandes');
 
 var cloudinary = require('cloudinary').v2;
 var uniqid = require('uniqid');
@@ -23,8 +25,8 @@ router.get('/', function (req, res, next) {
 router.post('/add-article/:token', async function (req, res, next) {
   let user = await userModel.findOne({ token: req.params.token })
 
-  console.log(req.params.token);
-  console.log(req.body);
+  // console.log(req.params.token);
+  // console.log(req.body);
   let article;
   let result = false;
   let date = new Date();
@@ -61,10 +63,10 @@ router.get('/article-list', async function (req, res, next) {
   let sellers = [];
   for (let i = 0; i < articles.length; i++) {
     let user = await userModel.findById(articles[i].sellerId);
-    console.log(articles[i].sellerId)
+    // console.log(articles[i].sellerId)
     sellers.push(user);
   }
-  console.log(sellers)
+  // console.log(sellers)
 
 
   res.json({ articles, sellers });
@@ -73,8 +75,8 @@ router.get('/article-list', async function (req, res, next) {
 router.get('/articleId/:id', async function (req, res) {
   let article = await articleModel.findById(req.params.id);
   let seller = await userModel.findById(article.sellerId)
-  console.log(article);
-  console.log(seller);
+  // console.log(article);
+  // console.log(seller);
   res.json({ article, seller });
 });
 
@@ -92,19 +94,39 @@ router.get('/new-basket', async function (req, res) {
   res.json({ product, price })
 })
 
+router.post('/add-order/:token', async function (req, res, next) {
+   let user = await userModel.findOne({ token: req.params.token })
+    var articles = []     
+ 
+ 
+    for(var i =0; i < req.body.orders.length; i++){
+         articles.push(req.body.orders[i])
+         console.log(req.body.orders[i])
+   }
+user.commandes.push(
+ {
+   articles: articles,
+   totalPrice: req.body.total
+  }
+
+)
+console.log(user.commandes[0].articles[0])
+ res.json({commandes : user.commandes});
+ });
+
 router.get('/valid-order', async function (req, res) {
 
   var lessQuantity = req.query.quantity
-  console.log(lessQuantity)
+  // console.log(lessQuantity)
   var article = await articleModel.findById(req.query.id)
-  console.log(article.stock)
+  // console.log(article.stock)
   var stock = article.stock
   var newStock = stock - lessQuantity
-console.log(newStock)
+  // console.log(newStock)
   var updateStock = await article.updateOne(
     { stock: newStock },
   );
-  res.json({stock, newStock })
+  res.json({ stock, newStock })
 })
 
 router.post('/add-image', async function(req, res){

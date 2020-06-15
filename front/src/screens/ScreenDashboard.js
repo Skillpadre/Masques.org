@@ -23,6 +23,7 @@ function ScreenDashboard(props) {
 
     const [listOrder, setListOrder] = useState([]);
     const [listSale, setListSale] = useState([]);
+    const [listCommandes, setListCommandes] = useState([])
 
     const[isLogin, setIsLogin]=useState(true);
 
@@ -53,7 +54,6 @@ function ScreenDashboard(props) {
           setInfoCity(response.user.city);
           setInfoTel(response.user.tel);
           setAvatar(response.user.avatar);
-
           setListOrder(response.user.orders);
           setListSale(response.user.articles);
         }
@@ -66,6 +66,12 @@ function ScreenDashboard(props) {
     loadUser();
   }, [user]);
 
+console.log(user)
+
+
+
+
+console.log(listCommandes)
 
   let afficherNom = infoFN + ' ' + infoLN;
   if(!infoFN || !infoLN){
@@ -153,13 +159,13 @@ function ScreenDashboard(props) {
 
               <List locale={{emptyText : "Vous n'avez pas encore passé de commande."}}
                 itemLayout="horizontal"
-                dataSource={listOrder}
+                dataSource={listCommandes}
                 renderItem={item => (
                   <List.Item>
                     <List.Item.Meta
                       avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                      title={<a href="https://ant.design">{item.title}</a>}
-                      description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                      title={"Commande n° " + item._id}
+               
                     />
                   </List.Item>
                 )}
@@ -175,7 +181,9 @@ function ScreenDashboard(props) {
 }
 
 function mapStateToProps(state){
-  return { user: state.user}
+  return { 
+    user: state.user
+  }
 }
 
 export default connect(mapStateToProps, null)(ScreenDashboard);

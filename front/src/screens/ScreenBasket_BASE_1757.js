@@ -10,7 +10,6 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
-import { set } from 'mongoose';
 const stripePromise = loadStripe('pk_test_T60y6sAVREOC6Dq9Cixjjx6I00TSGd4n7j');
 const { Content } = Layout;
 
@@ -19,28 +18,19 @@ function ScreenBasket(props) {
 
     const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
-    const [userToken, setUserToken] = useState('')
-  
-    
-    //Récupération du token dans localStorage
-    /* var userPanier = JSON.parse(localStorage.getItem('panier'))
-    console.log(articleList) */
-   
-    var userPanier = JSON.parse(localStorage.getItem('panier'))
     const [radioValue, setRadioValue] = useState('')
-
-    //Récupération du panier dans localStorage
-    var userPanier = JSON.parse(localStorage.getItem('panier'));
 
     useEffect(() => {
         function readArticleList() {
+            //Récupération du panier dans localStorage
+            var userPanier = JSON.parse(localStorage.getItem('panier'))
             
             setArticleList(userPanier)
-
         }
         readArticleList();
     }, []);
-    console.log(articleList)
+
+    
 
 
     let idCommande;
@@ -81,8 +71,6 @@ function ScreenBasket(props) {
        
         //console.log(panier)
         localStorage.setItem("panier", JSON.stringify(panier)); //je renvoi le nouveau tableau dans le local storage
-        userPanier= JSON.parse(localStorage.getItem('panier'));
-        setArticleList(userPanier)
        
     }
 
@@ -111,29 +99,8 @@ function ScreenBasket(props) {
         const rawResponse = await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
         const response = await rawResponse.json();
         console.log(response)
-
     };
-// Route pour add panier en sous doc
-   const addOrder = async (orders, total) => {
-
-       console.log(orders)
-        console.log(total)
-
-
-
-        const body = {orders : orders, total : total}
-     const bodyString =   JSON.stringify(body)
-    
-let data = await fetch('/add-order/' + props.token, {
-    method: 'POST',
-    headers: {'Content-Type':'application/Json'},
-    body: bodyString
-    });
-    let response = await data.json();
-console.log(response);
-         }
-
-
+  
     return (
 
         <Layout className="layout" style={{ minHeight: '100vh', height: 'auto', backgroundColor: 'white' }}>
@@ -171,7 +138,7 @@ console.log(response);
                                         />
 
                                         <List.Item.Meta
-                                            description={"Matière : " + item.material}
+                                            description={"Matière : " + item.colors}
                                         />
 
                                         <List.Item.Meta
@@ -217,10 +184,7 @@ console.log(response);
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-                                                      {/* <button role="link" onClick={() => {handleClick();majStock()}}>
-                                Checkout
-                                </button> */}
-                            <Button role="link" onClick={() => {handleClick();majStock(),addOrder(articleList, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                            <Button role="link" onClick={() => {handleClick();majStock()}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Paiement
                             </Button>
 
@@ -239,7 +203,7 @@ console.log(response);
 
 function mapStateToProps(state) {
     return {
-        token: state.user.token,
+        token: state.userToken,
         order: state.basketList
     }
 }

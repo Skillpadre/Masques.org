@@ -11,6 +11,7 @@ import GoogleMapReact from 'google-map-react';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
+import Marker from './Marker';
 
 const { Content } = Layout;
 
@@ -18,7 +19,7 @@ const { Content } = Layout;
 function ScreenMap(props) {
 
   const [center, setCenter] = useState({ lat: 11.0168, lng: 76.9558 });
-  const [zoom, setZoom] = useState(11);
+  const [zoom, setZoom] = useState(9);
 
   const [articleList, setArticleList] = useState([]);
   const [sellerList, setSellerList] = useState([]);
@@ -88,6 +89,7 @@ function ScreenMap(props) {
    };
 
   var buyingList;
+  var markers;
   //Si articleList est vide je met un spinner en attendant le chargement
   if (articleList.length<1){
     buyingList= <Space style={{marginTop: 10, display: 'flex', width : '100%', flexDirection: 'column', textAlign: 'center'}}>
@@ -112,8 +114,6 @@ function ScreenMap(props) {
     }else{
       lien=`/login`
     }
-
-    
 
     return (
 
@@ -144,7 +144,47 @@ function ScreenMap(props) {
       </List.Item>
 
     )
-  })
+  });
+
+  // Markers 
+  markers = articleList.map((item, i) => {
+    let urlAvatar = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png";
+    let username;
+    let lat;
+    let lng;
+    if(sellerList[i]){
+      urlAvatar = sellerList[i].avatar;
+      username = sellerList[i].username;
+      lat = sellerList[i].coordinates[1];
+      lng = sellerList[i].coordinates[0];
+    }
+
+    var lien;
+    //Si le user existe je l'autorise à allez sur la page fabricant
+    if(props.user){
+      lien=`/fabricant/${item._id}`
+    }else{
+      lien=`/login`
+    }
+
+    return (
+        <Marker
+          lat = {lat}
+          lng = {lng}
+          username={username}
+          urlAvatar = {urlAvatar}
+          color="blue"
+          id={i}
+          lien={lien}
+          description={item.description}
+        />
+      )
+    
+    
+
+    
+  });
+
   }
 
   return (
@@ -159,11 +199,12 @@ function ScreenMap(props) {
         <Row style={{width: '80%',height: '60vh', marginTop: 30}}>
     
             <GoogleMapReact
-              bootstrapURLKeys={{ key: 'AIzaSyA6lFML5Gv6tvWgNl0X7kXn6X1uMQyzX8o' }}
+              bootstrapURLKeys={{ key: 'AIzaSyA7dxkypDmi6PUAA5D5tCx0mQ_s_UiwimM' }}
               defaultCenter={center}
               defaultZoom={zoom}
-
-            />
+              >
+                {markers}
+            </GoogleMapReact>
      
         </Row>
         <Row style={{marginTop: 25}}>

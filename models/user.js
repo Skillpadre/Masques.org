@@ -5,12 +5,23 @@ const locationSchema = new mongoose.Schema({
     longitude: Number
 });
 
+//Commandes coté Acheteur
 const commandeSchema = new mongoose.Schema({
     articles: Array,
     quantity: Number,
     totalPrice: Number,
-    sellerId: String
-    });
+    sellerId: String,
+    livraison: String
+});
+
+//Commandes coté Vendeur
+const orderSchema = new mongoose.Schema({
+    articles: Object,
+    quantity: Number,
+    totalPrice: Number,
+    sellerId: String,
+    livraison: String
+});
 
 
 const userSchema = new mongoose.Schema({
@@ -28,7 +39,7 @@ const userSchema = new mongoose.Schema({
     tel: String,
     avatar: String,
     coordinates: Array, // [longitude, latitude]
-    orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'orders'}],
+    orders: [orderSchema],
     commandes: [commandeSchema],
     articles: [{type: mongoose.Schema.Types.ObjectId, ref: 'articles'}],
 });

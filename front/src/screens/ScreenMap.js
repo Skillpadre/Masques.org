@@ -19,7 +19,7 @@ const { Content } = Layout;
 function ScreenMap(props) {
 
   const [center, setCenter] = useState({ lat: 11.0168, lng: 76.9558 });
-  const [zoom, setZoom] = useState(9);
+  const [zoom, setZoom] = useState(14);
 
   const [articleList, setArticleList] = useState([]);
   const [sellerList, setSellerList] = useState([]);

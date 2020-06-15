@@ -10,7 +10,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
-import { set } from 'mongoose';
+
 const stripePromise = loadStripe('pk_test_T60y6sAVREOC6Dq9Cixjjx6I00TSGd4n7j');
 const { Content } = Layout;
 
@@ -20,14 +20,9 @@ function ScreenBasket(props) {
     const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
     const [userToken, setUserToken] = useState('')
-  
-    
-    //Récupération du token dans localStorage
-    /* var userPanier = JSON.parse(localStorage.getItem('panier'))
-    console.log(articleList) */
-   
-    var userPanier = JSON.parse(localStorage.getItem('panier'))
-    const [radioValue, setRadioValue] = useState('')
+
+    const [livraison, setLivraison] = useState('')
+ 
 
     //Récupération du panier dans localStorage
     var userPanier = JSON.parse(localStorage.getItem('panier'));
@@ -40,7 +35,7 @@ function ScreenBasket(props) {
         }
         readArticleList();
     }, []);
-    console.log(articleList)
+   
 
 
     let idCommande;
@@ -69,8 +64,7 @@ function ScreenBasket(props) {
 
 
     var onChange = e => {
-        console.log('radio checked', e.target.value);
-        setRadioValue(e.target.value);
+        setLivraison(e.target.value);
     };
     
     //supression article panier
@@ -79,7 +73,6 @@ function ScreenBasket(props) {
         var panier=articleList; //je récupère les produits
         panier.splice(indexItem,1); //je supprime celui choisi
        
-        //console.log(panier)
         localStorage.setItem("panier", JSON.stringify(panier)); //je renvoi le nouveau tableau dans le local storage
         userPanier= JSON.parse(localStorage.getItem('panier'));
         setArticleList(userPanier)
@@ -114,25 +107,23 @@ function ScreenBasket(props) {
 
     };
 // Route pour add panier en sous doc
-   const addOrder = async (orders, quantity, total) => {
-       console.log(orders)
-        console.log(total)
+    const addOrder = async (orders, quantity, total) => {
 
-    const body = {orders : orders, quantity : quantity, total : total}
-     const bodyString = JSON.stringify(body)
-    
-let data = await fetch('/add-order/' + props.token, {
-    method: 'POST',
-    headers: {'Content-Type':'application/Json'},
-    body: bodyString
-    });
-    let response = await data.json();
-console.log(response);
+        const body = {orders : orders, quantity : quantity, total : total, livraison : livraison}
+        const bodyString = JSON.stringify(body)
+        
+        let data = await fetch('/add-order/' + props.token, {
+            method: 'POST',
+            headers: {'Content-Type':'application/Json'},
+            body: bodyString
+        });
+        let response = await data.json();
+        localStorage.setItem("panier", JSON.stringify([])); //je renvoi le panier vide dans le local storage
+    }
 
-   }
-   const confirmBasket = async (orders, quantity, total) => {
-props.sendOrder(orders, quantity, total)
-   }
+    const confirmBasket = async (orders, quantity, total) => {
+        props.sendOrder(orders, quantity, total)
+    }
 
 
     return (
@@ -163,28 +154,34 @@ props.sendOrder(orders, quantity, total)
                                     >
                                     
                                         <List.Item.Meta
-                                            description={"Modèle : " + item.model}
+                                            title={"Modèle : "}
+                                            description={item.model}
 
                                         />
 
                                         <List.Item.Meta
-                                            description={"Couleur  : " + item.colors}
+                                            title={"Couleur : "}
+                                            description={item.colors}
                                         />
 
                                         <List.Item.Meta
-                                            description={"Matière : " + item.material}
+                                            title={"Matière : "}
+                                            description={item.material}
                                         />
 
                                         <List.Item.Meta
-                                            description={"Qualité : " + item.quality}
+                                        title={"Qualité : "}
+                                            description={item.quality}
                                         />
                                         <List.Item.Meta
-                                            description={"Quantité : " + item.quantity}
+                                        title={"Quantité : "}
+                                            description={item.quantity}
                                         />
 
                                         <List.Item.Meta
                                             style={{ fontWeight: 600 }}
-                                            description={"Prix : " + (item.priceUnit * item.quantity) + ' €'}
+                                            title={"Prix : "}
+                                            description={(item.priceUnit * item.quantity) + ' €'}
                                         />
 
                                     </List.Item>
@@ -208,7 +205,7 @@ props.sendOrder(orders, quantity, total)
 
                         <div id="retrait">
                             <h2>Moyen de retrait</h2>
-                            <Radio.Group onChange={onChange} value={radioValue}>
+                            <Radio.Group onChange={onChange} value={livraison}>
                                 <Radio style={radioStyle} value={'Retrait'}>
                                     Retrait
                                  </Radio>
@@ -221,7 +218,7 @@ props.sendOrder(orders, quantity, total)
                                                       {/* <button role="link" onClick={() => {handleClick();majStock()}}>
                                 Checkout
                                 </button> */}
-                            <Button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal); confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                            <Button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal, livraison); confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Paiement
                             </Button>
 

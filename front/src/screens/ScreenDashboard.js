@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import { Row, Col, Button, Layout, List, Avatar } from 'antd';
+import { Row, Col, Button, Layout, List, Modal } from 'antd';
 import { Redirect, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import Nav from './Nav'
@@ -21,11 +21,13 @@ function ScreenDashboard(props) {
   const [infoTel, setInfoTel] = useState();
   const [avatar, setAvatar] = useState();
 
-  const [listOrder, setListOrder] = useState([]);
   const [listSale, setListSale] = useState([]);
-  const [listCommandes, setListCommandes] = useState([])
+  const [listCommandes, setListCommandes] = useState([])//Commandes coté Acheteur
+  const [listOrders, setListOrders] = useState([])//Commandes coté Vendeur
 
   const [isLogin, setIsLogin] = useState(true);
+
+  const [visible, setVisible] = useState(false)//modal
 
 
   var user;
@@ -42,9 +44,8 @@ function ScreenDashboard(props) {
         const rawResponse = await fetch(`/users/loadinfo/${user.token}`);
         const response = await rawResponse.json();
 
-        console.log(response.user)
-
-        if (response.user) {
+  
+        if (response.user.commandes) {
 
           setInfoUsername(response.user.username)
           setInfoLN(response.user.lastName);
@@ -54,9 +55,11 @@ function ScreenDashboard(props) {
           setInfoCity(response.user.city);
           setInfoTel(response.user.tel);
           setAvatar(response.user.avatar);
-          setListOrder(response.user.orders);
           setListCommandes(response.user.commandes)
+          setListOrders(response.user.orders)
           setListSale(response.user.articles);
+          
+          console.log(response.user.orders)
         }
 
       } else {
@@ -68,7 +71,19 @@ function ScreenDashboard(props) {
   }, [user]);
 
 
-  console.log(listCommandes)
+  //MODAL PERSONNALISATION
+  var showModal = () => {
+    setVisible(true)
+  };
+
+  var handleOk = e => {
+    setVisible(false)
+  };
+
+  var handleCancel = e => {
+    setVisible(false)
+  };
+ 
 
   let afficherNom = infoFN + ' ' + infoLN;
   if (!infoFN || !infoLN) {
@@ -105,7 +120,7 @@ function ScreenDashboard(props) {
 
       <Content style={{ height: '100%', padding: '0 50px', margin: '40px 0' }} className="Dashboard-page">
 
-        <Row justify='center' align='middle'>
+        <Row justify='center' align='top'>
           {finaliserCompte}
         </Row>
 
@@ -129,53 +144,103 @@ function ScreenDashboard(props) {
 
         </Row>
 
-        <Row style={{ marginTop: 40 }}>
+        <Row style={{ marginTop: 40 }} justify='center'>
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
-            <h2>Commandes en attente de validation</h2>
-            <div id="dashboard-box-pendingOrder" className="dashboard-box">
+            <h2>Mes offres publiées</h2>
+            <div className="dashboard-box">
 
-              <List locale={{ emptyText: "Aucune commande en attente de validation." }}
+              <List locale={{ emptyText: "Aucune offre publiée." }}
                 itemLayout="horizontal"
                 dataSource={listPendingSale}
                 renderItem={item => (
                   <List.Item style={{ marginLeft: 7 }}>
                     <List.Item.Meta
-                      //avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                      title={"Article n° " + item._id}
+                      title={"Offre n° " + item._id}
                       description={"Créé le " + item.date_insert}
                     />
                     {item.description}
                   </List.Item>
                 )}
-              />,
-  </div>
+              />
+            </div>
           </Col>
-          <Col md={{ span: 12 }} sm={{ span: 24 }}>
-            <h2>Historique des commandes</h2>
-            <div id="dashboard-box-FinishOrder" className="dashboard-box">
 
-              <List locale={{ emptyText: "Vous n'avez pas encore passé de commande." }}
+          <Col md={{ span: 12 }} sm={{ span: 24 }}>
+            <h2>Mes commandes passées</h2>
+            <div className="dashboard-box">
+
+              <List locale={{ emptyText: "Aucune commande passée." }}
                 itemLayout="horizontal"
                 dataSource={listCommandes}
                 renderItem={item => (
-                  <List.Item>
+                  <List.Item style={{ marginLeft: 7 }}>
                     <List.Item.Meta
                       title={"Commande n° " + item._id}
-                    />
-                    <List.Item.Meta
                       description={"Quantité commandée : " + item.quantity}
-
                     />
-
-                    <List.Item.Meta
-                      description={"Prix total  : " + item.totalPrice}
-                    />
-
+                    {" Prix total :" + item.totalPrice + '€'}
                   </List.Item>
-                  
                 )}
-              />,
-  </div>
+              />
+            </div>
+          </Col>
+        
+          <Col md={{ span: 20 }} sm={{ span: 24 }}>
+            <h2>Commandes clients</h2>
+            <div className='dashboard-box'>
+              
+               <List 
+                  locale={{emptyText : 'Aucun commande client.'}}
+                  style={{ margin: "10px 15px 0 10px"}}
+                  dataSource={listOrders}
+                  renderItem={item => (
+                      <List.Item>
+                      
+                          <List.Item.Meta
+                              title={"Commande n° " + item._id}
+                              description={"Quantité commandée : " + item.quantity}
+                          />
+
+                          <List.Item.Meta
+                              title={"Modèle : "}
+                              description={item.articles.model}
+                          />
+
+                          <List.Item.Meta
+                                title={"Couleur : "}
+                                description={item.articles.colors}
+                          />
+
+                          <List.Item.Meta
+                              title={"Matière : "}
+                              description={item.articles.material}
+                          />
+                          <List.Item.Meta
+                              title={"Prix total : "}
+                              description={item.totalPrice + '€'}
+                          />
+                          <List.Item.Meta
+                            title={<Button style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type="primary" onClick={showModal}>Voir personnalisation</Button>}
+                          />
+          
+                          <Modal style={{textAlign: 'center'}}
+                                  title="Personnalisation client"
+                                  visible={visible}
+                                  onOk={handleOk}
+                                  onCancel={handleCancel}
+                            >
+                              <div className='masque' style={{backgroundImage: `url(${item.articles.urlImg})`}}>
+                                  <p style={{ marginTop: 90, fontSize: 25, color: 'black', maxWidth: '270px'}}>{item.articles.designText}</p>
+                                  {item.articles.designImg!== ''?<img style={{ width: 150, height: 100}} src={item.articles.designImg} alt='image sur masque'/> :null}
+                              </div>
+        
+                            </Modal>
+                      </List.Item>
+                  )}
+                  
+              />
+
+            </div>
           </Col>
         </Row>
 

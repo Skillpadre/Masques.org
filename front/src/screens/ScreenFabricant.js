@@ -6,6 +6,7 @@ import Nav from './Nav'
 import FooterComp from './Footer';
 
 import { Row, Col, Layout, Avatar, Form, Select, Input, InputNumber, Button } from 'antd';
+import { OrderedListOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -88,6 +89,9 @@ function ScreenFabricant(props) {
         order.quantity = quantity
         order.material = material
         order.model = modele
+        order.designText= inscription //HERE
+        order.designImg = image //HERE
+        order.urlImg= urlImg
         props.sendOrder(order)
 
         
@@ -156,12 +160,6 @@ function ScreenFabricant(props) {
                             <p style={{ marginTop: 90, fontSize: 25, color: colorInscription, maxWidth: '270px'}}>{inscription}</p>
                             {image!== ''?<img style={{ width: 150, height: 100}} src={image} alt='image sur masque'/> :null}
                         </div>
-
-                        {/* <Card style={{width: '70%'}}
-                            cover={<img alt="masque" src={`../assets/masques/masque-${color}.png`} />}
-                        >
-                        </Card> */}
-
 
                     </Col>
                     <Col md={{ span: 7 }} sm={{ span: 12 }}>

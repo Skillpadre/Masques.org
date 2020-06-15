@@ -27,8 +27,7 @@ function ScreenMap(props) {
   const [visible, setVisible] = useState(false) //modal
 
   function geo_success(position) {
-    console.log('geoloc succes')
-    console.log(position.coords.latitude, position.coords.longitude);
+    //console.log('geoloc succes')
   
     setCenter({lat: position.coords.latitude, lng: position.coords.longitude})
   
@@ -48,8 +47,6 @@ function ScreenMap(props) {
   
       setArticleList(articles);
       setSellerList(sellers);
-      console.log(sellers);
-      console.log(articles)
     }
     loadData()
   }
@@ -89,7 +86,7 @@ function ScreenMap(props) {
    };
 
   var buyingList;
-  var markers;
+  var markers=[];
   //Si articleList est vide je met un spinner en attendant le chargement
   if (articleList.length<1){
     buyingList= <Space style={{marginTop: 10, display: 'flex', width : '100%', flexDirection: 'column', textAlign: 'center'}}>
@@ -147,36 +144,39 @@ function ScreenMap(props) {
   });
 
   // Markers 
-  markers = articleList.map((item, i) => {
-    let urlAvatar = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png";
-    let username;
-    let lat;
-    let lng;
-    if(sellerList[i]){
-      urlAvatar = sellerList[i].avatar;
-      username = sellerList[i].username;
-      lat = sellerList[i].coordinates[1];
-      lng = sellerList[i].coordinates[0];
+  sellerList.map((item, i) => {
+    let urlAvatar = item.avatar;
+    let username = item.username;
+    let lat = item.coordinates[1];
+    let lng = item.coordinates[0];
+    let articles = [];
+    
+    //on ajoute que les articles encore en vente
+    for(let i=0; i<articleList.length; i++){
+      if(!articleList[i].sellout && articleList[i].sellerId === item._id){
+        articles.push(articleList[i]);
+      }
     }
 
     var lien;
     //Si le user existe je l'autorise à allez sur la page fabricant
     if(props.user){
-      lien=`/fabricant/${item._id}`
+      lien=`/fabricant/`
     }else{
       lien=`/login`
     }
 
-    return (
+    markers.push(
         <Marker
           lat = {lat}
           lng = {lng}
           username={username}
           urlAvatar = {urlAvatar}
-          color="blue"
+          color="#92D050"
           id={i}
           lien={lien}
-          description={item.description}
+          articles={articles}
+          
         />
       )
     
@@ -234,8 +234,6 @@ function radian(degrees) { // transformer degrés en radians
 
 function calculDistance(lat1, lon1, lat2, lon2){ // calcul de distance entre 2 points, valeur retournée en Km
   let distance = Math.acos(Math.sin(radian(lat1))*Math.sin(radian(lat2)) + Math.cos(radian(lat1))*Math.cos(radian(lat2))*Math.cos(radian(lon1-lon2)))*6371;
-  console.log('distance')
-  console.log(distance);
   return distance;
 }
 

@@ -21,10 +21,6 @@ function ScreenBasket(props) {
     const [articleList, setArticleList] = useState([])
     const [userToken, setUserToken] = useState('')
   
-    
-    //Récupération du token dans localStorage
-    /* var userPanier = JSON.parse(localStorage.getItem('panier'))
-    console.log(articleList) */
    
     var userPanier = JSON.parse(localStorage.getItem('panier'))
     const [radioValue, setRadioValue] = useState('')
@@ -121,17 +117,17 @@ function ScreenBasket(props) {
     const body = {orders : orders, quantity : quantity, total : total}
      const bodyString = JSON.stringify(body)
     
-let data = await fetch('/add-order/' + props.token, {
-    method: 'POST',
-    headers: {'Content-Type':'application/Json'},
-    body: bodyString
+    let data = await fetch('/add-order/' + props.token, {
+        method: 'POST',
+        headers: {'Content-Type':'application/Json'},
+        body: bodyString
     });
     let response = await data.json();
-console.log(response);
-
+    localStorage.setItem("panier", JSON.stringify([])); //je renvoi le panier vide dans le local storage
    }
+
    const confirmBasket = async (orders, quantity, total) => {
-props.sendOrder(orders, quantity, total)
+    props.sendOrder(orders, quantity, total)
    }
 
 

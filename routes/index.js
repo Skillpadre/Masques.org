@@ -143,6 +143,7 @@ router.post('/add-order/:token', async function (req, res, next) {
         articles: req.body.orders[i],
         quantity: req.body.quantity,
         totalPrice: req.body.total,
+        livraison: req.body.livraison
       })
       await vendeur.save();
         articles.push(req.body.orders[i])
@@ -153,6 +154,7 @@ acheteur.commandes.push(
   articles: articles,
   quantity: req.body.quantity,
   totalPrice: req.body.total,
+  livraison: req.body.livraison
  }
 
 )

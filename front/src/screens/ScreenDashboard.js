@@ -178,7 +178,7 @@ function ScreenDashboard(props) {
                       title={"Commande n° " + item._id}
                       description={"Quantité commandée : " + item.quantity}
                     />
-                    {" Prix total :" + item.totalPrice}
+                    {" Prix total :" + item.totalPrice + '€'}
                   </List.Item>
                 )}
               />
@@ -230,8 +230,8 @@ function ScreenDashboard(props) {
                                   onCancel={handleCancel}
                             >
                               <div className='masque' style={{backgroundImage: `url(${item.articles.urlImg})`}}>
-                                  <p style={{ marginTop: 90, fontSize: 25, color: 'white', maxWidth: '270px'}}>{item.articles.designText}</p>
-                                  <img style={{ width: 150, height: 100}} src={item.articles.designImg} alt='image sur masque'/>
+                                  <p style={{ marginTop: 90, fontSize: 25, color: 'black', maxWidth: '270px'}}>{item.articles.designText}</p>
+                                  {item.articles.designImg!== ''?<img style={{ width: 150, height: 100}} src={item.articles.designImg} alt='image sur masque'/> :null}
                               </div>
         
                             </Modal>

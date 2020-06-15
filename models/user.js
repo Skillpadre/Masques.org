@@ -10,7 +10,8 @@ const commandeSchema = new mongoose.Schema({
     articles: Array,
     quantity: Number,
     totalPrice: Number,
-    sellerId: String
+    sellerId: String,
+    livraison: String
 });
 
 //Commandes coté Vendeur
@@ -18,7 +19,8 @@ const orderSchema = new mongoose.Schema({
     articles: Object,
     quantity: Number,
     totalPrice: Number,
-    sellerId: String
+    sellerId: String,
+    livraison: String
 });
 
 

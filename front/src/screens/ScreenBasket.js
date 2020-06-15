@@ -111,11 +111,8 @@ console.log(props.token)
     };
 // Route pour add panier en sous doc
    const addOrder = async (orders, total) => {
-
        console.log(orders)
         console.log(total)
-
-
 
         const body = {orders : orders, total : total}
      const bodyString =   JSON.stringify(body)
@@ -216,7 +213,7 @@ console.log(response);
                                                       {/* <button role="link" onClick={() => {handleClick();majStock()}}>
                                 Checkout
                                 </button> */}
-                            <Button role="link" onClick={() => {handleClick();majStock(),addOrder(articleList, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                            <Button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Paiement
                             </Button>
 

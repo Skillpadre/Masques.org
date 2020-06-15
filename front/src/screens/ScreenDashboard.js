@@ -25,6 +25,8 @@ function ScreenDashboard(props) {
     const [listSale, setListSale] = useState([]);
     const [listCommandes, setListCommandes] = useState([])
 
+    const[isLogin, setIsLogin]=useState(true);
+
 
     var user;
 
@@ -56,6 +58,8 @@ function ScreenDashboard(props) {
           setListSale(response.user.articles);
         }
 
+      }else{
+        setIsLogin(false)
       }
     
     }
@@ -76,7 +80,7 @@ console.log(listCommandes)
 
   let finaliserCompte;
   if(!infoFN || !infoLN || !infoAddress || !infoCity || !infoZip || !infoTel || avatar === ''){
-    finaliserCompte = <p>Vous pouvez finaliser votre compte en renseignant vos information <Link to='/profil'>ici</Link></p>
+    finaliserCompte = <p style={{fontSize: 15}}>Pour vendre des articles, veuillez finalisez votre compte <Link to='/profil'>ICI</Link> !</p>;
   }
 
   let listPendingSale =  [];
@@ -94,31 +98,34 @@ console.log(listCommandes)
     }
   });
 
+  if(!isLogin){
+    return (<Redirect to='/' />)
+  } 
  
   return (
-    <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
+    <Layout className="layout" style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}>
       <Nav />
 
-      <Content style={{ padding: '0 50px', margin: '40px 0' }} className="Dashboard-page">
+      <Content style={{ height: '100%', padding: '0 50px', margin: '40px 0' }} className="Dashboard-page">
 
       <Row justify='center' align='middle'>
         {finaliserCompte}
       </Row>
         
-        <Row justify='center' align='middle'>
+        <Row justify='space-between' align='middle'>
           <Col md={{span: 8}} sm={{span: 24}}>
 
             <h2 style={{fontWeight: 700, fontSize: 25}}>Bienvenue {afficherNom} !</h2>
     
           </Col>
-          <Col align= 'center' md={{span: 8}} sm={{span: 12}} xs={{span: 24}}> 
+          <Col md={{span: 8}} sm={{span: 12}} xs={{span: 24}}> 
 
           <h1 style={{fontWeight: 700, fontSize: 40}}>Tableau de bord</h1>
 
           </Col>
 
-          <Col align= 'right' md={{span: 8}} sm={{span: 12}} xs={{span: 24}} style={{display: 'flex', flexDirection: 'column'}}>
-            <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/mask'>Vendre des articles</Link></Button>
+          <Col md={{span: 3}} sm={{span: 12}} xs={{span: 24}} style={{display: 'flex', flexDirection: 'column'}}>
+            <Button disabled={finaliserCompte? true : false} style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/mask'>Vendre des articles</Link></Button>
             <Button style= {{width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to='/map'>Passer une commande</Link></Button>
             <Button style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type='primary'><Link to='/profil'>Modifier mes infos</Link></Button>
           </Col>
@@ -130,14 +137,13 @@ console.log(listCommandes)
             <h2>Commandes en attente de validation</h2>
             <div id="dashboard-box-pendingOrder" className="dashboard-box">
 
-              <List
-                locale={{emptyText : 'Aucune commande en attente.'}}
+              <List locale={{emptyText : "Aucune commande en attente de validation."}}
                 itemLayout="horizontal"
                 dataSource={listPendingSale}
                 renderItem={item => (
-                  <List.Item style={{margin: '2px 8px'}}>
+                  <List.Item style={{marginLeft: 7}}>
                     <List.Item.Meta
-                      avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                      //avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                       title={"Article n° " + item._id}
                       description={"Créé le " + item.date_insert}
                     />
@@ -151,8 +157,7 @@ console.log(listCommandes)
             <h2>Historique des commandes</h2>
             <div id="dashboard-box-FinishOrder" className="dashboard-box">
 
-              <List
-                locale={{emptyText : "Vous n'avez pas encore passé de commande."}}
+              <List locale={{emptyText : "Vous n'avez pas encore passé de commande."}}
                 itemLayout="horizontal"
                 dataSource={listCommandes}
                 renderItem={item => (

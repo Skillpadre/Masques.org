@@ -13,7 +13,7 @@ const articleSchema = new mongoose.Schema({
     date_insert: Date,
     date_end: Date,
     sellout: Boolean,
-    sellerId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+    sellerId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'}
 });
 
 const articleModel = new mongoose.model('articles', articleSchema);

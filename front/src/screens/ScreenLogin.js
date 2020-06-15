@@ -4,7 +4,7 @@ import '../App.css';
 
 import {connect} from 'react-redux'
 
-import { Layout, Form, Checkbox, Row, Col, Card, Input, Button} from 'antd';
+import { Layout, Form, Row, Col, Input, Button} from 'antd';
 import 'antd/dist/antd.css';
 
 import Nav from './Nav'
@@ -48,7 +48,8 @@ function ScreenLogin(props) {
           urlAvatar: response.user.avatar
         }
         props.addUser(user);// add user reducer
-        localStorage.setItem('user', JSON.stringify(user));//envoi dans le localStorage
+        localStorage.setItem('user', JSON.stringify(user));//envoi des infos user dans le localStorage
+        localStorage.setItem('panier', JSON.stringify([])); //création du panier dans le local storage
         setUserExist(true);
       } else {                  // Si pas de user
         setErrorSignup(response.error)
@@ -84,7 +85,8 @@ function ScreenLogin(props) {
         urlAvatar: response.user.avatar
       }
       props.addUser(user);// add user reducer
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(user));//envoi des infos user dans le localStorage
+      localStorage.setItem('panier', JSON.stringify([])); //création du panier dans le local storage
       setUserExist(true);
     } else {                  // Si pas de user
       setErrorSignin(response.error)
@@ -112,7 +114,7 @@ function ScreenLogin(props) {
     return <Redirect to='/' />
 
   return (
-    <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+    <Layout style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}className="layout">
 
       <Nav/>
 

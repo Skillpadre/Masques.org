@@ -54,7 +54,7 @@ function ScreenConfirm (props){
     
     //Data Colonne
     const dataSource = [
-        /* {
+        {
         key: '1',
         Titre: 'Masque personnalisé',
         Couleur: 'Bleu',
@@ -62,7 +62,7 @@ function ScreenConfirm (props){
         Quantité: 18,
         Total: 24 + '€'
 
-        }, */
+        },
     ];
 
     
@@ -100,7 +100,7 @@ console.log(order)
     return(
             
 
-    <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
+    <Layout className="layout" style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}>
         
         <Nav />
     
@@ -117,7 +117,7 @@ console.log(order)
                 <p style={{fontWeight : 700, margin: '10px 30px 50px'}}>Votre commande à bien été prise en compte !</p>
                 
                 <p>Récapitulatif</p>
-                <Table bordered 
+                <Table bordered
                   dataSource={dataSource} 
                   columns={columns} 
                   style={{margin: '20px 0 20px', width: '70%'}} 

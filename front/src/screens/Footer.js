@@ -22,21 +22,21 @@ function FooterComp() {
 
             <Col span={6}>
                 <Link to='/quisommesnous'><p style={{color: 'white'}}>Qui sommes nous ?</p></Link>
-                <Link to='/actualités'><p style={{color: 'white'}}>Actualité</p></Link>
             </Col>
       
             <Col span={6} style={{color : 'white'}}>
                 <p>Suivez nous !</p>
-                <a href= '#' target="_blank" style={{color: 'white'}}><InstagramFilled style={{fontSize: 25, marginRight: 3}}/></a>
-                <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' target="_blank" style={{color: 'white'}}><FacebookFilled style={{fontSize: 25, marginRight: 3}}/></a>
-                <a href='https://twitter.com/MasquesOrg' target="_blank" style={{color: 'white'}}><TwitterSquareFilled style={{fontSize: 25}}/></a>
+                <a href= '#' target="_blank" rel="noopener noreferrer" style={{color: '#92D050'}}><InstagramFilled style={{fontSize: 25, marginRight: 3}}/></a>
+                <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' target="_blank" rel="noopener noreferrer" style={{color: '#92D050'}}><FacebookFilled style={{fontSize: 25, marginRight: 3}}/></a>
+                <a href='https://twitter.com/MasquesOrg' target="_blank" rel="noopener noreferrer" style={{color: '#92D050'}}><TwitterSquareFilled style={{fontSize: 25}}/></a>
             </Col>
           </Row>
 
           <Divider/>
         
-        <Row style={{fontSize: 12, marginTop: 0, color : '#9fa1a5'}} justify='center'>
-        © 2020 Masques.org. Tous droits réservés.
+        <Row style={{fontSize: 14, marginTop: 0, color : '#9fa1a5', flexDirection: 'column'}} justify='center'>
+          <p>L'APP Masques<span style={{color: '#92D050'}}>.ORG</span> | Plateforme d'achats Responsables & Solidaires</p>
+          <p>© 2020 Masques.org. Tous droits réservés.</p>
         </Row>
      
     </Footer>

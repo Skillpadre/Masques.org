@@ -6,6 +6,10 @@ let userModel = require('../models/user')
 let orderModel = require('../models/orders')
 let commandeModel = require('../models/commandes');
 
+var cloudinary = require('cloudinary').v2;
+var uniqid = require('uniqid');
+var fs = require('fs');
+
 const stripe = require('stripe')('sk_test_fPEUR0HzUgzfHM8jCQzMKPD600ffNP4cbh');
 
 
@@ -38,9 +42,9 @@ router.post('/add-article/:token', async function (req, res, next) {
     quality: req.body.quality,
     date_insert: date,
     sellout: false,
-    sellerId: user._id
-
+    sellerId: user._id,
   });
+
   article = await newArticle.save();
 
   user.articles.push(article);
@@ -125,5 +129,26 @@ router.get('/valid-order', async function (req, res) {
   res.json({ stock, newStock })
 })
 
+router.post('/add-image', async function(req, res){
+  
+  //ENVOI TEMPORAIRE DE LA PHOTO DANS UN REPERTOIRE LOCAL
+  var pictureName = './tmp/'+uniqid()+'.jpg';
+  var resultCopy = await req.files.image.mv(pictureName);
+  
+  //SI LE RESULTAT EST VIDE LA SAUVEGARDE A BIEN ETE FAITE
+  if(!resultCopy) {
+    //ENVOI VERS CLOUDINARY
+    var resultCloudinary = await cloudinary.uploader.upload(pictureName);
+  
+   console.log(resultCloudinary.url)
+    res.json({url : resultCloudinary.url});
+  }else{
+    res.json({error: resultCopy, article});
+  }
+
+ //SUPPRESSION DE L'IMAGE STOCKER TEMPORAIREMENT
+ fs.unlinkSync(pictureName);
+
+});
 
 module.exports = router;

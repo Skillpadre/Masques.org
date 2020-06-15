@@ -4,14 +4,14 @@ import '../App.css';
 
 import {connect} from 'react-redux'
 
-import { Row, Col, Layout, Card, Button, List, Avatar, Divider, Spin, Space} from 'antd';
+import { Row, Layout, Card, Button, List, Avatar, Divider, Spin, Space, Modal} from 'antd';
 import 'antd/dist/antd.css';
 
 import GoogleMapReact from 'google-map-react';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
-import { LineChartOutlined } from '@ant-design/icons';
+import Marker from './Marker';
 
 const { Content } = Layout;
 
@@ -19,26 +19,77 @@ const { Content } = Layout;
 function ScreenMap(props) {
 
   const [center, setCenter] = useState({ lat: 11.0168, lng: 76.9558 });
-  const [zoom, setZoom] = useState(11);
+  const [zoom, setZoom] = useState(9);
 
   const [articleList, setArticleList] = useState([]);
   const [sellerList, setSellerList] = useState([]);
 
-  useEffect(() => {
+  const [visible, setVisible] = useState(false) //modal
+
+  function geo_success(position) {
+    console.log('geoloc succes')
+    console.log(position.coords.latitude, position.coords.longitude);
+  
+    setCenter({lat: position.coords.latitude, lng: position.coords.longitude})
+  
     async function loadData() {
       var rawResponse = await fetch('/article-list');
       var response = await rawResponse.json();
-
-      setArticleList(response.articles);
-      setSellerList(response.sellers);
-      console.log(response.sellers);
-      console.log(response.articles)
+  
+      let sellers = [];
+      let articles = [];
+  
+      response.sellers.map((seller, i) => {
+       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 100) { // Rayon de 100 Km
+        sellers.push(seller);
+        articles.push(response.articles[i]);
+       }
+      })
+  
+      setArticleList(articles);
+      setSellerList(sellers);
+      console.log(sellers);
+      console.log(articles)
     }
     loadData()
+  }
+  
+  function geo_error() {
+    console.log("Sorry, no position available.");
+  }
+  
+  var geo_options = {
+    enableHighAccuracy: true, 
+    maximumAge        : 30000, 
+    timeout           : 27000
+  };
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      /* la géolocalisation est disponible */
+      navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+    } else {
+          /* la géolocalisation n'est pas disponible */
+          console.log('pas de geoloc')
+    }
+
   }, []);
 
+  //MODAL
+  let showModal = () => {
+    setVisible(true)
+  };
+
+  let handleOk = () => {
+   setVisible(false)
+  };
+
+  let handleCancel = () => {
+    setVisible(false)
+   };
 
   var buyingList;
+  var markers;
   //Si articleList est vide je met un spinner en attendant le chargement
   if (articleList.length<1){
     buyingList= <Space style={{marginTop: 10, display: 'flex', width : '100%', flexDirection: 'column', textAlign: 'center'}}>
@@ -64,33 +115,81 @@ function ScreenMap(props) {
       lien=`/login`
     }
 
-
     return (
 
-      <List.Item key={i} style={{alignItems: 'flex-start'}}>
-        <Card hoverable title={item.title} bodyStyle={{width: 400, height: 300}} style={{margin : '20px 10px'}}>
+      <List.Item key={i} style={{textAlign: 'center'}}>
+        <Card hoverable title={item.title} bodyStyle={{width: 300, height: 290}} style={{margin : '20px 10px'}}>
 
-          <Card.Meta title={username} description={item.description} avatar={<Avatar src={urlAvatar} style={{padding:0}}/>}/>
-        
+          <Card.Meta title={username} avatar={<Avatar src={urlAvatar}/>}/>
+
+          <Button onClick={showModal} style={{color: '#E23D70', border: 'white'}}>Description</Button>
+
           <Divider/>
           <Card.Meta description={"Prix unitaire: " + item.priceUnit + " €"}/>
           <Card.Meta description={"Quantité dispo: " + item.stock}/>
           <Card.Meta description={"Qualité: " + item.quality}/>
-          <Card.Meta description={"Couleur :" + item.colors.join()}/>
-          
-
-        
+          <Card.Meta description={"Couleurs: " + item.colors.join()}/>
+          <Card.Meta description={"Matières: " + item.material.join()}/>
+      
           <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={lien}>Choisir cet article</Link></Button>
         </Card>
+        <Modal title="Description de l'offre :"
+                visible={visible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+        >
+          <p>{item.description}</p>
+        
+        </Modal>
       </List.Item>
 
     )
-  })
+  });
+
+  // Markers 
+  markers = articleList.map((item, i) => {
+    let urlAvatar = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png";
+    let username;
+    let lat;
+    let lng;
+    if(sellerList[i]){
+      urlAvatar = sellerList[i].avatar;
+      username = sellerList[i].username;
+      lat = sellerList[i].coordinates[1];
+      lng = sellerList[i].coordinates[0];
+    }
+
+    var lien;
+    //Si le user existe je l'autorise à allez sur la page fabricant
+    if(props.user){
+      lien=`/fabricant/${item._id}`
+    }else{
+      lien=`/login`
+    }
+
+    return (
+        <Marker
+          lat = {lat}
+          lng = {lng}
+          username={username}
+          urlAvatar = {urlAvatar}
+          color="blue"
+          id={i}
+          lien={lien}
+          description={item.description}
+        />
+      )
+    
+    
+
+    
+  });
+
   }
 
   return (
 
-    <Layout className="layout" style={{height: 'auto', backgroundColor: 'white'}}>
+    <Layout className="layout" style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}>
 
       <Nav />
 
@@ -100,11 +199,12 @@ function ScreenMap(props) {
         <Row style={{width: '80%',height: '60vh', marginTop: 30}}>
     
             <GoogleMapReact
-              bootstrapURLKeys={{ key: 'AIzaSyA6lFML5Gv6tvWgNl0X7kXn6X1uMQyzX8o' }}
+              bootstrapURLKeys={{ key: 'AIzaSyA7dxkypDmi6PUAA5D5tCx0mQ_s_UiwimM' }}
               defaultCenter={center}
               defaultZoom={zoom}
-
-            />
+              >
+                {markers}
+            </GoogleMapReact>
      
         </Row>
         <Row style={{marginTop: 25}}>
@@ -124,6 +224,20 @@ function ScreenMap(props) {
   );
 }
 
+
+
+
+function radian(degrees) { // transformer degrés en radians
+  let pi = Math.PI;
+  return degrees * (pi/180);
+}
+
+function calculDistance(lat1, lon1, lat2, lon2){ // calcul de distance entre 2 points, valeur retournée en Km
+  let distance = Math.acos(Math.sin(radian(lat1))*Math.sin(radian(lat2)) + Math.cos(radian(lat1))*Math.cos(radian(lat2))*Math.cos(radian(lon1-lon2)))*6371;
+  console.log('distance')
+  console.log(distance);
+  return distance;
+}
 
 function mapStateToProps(state) {
   return { user: state.user }

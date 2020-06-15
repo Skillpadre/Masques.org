@@ -37,7 +37,7 @@ function ScreenContact() {
 
 
   return (
-    <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+    <Layout style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}className="layout">
 
       <Nav />
 
@@ -104,6 +104,7 @@ function ScreenContact() {
               <Select.Option value="1">Demande d'information</Select.Option>
               <Select.Option value="2">Question sur une commande</Select.Option>
               <Select.Option value="3">Problème sur le site</Select.Option>
+              <Select.Option value="3">Suggestion</Select.Option>
               <Select.Option value="4">Autre</Select.Option>
             </Select>
           </Form.Item>
@@ -117,7 +118,7 @@ function ScreenContact() {
                       },
                     ]}
           >
-            <Input.TextArea />
+            <Input.TextArea rows={6}/>
           </Form.Item>
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>
@@ -131,9 +132,9 @@ function ScreenContact() {
         <h3 style={{fontWeight: 700, fontSize: 20}}>Et suivez-nous sur les réseaux sociaux !</h3>
           
         <div style={{margin: 20}}>
-          <a href= '#' target="_blank"><img src= './assets/icones/instagram.png' style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
-          <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' target="_blank"><img src='./assets/icones/facebook.png' style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
-          <a href='https://twitter.com/MasquesOrg' target="_blank" ><img src='./assets/icones/twitter.png' style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
+          <a href= '#' target="_blank"><img src= './assets/icones/instagram.png' rel="noopener noreferrer" alt='instagram' style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
+          <a href= 'https://www.facebook.com/Masquesorg-110068767322252/' rel="noopener noreferrer" target="_blank"><img src='./assets/icones/facebook.png' alt='facebook'style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
+          <a href='https://twitter.com/MasquesOrg' target="_blank" ><img src='./assets/icones/twitter.png' rel="noopener noreferrer" alt='twitter' style={{width: 45, height: 'auto', margin: '0 3px'}}/></a>
         </div>
           
       </Content>

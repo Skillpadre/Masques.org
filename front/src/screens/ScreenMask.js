@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import '../App.css';
 import {connect} from 'react-redux'
@@ -26,8 +26,19 @@ function ScreenMasks(props) {
     const [isVisible, setIsVisible] = useState(false)
     const [isCreated, setIsCreated] = useState(false);
 
+    const[isLogin, setIsLogin]=useState(true);
+
 
     const { TextArea } = Input
+
+    useEffect(() => {
+        function loadUser(){
+            if(props.user==null){
+                setIsLogin(false)
+            }
+        }
+        loadUser()
+    }, [props.user])
 
     const onFinish = values => {
         setDescription(values.description);
@@ -58,7 +69,7 @@ function ScreenMasks(props) {
         }
     }
 
-     let showModal = () => {
+    let showModal = () => {
        setIsVisible(true)
     };
 
@@ -69,12 +80,17 @@ function ScreenMasks(props) {
     }
 
     if(isCreated){
-        return <Redirect to='/dashboard' />
-    }
+        return (<Redirect to='/dashboard' />)
+    } 
 
+    if(!isLogin){
+        return (<Redirect to='/' />)
+    } 
+
+   
     return (
         
-        <Layout style={{height: 'auto', backgroundColor: 'white'}}className="layout">
+        <Layout style={{minHeight: '100vh', height: 'auto', backgroundColor: 'white'}}className="layout">
 
             <Nav />
 
@@ -84,7 +100,7 @@ function ScreenMasks(props) {
         
                 <h2>Paramètres de la fabrication</h2>
     
-                <Form size='middle' style={{ width: '50%', textAlign: 'center'}}
+                <Form size='middle' style={{ width: '50%', textAlign: 'center', marginTop: 15}}
                     onFinish={onFinish}
                     initialValues={{
                         'stock': 1,
@@ -96,46 +112,76 @@ function ScreenMasks(props) {
                 >
 
 
-                    <p>Indiquez les types de masques que vous pouvez fabriquer.</p>
+                    <p className='textMask'>Indiquez les types de masques que vous pouvez fabriquer.</p>
                     <Form.Item name="model" label="Modèle">
-                        <Checkbox.Group>
-                        <Row>
-                            <Col span={8}>
-                            <Checkbox
-                                value="anatomique"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Anatomique
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="ffp2"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                FFP2
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="chirurgical"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Chirurgical
-                            </Checkbox>
-                            </Col>
-                        </Row>
+                        <Checkbox.Group style= {{textAlign: 'left'}}>
+                            <Row> 
+                                <Col span={8}> 
+                                    <Checkbox
+                                        value="Grand public"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Grand public
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Barrière"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Barrière
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Chrirugical"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Chrirugical
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="FFP1"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        FFP1
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="FFP2"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                    FFP2
+                                </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="FFP3"
+                                        style={{
+                                        lineHeight: '32px',
+                                        }}
+                                    >
+                                        FFP3
+                                    </Checkbox>
+                                </Col>
+                            </Row>
                         </Checkbox.Group>
                     </Form.Item>
 
 
-                    <p>Indiquez le nombre de masques que vous pouvez réaliser.</p>
+                    <p className='textMask'>Indiquez le nombre de masques que vous pouvez réaliser.</p>
 
                     <Form.Item label="Quantité"
                             name="stock"
@@ -151,7 +197,7 @@ function ScreenMasks(props) {
                     </Form.Item>
 
                     
-                    <p>Indiquez le prix unitaire.</p>
+                    <p className='textMask'>Indiquez le prix unitaire.</p>
 
                     <Form.Item label="Prix unitaire"
                             name="priceUnit"
@@ -166,110 +212,190 @@ function ScreenMasks(props) {
 
                     </Form.Item>
                   
-                    <p>Indiquez les couleurs de masque que vous pouvez réaliser.</p>
+                    <p className='textMask'>Indiquez les couleurs de masque que vous pouvez réaliser.</p>
                     <Form.Item name="colors" label="Couleurs disponibles">
-                        <Checkbox.Group>
-                        <Row>
-                            <Col span={8}>
-                            <Checkbox
-                                value="bleu"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Bleu
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="noir"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Noir
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="rouge"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Rouge
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="vert"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Vert
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="jaune"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Jaune
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="blanc"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Blanc
-                            </Checkbox>
-                            </Col>
-                        </Row>
+                        <Checkbox.Group style= {{textAlign: 'left'}}>
+                            <Row>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Bleu"
+                                        style={{
+                                         lineHeight: '32px',
+                                        }}
+                                    >
+                                        Bleu
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Noir"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Noir
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Rouge"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Rouge
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Vert"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Vert
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Jaune"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Jaune
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Blanc"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Blanc
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Gris"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Gris
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Orange"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Orange
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Rose"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Rose
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Violet"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Violet
+                                    </Checkbox>
+                                </Col>
+                            </Row>
                         </Checkbox.Group>
                     </Form.Item>
                     
 
-                    <p>Indiquez les matières que vous possedez.</p>
+                    <p className='textMask'>Indiquez les matières que vous possedez.</p>
                     <Form.Item name="matiere" label="Matières disponibles">
-                        <Checkbox.Group>
-                        <Row>
-                            <Col span={8}>
-                            <Checkbox
-                                value="tissu"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Tissu
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="noir"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Noir
-                            </Checkbox>
-                            </Col>
-                            <Col span={8}>
-                            <Checkbox
-                                value="rouge"
-                                style={{
-                                lineHeight: '32px',
-                                }}
-                            >
-                                Rouge
-                            </Checkbox>
-                            </Col>
-                        </Row>
+                        <Checkbox.Group style= {{textAlign: 'left'}}>
+                            <Row>
+                                <Col span={8}>
+                                <Checkbox
+                                    value="Coton"
+                                    style={{
+                                        ineHeight: '32px',
+                                    }}
+                                >
+                                    Coton
+                                </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Coton Bio"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Coton Bio
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Autre"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Autre
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Lin"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Lin
+                                    </Checkbox>
+                                </Col>
+                                <Col>
+                                    <Checkbox
+                                        value="Autre matière organique/végétale"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Autre matière organique/végétale
+                                    </Checkbox>
+                                </Col>
+                                <Col>
+                                    <Checkbox
+                                        value="Cuir (upcycling)"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Cuir (upcycling)
+                                    </Checkbox>
+                                </Col>
+                                <Col>
+                                    <Checkbox
+                                        value="Jean (upcycling)"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Jean (upcycling)
+                                    </Checkbox>
+                                </Col>
+                            </Row>
                         </Checkbox.Group>
                     </Form.Item>
 
@@ -280,7 +406,7 @@ function ScreenMasks(props) {
                         <Input onChange={e => setQualité(e.target.value)} value={qualité} placeholder='moyenne, supérieure ...' />
                     </Form.Item>
                       
-                    <p>Vous pouvez modifiez la description comme vous le souhaitez.</p>
+                    <p className='textMask'>Vous pouvez ajouter la description que vous souhaitez.</p>
                     <Form.Item label="Description"
                             name="description"
                     >
@@ -300,7 +426,7 @@ function ScreenMasks(props) {
                 >
                     <h3>Récapitulatif</h3>
                     <p>Nombre de masques : {inputStock}</p>
-                    <p>Prix d'un masque : {inputPrice}</p>
+                    <p>Prix d'un masque : {inputPrice}€</p>
                     <p>Couleurs disponibles : {couleurs.join(', ')}</p>
                     <p>Matières disponibles : {matiere.join(', ')}</p>
                     <p>Modèles disponibles : {model.join(', ')}</p>

@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     zip_code: String,
     tel: String,
     avatar: String,
-    location: locationSchema,
+    coordinates: Array, // [longitude, latitude]
     orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'orders'}],
     commandes: [commandeSchema],
     articles: [{type: mongoose.Schema.Types.ObjectId, ref: 'articles'}],

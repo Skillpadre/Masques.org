@@ -125,6 +125,10 @@ router.post('/update-info/:token', async function(req, res){
   if(req.body.city)
     user.city = req.body.city;
 
+  if(req.body.coord){
+    user.coordinates = req.body.coord; // [longitude, latitude]
+  }
+
   user = await user.save();
   res.json({user});
 });

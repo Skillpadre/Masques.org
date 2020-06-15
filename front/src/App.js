@@ -11,7 +11,6 @@ import ScreenBasket from './screens/ScreenBasket';
 import ScreenFabricant from './screens/ScreenFabricant';
 import ScreenProfil from './screens/ScreenProfil';
 import ScreenMask from './screens/ScreenMask';
-import Footer from './screens/Footer';
 import ScreenContact from './screens/ScreenContact'
 import ScreenQuiSommesNous from './screens/ScreenQuiSommeNous'
 import ScreenActualité from './screens/ScreenActualité'

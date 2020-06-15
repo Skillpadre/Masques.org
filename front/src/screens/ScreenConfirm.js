@@ -115,7 +115,7 @@ console.log(order)
 
                 <CheckCircleFilled style={{color: '#92D050', fontSize: 100}}/>
                 <p style={{fontWeight : 700, margin: '10px 30px 50px'}}>Votre commande à bien été prise en compte !</p>
-                <p style={{color: '#92D050'}}>Merci pour votre merci pour votre achat responsable et solidaire !</p>
+                <p style={{color: '#92D050'}}>Merci votre achat responsable et solidaire !</p>
 
                 
                 <p>Récapitulatif</p>

@@ -19,14 +19,6 @@ function ScreenBasket(props) {
 
     const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
-    const [userToken, setUserToken] = useState('')
-  
-    
-    //Récupération du token dans localStorage
-    /* var userPanier = JSON.parse(localStorage.getItem('panier'))
-    console.log(articleList) */
-   
-    var userPanier = JSON.parse(localStorage.getItem('panier'))
     const [radioValue, setRadioValue] = useState('')
 
     //Récupération du panier dans localStorage
@@ -40,7 +32,6 @@ function ScreenBasket(props) {
         }
         readArticleList();
     }, []);
-    console.log(articleList)
 
 
     let idCommande;
@@ -111,30 +102,8 @@ function ScreenBasket(props) {
         const rawResponse = await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
         const response = await rawResponse.json();
         console.log(response)
-
     };
-// Route pour add panier en sous doc
-   const addOrder = async (orders, quantity, total) => {
-       console.log(orders)
-        console.log(total)
-
-    const body = {orders : orders, quantity : quantity, total : total}
-     const bodyString = JSON.stringify(body)
-    
-let data = await fetch('/add-order/' + props.token, {
-    method: 'POST',
-    headers: {'Content-Type':'application/Json'},
-    body: bodyString
-    });
-    let response = await data.json();
-console.log(response);
-
-   }
-   const confirmBasket = async (orders, quantity, total) => {
-props.sendOrder(orders, quantity, total)
-   }
-
-
+  
     return (
 
         <Layout className="layout" style={{ minHeight: '100vh', height: 'auto', backgroundColor: 'white' }}>
@@ -218,10 +187,7 @@ props.sendOrder(orders, quantity, total)
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-                                                      {/* <button role="link" onClick={() => {handleClick();majStock()}}>
-                                Checkout
-                                </button> */}
-                            <Button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal); confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                            <Button role="link" onClick={() => {handleClick();majStock()}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Paiement
                             </Button>
 
@@ -240,7 +206,7 @@ props.sendOrder(orders, quantity, total)
 
 function mapStateToProps(state) {
     return {
-        token: state.user.token,
+        token: state.userToken,
         order: state.basketList
     }
 }
@@ -249,9 +215,6 @@ function mapDispatchToProps(dispatch) {
     return {
         sendQuantity: function (quantity) {
             dispatch({ type: 'sendQuantity', userQuantity: quantity })
-        },
-        sendOrder:function(orders, quantity, total) {
-            dispatch({type: "addBasket", userOrder: orders, userQuantity : quantity, userTotal : total})
         }
     }
 }

@@ -10,7 +10,6 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
-import { set } from 'mongoose';
 const stripePromise = loadStripe('pk_test_T60y6sAVREOC6Dq9Cixjjx6I00TSGd4n7j');
 const { Content } = Layout;
 
@@ -29,19 +28,18 @@ function ScreenBasket(props) {
     var userPanier = JSON.parse(localStorage.getItem('panier'))
     const [radioValue, setRadioValue] = useState('')
 
-    //Récupération du panier dans localStorage
-    var userPanier = JSON.parse(localStorage.getItem('panier'));
-
     useEffect(() => {
         function readArticleList() {
+            //Récupération du panier dans localStorage
+            var userPanier = JSON.parse(localStorage.getItem('panier'))
             
             setArticleList(userPanier)
-
         }
         readArticleList();
     }, []);
     console.log(articleList)
 
+console.log(props.token)
 
     let idCommande;
     if(props.order.length !== 0){
@@ -81,8 +79,6 @@ function ScreenBasket(props) {
        
         //console.log(panier)
         localStorage.setItem("panier", JSON.stringify(panier)); //je renvoi le nouveau tableau dans le local storage
-        userPanier= JSON.parse(localStorage.getItem('panier'));
-        setArticleList(userPanier)
        
     }
 
@@ -114,12 +110,15 @@ function ScreenBasket(props) {
 
     };
 // Route pour add panier en sous doc
-   const addOrder = async (orders, quantity, total) => {
+   const addOrder = async (orders, total) => {
+
        console.log(orders)
         console.log(total)
 
-    const body = {orders : orders, quantity : quantity, total : total}
-     const bodyString = JSON.stringify(body)
+
+
+        const body = {orders : orders, total : total}
+     const bodyString =   JSON.stringify(body)
     
 let data = await fetch('/add-order/' + props.token, {
     method: 'POST',
@@ -128,11 +127,7 @@ let data = await fetch('/add-order/' + props.token, {
     });
     let response = await data.json();
 console.log(response);
-
-   }
-   const confirmBasket = async (orders, quantity, total) => {
-props.sendOrder(orders, quantity, total)
-   }
+         }
 
 
     return (
@@ -172,7 +167,7 @@ props.sendOrder(orders, quantity, total)
                                         />
 
                                         <List.Item.Meta
-                                            description={"Matière : " + item.material}
+                                            description={"Matière : " + item.colors}
                                         />
 
                                         <List.Item.Meta
@@ -221,7 +216,7 @@ props.sendOrder(orders, quantity, total)
                                                       {/* <button role="link" onClick={() => {handleClick();majStock()}}>
                                 Checkout
                                 </button> */}
-                            <Button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal); confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                            <Button role="link" onClick={() => {handleClick();majStock(),addOrder(articleList, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Paiement
                             </Button>
 
@@ -249,9 +244,6 @@ function mapDispatchToProps(dispatch) {
     return {
         sendQuantity: function (quantity) {
             dispatch({ type: 'sendQuantity', userQuantity: quantity })
-        },
-        sendOrder:function(orders, quantity, total) {
-            dispatch({type: "addBasket", userOrder: orders, userQuantity : quantity, userTotal : total})
         }
     }
 }

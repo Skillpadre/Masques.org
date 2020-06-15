@@ -118,7 +118,7 @@ function ScreenMap(props) {
     return (
 
       <List.Item key={i} style={{textAlign: 'center'}}>
-        <Card hoverable title={item.title} bodyStyle={{width: 300, height: 290}} style={{margin : '20px 10px'}}>
+        <Card hoverable title={item.title} bodyStyle={{width: 300, height: 330}} style={{margin : '20px 10px'}}>
 
           <Card.Meta title={username} avatar={<Avatar src={urlAvatar}/>}/>
 
@@ -131,7 +131,7 @@ function ScreenMap(props) {
           <Card.Meta description={"Couleurs: " + item.colors.join()}/>
           <Card.Meta description={"Matières: " + item.material.join()}/>
       
-          <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={lien}>Choisir cet article</Link></Button>
+          <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={lien}>Personnaliser ICI</Link></Button>
         </Card>
         <Modal title="Description de l'offre :"
                 visible={visible}

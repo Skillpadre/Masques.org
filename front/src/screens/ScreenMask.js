@@ -218,9 +218,19 @@ function ScreenMasks(props) {
                             <Row>
                                 <Col span={8}>
                                     <Checkbox
-                                        value="Bleu"
+                                        value="Blanc"
                                         style={{
                                          lineHeight: '32px',
+                                        }}
+                                    >
+                                        Blanc
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Bleu"
+                                        style={{
+                                            lineHeight: '32px',
                                         }}
                                     >
                                         Bleu
@@ -228,32 +238,32 @@ function ScreenMasks(props) {
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox
-                                        value="Noir"
+                                        value="Bleu-Ciel"
                                         style={{
                                             lineHeight: '32px',
                                         }}
                                     >
-                                        Noir
+                                        Bleu Ciel
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox
-                                        value="Rouge"
+                                        value="Gris"
                                         style={{
                                             lineHeight: '32px',
                                         }}
                                     >
-                                        Rouge
+                                        Gris
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox
-                                        value="Vert"
+                                        value="Gris-Fonce"
                                         style={{
                                             lineHeight: '32px',
                                         }}
                                     >
-                                        Vert
+                                        Gris Foncé
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
@@ -268,22 +278,22 @@ function ScreenMasks(props) {
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox
-                                        value="Blanc"
+                                        value="Jaune-Clair"
                                         style={{
                                             lineHeight: '32px',
                                         }}
                                     >
-                                        Blanc
+                                        Jaune Clair
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox
-                                        value="Gris"
+                                        value="Noir"
                                         style={{
                                             lineHeight: '32px',
                                         }}
                                     >
-                                        Gris
+                                        Noir
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
@@ -308,12 +318,72 @@ function ScreenMasks(props) {
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox
+                                        value="Rose-Clair"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Rose Clair
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Rouge"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Rouge
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Rouge-Fonce"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Rouge Foncé
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Saumon"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                       Saumon
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Vert"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                       Vert
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Vert-Fonce"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                       Vert Foncé
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
                                         value="Violet"
                                         style={{
                                             lineHeight: '32px',
                                         }}
                                     >
-                                        Violet
+                                       Violet
                                     </Checkbox>
                                 </Col>
                             </Row>

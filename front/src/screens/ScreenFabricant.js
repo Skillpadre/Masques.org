@@ -19,10 +19,10 @@ function ScreenFabricant(props) {
     const [stock, setStock] = useState();
     const [description, setDescription] = useState('')
 
-    const [matiere, SetMatiere] = useState('tissu');
+    const [material, SetMaterial] = useState('');
     const [matiereList, SetMatiereList] = useState([]);
 
-    const [modele, setModele] = useState('Anatomique');
+    const [modele, setModele] = useState('');
     const [modelList, setModelList] = useState([]);
 
     const [quantity, setQuantity] = useState(0);
@@ -69,7 +69,7 @@ function ScreenFabricant(props) {
     };
 
     const onChangeMatiere = async (value) => {
-        SetMatiere(value)
+        SetMaterial(value)
     };
 
     const onChangeModel = async (value) => {
@@ -86,7 +86,7 @@ function ScreenFabricant(props) {
         console.log(order)
         order.colors = color
         order.quantity = quantity
-        order.matiere = matiere
+        order.material = material
         order.model = modele
         props.sendOrder(order)
 
@@ -214,8 +214,8 @@ function ScreenFabricant(props) {
                                 >
                                     {/* Map sur le tableau de matière  */}
                                     {
-                                        matiereList.map((mat, i) => {
-                                            return <Option key={i} value={mat}>{mat}</Option>
+                                        matiereList.map((material, i) => {
+                                            return <Option key={i} value={material}>{material}</Option>
                                         })
                                     }
 

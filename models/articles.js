@@ -8,6 +8,8 @@ const articleSchema = new mongoose.Schema({
     colors: Array,
     material: Array,
     model: Array,
+    inscription: Array,
+    logo: Array,
     img: String,
     quality: String,
     date_insert: Date,

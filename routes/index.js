@@ -43,6 +43,8 @@ router.post('/add-article/:token', async function (req, res, next) {
     date_insert: date,
     sellout: false,
     sellerId: user._id,
+    inscription: req.body.inscription,
+    logo: req.body.logo,
   });
 
   article = await newArticle.save();

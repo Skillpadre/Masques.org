@@ -7,6 +7,7 @@ const locationSchema = new mongoose.Schema({
 
 const commandeSchema = new mongoose.Schema({
     articles: Array,
+    quantity: Number,
     totalPrice: Number,
     sellerId: String
     });

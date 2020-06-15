@@ -84,7 +84,8 @@ function ScreenConfirm (props){
             if (response.user){ 
     
               setInfoUsername(response.user.username)
-    
+              setOrder(order)
+              setQuantity(quantity)
             }
     
           }else{

@@ -97,21 +97,24 @@ router.get('/new-basket', async function (req, res) {
 router.post('/add-order/:token', async function (req, res, next) {
    let user = await userModel.findOne({ token: req.params.token })
     var articles = []     
- 
- 
+ console.log(req.body.quantity)
     for(var i =0; i < req.body.orders.length; i++){
          articles.push(req.body.orders[i])
-         console.log(req.body.orders[i])
+        //  console.log(req.body.orders[i])
    }
 user.commandes.push(
  {
    articles: articles,
+   quantity: req.body.quantity,
    totalPrice: req.body.total
   }
 
 )
-console.log(user.commandes[0].articles[0])
- res.json({commandes : user.commandes});
+await user.save();
+
+// // console.log("Première commande : " + user.commandes[0].articles[0].colors)
+console.log(user)
+ res.json({user});
  });
 
 router.get('/valid-order', async function (req, res) {

@@ -34,14 +34,14 @@ function App() {
           <Route component={ScreenHome} path="/" exact />
           <Route component={ScreenLogin} path="/login"/>
           <Route component={ScreenMap} path="/map"/>
-          <Route component={ScreenConfirm} path="/confirm"/>
-          <Route component={ScreenDashboard} path="/dashboard/"/>
-          <Route component={ScreenBasket} path="/basket"/>
-          <Route component={ScreenFabricant} path="/fabricant/:id"/>
-          <Route component={ScreenProfil} path="/profil"/>
-          <Route component={ScreenMask} path="/mask"/>
-          <Route component={ScreenContact} path="/contact"/>
-          <Route component={ScreenQuiSommesNous} path="/quisommesnous"/>
+          <Route component={ScreenConfirm} path="/validation-commande"/>
+          <Route component={ScreenDashboard} path="/mon-compte"/>
+          <Route component={ScreenBasket} path="/panier"/>
+          <Route component={ScreenFabricant} path="/product/:id"/>
+          <Route component={ScreenProfil} path="/mon-profil"/>
+          <Route component={ScreenMask} path="/creation-vente"/>
+          <Route component={ScreenContact} path="/nous-contacter"/>
+          <Route component={ScreenQuiSommesNous} path="/qui-sommes-nous"/>
           <Route component={ScreenActualité} path="/actualités"/>
           <Route component={ScreenError404} path="*"/> {/* LAISSER EN DERNIERE ROUTE */}
         </Switch>

@@ -6,6 +6,7 @@ h1{
   font-weight: bold;
   font-size:40px;
 }
+
 #title{
   text-align: center;
   font-weight: 700;
@@ -21,7 +22,8 @@ header{
 }
 
 #choix{
-  text-align: center
+  text-align: center;
+  color: #E23D70
 }
 
 .site-card-wrapper {
@@ -82,10 +84,13 @@ header{
 }
 
 .dashboard-box{
-  border: 1px solid black ;
+  border: solid #e6eaee ;
+  border-width: 2px 4px 4px 2px;
+  border-radius: 6px;
   width: auto;
   height: auto;
   margin:15px;
+  text-align: center;
 }
 
 

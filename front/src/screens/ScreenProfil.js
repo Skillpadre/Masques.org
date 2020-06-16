@@ -14,8 +14,6 @@ const { Content } = Layout;
 
 function ScreenProfil(props) {
 
-    const [value, setValue] = useState('');
-
     const [infoLN, setInfoLN] = useState('');
     const [infoFN, setInfoFN] = useState('');
     const [infoAddress, setInfoAddress] = useState('');
@@ -27,6 +25,7 @@ function ScreenProfil(props) {
     const [changementOk, setChangementOk] = useState();
 
     const [avatar, setAvatar] = useState('');
+    const [avatarDisplay, setAvatarDisplay] = useState('')
     const [changAvatar, setChangAvatar] = useState();
 
     const [option, setOption] = useState([]);
@@ -36,7 +35,6 @@ function ScreenProfil(props) {
 
     useEffect(() => {
         // On charge les info pour les afficher
-        console.log(props.user);
         async function loadInfo() {
             if(props.user){
                 const rawResponse = await fetch(`/users/loadinfo/${props.user.token}`);
@@ -49,7 +47,7 @@ function ScreenProfil(props) {
                     setInfoZip(response.user.zip_code);
                     setInfoCity(response.user.city);
                     setInfoTel(response.user.tel);
-                    setAvatar(response.user.avatar);
+                    setAvatarDisplay(response.user.avatar);
 
                     if(response.user.coordinates){
                         setInfoCoord(response.user.coordinates);
@@ -90,8 +88,13 @@ function ScreenProfil(props) {
     };
 
     var fileSelectedHandler= event =>{
-        console.log(event.target.files[0]);
-        setAvatar(event.target.files[0])
+            event.preventDefault();
+            const reader = new FileReader();
+            reader.onload = () => {
+              setAvatarDisplay(reader.result)
+            };
+            reader.readAsDataURL(event.target.files[0])
+            setAvatar(event.target.files[0])
       }
 
     const handleClickAvatar = async () =>{
@@ -126,7 +129,6 @@ function ScreenProfil(props) {
     async function search(text) {
         let rawResponse = await fetch('https://api-adresse.data.gouv.fr/search/?q=' + text)
         let response = await rawResponse.json();
-        console.log(response.features);
 
         let responseList = [];
 
@@ -173,7 +175,6 @@ function ScreenProfil(props) {
 
       // Selection de la bonne adresse dans l'autocomplétion
       function handleClickAutoComplet(e, label, coord, city, zipcode, i) {
-
         setInfoAddress(label);
         setInfoCoord(coord)  
         setInfoCity(city)
@@ -183,10 +184,10 @@ function ScreenProfil(props) {
 
     let urlImg;
 
-    if(avatar === ''){
+    if(avatarDisplay === ''){
         urlImg = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png"
     } else {
-        urlImg = avatar;
+        urlImg = avatarDisplay;
     }
     
     if(!isLogin){

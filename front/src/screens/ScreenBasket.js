@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import '../App.css';
 import { Row, Col, Layout, List, Divider, Radio, Button } from 'antd';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, CreditCardOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
@@ -17,21 +17,22 @@ const { Content } = Layout;
 
 function ScreenBasket(props) {
 
-    const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
-    const [userToken, setUserToken] = useState('')
 
-    const [livraison, setLivraison] = useState('')
+    const [livraison, setLivraison] = useState('Retrait')
+
+    const [isLogin, setIsLogin] = useState(true);
  
-
     //Récupération du panier dans localStorage
     var userPanier = JSON.parse(localStorage.getItem('panier'));
   
     useEffect(() => {
-        function readArticleList() {
-            
-            setArticleList(userPanier)
-
+        function readArticleList() {    
+            if(userPanier !== null){
+                setArticleList(userPanier)
+            }else{
+                setIsLogin(false)
+            }
         }
         readArticleList();
     }, []);
@@ -52,14 +53,14 @@ function ScreenBasket(props) {
         totalQuantity += articleList[i].quantity
     }
    
-    if (totalCommande == NaN) {
+    if (totalCommande === NaN) {
         totalCommande = 0
     }
    
     const radioStyle = {
-        display: 'block',
-        height: '30px',
-        lineHeight: '30px',    };
+        display: 'flex',
+        margin: 10
+    };
 
 
     var onChange = e => {
@@ -100,9 +101,8 @@ function ScreenBasket(props) {
 
     const majStock = async () => {
 
-        const rawResponse = await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
-        const response = await rawResponse.json();
-        console.log(response)
+        /*const rawResponse =*/ await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
+        //const response = await rawResponse.json();
 
     };
 // Route pour add panier en sous doc
@@ -111,12 +111,12 @@ function ScreenBasket(props) {
         const body = {orders : orders, quantity : quantity, total : total, livraison : livraison}
         const bodyString = JSON.stringify(body)
         
-        let data = await fetch('/add-order/' + props.token, {
+        /*let data =*/ await fetch('/add-order/' + props.token, {
             method: 'POST',
             headers: {'Content-Type':'application/Json'},
             body: bodyString
         });
-        let response = await data.json();
+        // let response = await data.json();
         localStorage.setItem("panier", JSON.stringify([])); //je renvoi le panier vide dans le local storage
     }
 
@@ -124,6 +124,9 @@ function ScreenBasket(props) {
         props.sendOrder(orders, quantity, total)
     }
 
+    if (!isLogin) {
+        return (<Redirect to='/' />)
+    }
 
     return (
 
@@ -140,10 +143,10 @@ function ScreenBasket(props) {
 
                 <Row style={{ marginTop: 40, textAlign: 'center' }} justify='center' align= 'top'>
                     <Col md={{ span: 14 }} sm={{ span: 24 }}>
-                        <h2>Produit(s) en attente</h2>
-                        <div id="dashboard-box">
+                        <h2 style={{color: '#E23D70'}}>Produit(s) en attente</h2>
+                        <div className="dashboard-box">
                             
-                            <List bordered
+                            <List
                                 locale={{emptyText : 'Votre panier est vide.'}}
                                 style={{ margin: "10px 15px 0 10px"}}
                                 dataSource={articleList}
@@ -196,14 +199,14 @@ function ScreenBasket(props) {
 
                         </div>
 
-                        { props.order.length !== 0? <Link to={`/fabricant/${idCommande}`}><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>: null}
+                        { props.order.length !== 0? <Link to={`/product/${idCommande}`}><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>: null}
                         <Link to="/map"><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Retourner à la liste des fabricants</Button></Link>
                     </Col>
 
                     <Col md={{ span: 9 }} sm={{ span: 24 }}>
 
                         <div id="retrait">
-                            <h2>Moyen de retrait</h2>
+                            <h2 style={{color: '#E23D70'}}>Moyen de retrait</h2>
                             <Radio.Group onChange={onChange} value={livraison}>
                                 <Radio style={radioStyle} value={'Retrait'}>
                                     Retrait

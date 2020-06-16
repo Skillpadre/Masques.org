@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 import Nav from './Nav'
 import FooterComp from './Footer';
 import { connect } from 'react-redux'
+import moment from 'moment';
 
 const { Content } = Layout;
 
@@ -59,7 +60,6 @@ function ScreenDashboard(props) {
           setListOrders(response.user.orders)
           setListSale(response.user.articles);
           
-          console.log(response.user.orders)
         }
 
       } else {
@@ -92,23 +92,13 @@ function ScreenDashboard(props) {
 
   let finaliserCompte;
   if (!infoFN || !infoLN || !infoAddress || !infoCity || !infoZip || !infoTel || avatar === '') {
-    finaliserCompte = <p style={{ fontSize: 15 }}>Pour vendre des articles, veuillez finalisez votre compte <Link to='/profil'>ICI</Link> !</p>;
+    finaliserCompte = <p style={{ fontSize: 15 }}>Pour vendre des articles, veuillez finalisez votre compte <Link to='/mon-profil'>ICI</Link> !</p>;
   }
 
   let listPendingSale = [];
 
   listSale.map((article, i) => {
     if (!article.sellout) {
-      console.log('test' + i)
-      console.log(article.date_insert);
-      let date = new Date(article.date_insert);
-      console.log(date);
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-
-      article.date_insert = day + "/" + month + "/" + year;
-
       listPendingSale.push(article);
     }
   });
@@ -140,60 +130,72 @@ function ScreenDashboard(props) {
           </Col>
 
           <Col md={{ span: 3 }} sm={{ span: 12 }} xs={{ span: 24 }} style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button disabled={finaliserCompte ? true : false} style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary"><Link to='/mask'>Vendre des articles</Link></Button>
+            <Button disabled={finaliserCompte ? true : false} style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary"><Link to='/creation-vente'>Vendre des articles</Link></Button>
             <Button style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary"><Link to='/map'>Passer une commande</Link></Button>
-            <Button style={{ marginTop: 20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black' }} type='primary'><Link to='/profil'>Modifier mes infos</Link></Button>
+            <Button style={{ marginTop: 20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black' }} type='primary'><Link to='/mon-profil'>Modifier mes infos</Link></Button>
           </Col>
 
         </Row>
 
         <Row style={{ marginTop: 40 }} justify='center'>
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
-            <h2>Mes offres publiées</h2>
-            <div className="dashboard-box">
-
-              <List locale={{ emptyText: "Aucune offre publiée." }}
-                itemLayout="horizontal"
-                dataSource={listPendingSale}
-                renderItem={item => (
-                  <List.Item style={{ marginLeft: 7 }}>
+            <h2 style={{color: '#E23D70'}}>Mes offres publiées</h2>
+            <div className='dashboard-box'>
+              
+               <List 
+                  locale={{emptyText : 'Aucun offre publiée.'}}
+                  style={{ margin: "10px 15px 0 10px", textAlign: 'left'}}
+                  dataSource={listPendingSale}
+                  renderItem={item => (
+                    <List.Item style={{ marginLeft: 7 }}>
                     <List.Item.Meta
                       title={"Offre n° " + item._id}
-                      description={"Créé le " + item.date_insert}
+                      description={"Créé le " + moment(item.date_insert).format('L')}
                     />
                     {item.description}
                   </List.Item>
-                )}
+                  )} 
               />
+
             </div>
           </Col>
-
+         
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
-            <h2>Mes commandes passées</h2>
-            <div className="dashboard-box">
+            <h2 style={{color: '#E23D70'}}>Mes commandes passées</h2>
+            <div className='dashboard-box'>
+              
+               <List 
+                  locale={{emptyText : 'Aucun commande passée.'}}
+                  style={{ margin: "10px 15px 0 10px"}}
+                  dataSource={listCommandes}
+                  renderItem={item => (
+                      <List.Item>
+                      
+                          <List.Item.Meta
+                              title={"Commande n° " + item._id}
+                              description={"Quantité commandée : " + item.quantity}
+                          />
 
-              <List locale={{ emptyText: "Aucune commande passée." }}
-                itemLayout="horizontal"
-                dataSource={listCommandes}
-                renderItem={item => (
-                  <List.Item style={{ marginLeft: 7 }}>
-                    <List.Item.Meta
-                      title={"Commande n° " + item._id}
-                      description={"Quantité commandée : " + item.quantity}
-                    />
+                          <List.Item.Meta
+                              title={"Livraison : "}
+                              description={item.livraison}
+                          />
 
-                    <List.Item.Meta
-                      description={"Prix total  : " + item.totalPrice + "€"}
-                    />
+                          <List.Item.Meta
+                              title={" Prix total :"}
+                              description={item.totalPrice + '€'}
+                          />
 
-                  </List.Item>
-                )}
+      
+                      </List.Item>
+                  )} 
               />
+
             </div>
           </Col>
         
           <Col md={{ span: 20 }} sm={{ span: 24 }}>
-            <h2>Commandes clients</h2>
+            <h2 style={{color: '#E23D70'}}>Commandes clients</h2>
             <div className='dashboard-box'>
               
                <List 

@@ -122,7 +122,7 @@ function ScreenLogin(props) {
         <h1>Rejoingnez-nous!</h1>
 
           {/* SIGN-IN */}
-          <Row className="Sign" className="Login-page">
+          <Row className="Sign Login-page">
             <Col md={{span: 6}} sm={{span: 22}} className='Sign'>
               <h2 style={{fontWeight: 700}}>Se connecter</h2>
 

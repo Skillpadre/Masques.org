@@ -91,8 +91,8 @@ function ScreenBasket(props) {
                 { price: priceId, quantity: 1 }
             ],
             mode: 'payment',
-            successUrl: `http://localhost:3001/confirm`,
-            cancelUrl: 'http://localhost:3001/basket',
+            successUrl: `http://localhost:3001/validation-commande`,
+            cancelUrl: 'http://localhost:3001/panier',
         })
             .then(async function (result) {
                 console.log(result.error.message)
@@ -105,6 +105,7 @@ function ScreenBasket(props) {
         //const response = await rawResponse.json();
 
     };
+    console.log(totalQuantity)
 // Route pour add panier en sous doc
     const addOrder = async (orders, quantity, total) => {
 

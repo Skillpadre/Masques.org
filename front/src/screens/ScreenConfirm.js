@@ -45,9 +45,9 @@ function ScreenConfirm(props) {
     loadUser();
   }, [user]);
 
-if( props.myConfirm[0] == undefined || props.myConfirm[0].orders == [] || userConfirm[0] == undefined || userConfirm[0].orders == []){
-  return <Redirect to='/' />
-}
+// if( props.myConfirm[0] == undefined || props.myConfirm[0].orders == [] || userConfirm[0] == undefined || userConfirm[0].orders == []){
+//   return <Redirect to='/' />
+// }
 
   var total = 0
   var price = 0

@@ -83,7 +83,7 @@ function ScreenMasks(props) {
     }
 
     if(isCreated){
-        return (<Redirect to='/dashboard' />)
+        return (<Redirect to='/mon-compte' />)
     } 
 
     if(!isLogin){

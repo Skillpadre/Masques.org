@@ -138,7 +138,7 @@ function ScreenConfirm(props) {
 
 
           <CheckCircleFilled style={{ color: '#92D050', fontSize: 100 }} />
-          <p style={{ fontWeight: 700, margin: '10px 30px 50px' }}>Votre commande de {total} masques pour un total de {price} € a bien été prise en compte !</p>
+          <p style={{ fontWeight: 700, margin: '10px 30px 50px' }}>Votre commande de {total} masque(s) pour un total de {price} € a bien été prise en compte !</p>
           <p style={{ color: '#92D050' }}>Merci pour votre achat responsable et solidaire !</p>
 
 

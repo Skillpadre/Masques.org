@@ -78,7 +78,7 @@ router.get('/articleId/:id', async function (req, res) {
 
 router.get('/new-basket', async function (req, res) {
   const product = await stripe.products.create({
-    name: "Article id : " + req.query.id,
+    name: "Numéro de commande : " + req.query.id,
   });
   const price = await stripe.prices.create({
     product: product.id,

@@ -141,45 +141,57 @@ function ScreenDashboard(props) {
         <Row style={{ marginTop: 40 }} justify='center'>
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
             <h2>Mes offres publiées</h2>
-            <div className="dashboard-box">
-
-              <List locale={{ emptyText: "Aucune offre publiée." }}
-                itemLayout="horizontal"
-                dataSource={listPendingSale}
-                renderItem={item => (
-                  <List.Item style={{ marginLeft: 7 }}>
+            <div className='dashboard-box'>
+              
+               <List 
+                  locale={{emptyText : 'Aucun offre publiée.'}}
+                  style={{ margin: "10px 15px 0 10px", textAlign: 'left'}}
+                  dataSource={listPendingSale}
+                  renderItem={item => (
+                    <List.Item style={{ marginLeft: 7 }}>
                     <List.Item.Meta
                       title={"Offre n° " + item._id}
                       description={"Créé le " + moment(item.date_insert).format('L')}
                     />
                     {item.description}
                   </List.Item>
-                )}
+                  )} 
               />
+
             </div>
           </Col>
-
+         
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
             <h2>Mes commandes passées</h2>
-            <div className="dashboard-box">
+            <div className='dashboard-box'>
+              
+               <List 
+                  locale={{emptyText : 'Aucun commande passée.'}}
+                  style={{ margin: "10px 15px 0 10px"}}
+                  dataSource={listCommandes}
+                  renderItem={item => (
+                      <List.Item>
+                      
+                          <List.Item.Meta
+                              title={"Commande n° " + item._id}
+                              description={"Quantité commandée : " + item.quantity}
+                          />
 
-              <List locale={{ emptyText: "Aucune commande passée." }}
-                itemLayout="horizontal"
-                dataSource={listCommandes}
-                renderItem={item => (
-                  <List.Item style={{ marginLeft: 7 }}>
-                    <List.Item.Meta
-                      title={"Commande n° " + item._id}
-                      description={"Quantité commandée : " + item.quantity}
-                    />
+                          <List.Item.Meta
+                              title={"Livraison : "}
+                              description={item.livraison}
+                          />
 
-                    <List.Item.Meta
-                      description={"Prix total  : " + item.totalPrice + "€"}
-                    />
+                          <List.Item.Meta
+                              title={" Prix total :"}
+                              description={item.totalPrice + '€'}
+                          />
 
-                  </List.Item>
-                )}
+      
+                      </List.Item>
+                  )} 
               />
+
             </div>
           </Col>
         

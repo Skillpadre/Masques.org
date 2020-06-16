@@ -37,6 +37,7 @@ function ScreenFabricant(props) {
     const [colorInscription, setColorInscription] = useState('black')
 
     const [image, setImage] = useState('');
+    const [imageDisplay, setImageDisplay] = useState('')
     const [logoList, setLogoList] = useState([]);
 
     useEffect(() => {
@@ -110,7 +111,12 @@ function ScreenFabricant(props) {
 
     //Téléchargement image/logo
     var fileSelectedHandler= event =>{
-        console.log(event.target.files[0]);
+        event.preventDefault();
+        const reader = new FileReader();
+        reader.onload = () => {
+          setImageDisplay(reader.result)
+        };
+        reader.readAsDataURL(event.target.files[0])
         setImage(event.target.files[0])
     }
 
@@ -186,7 +192,7 @@ function ScreenFabricant(props) {
 
                         <div className='masque' style={{backgroundImage: `url(${urlImg})`/* "url('http://localhost:3001/assets/masques/masque-noir.png')" */}}>
                             <p style={{ marginTop: 90, fontSize: 25, color: colorInscription, maxWidth: '270px'}}>{inscription}</p>
-                            {image!== ''?<img style={{ width: 150, height: 100}} src={image} alt='image sur masque'/> :null}
+                            {imageDisplay!== ''?<img style={{ width: 150, height: 100}} src={imageDisplay} alt='image sur masque'/> :null}
                         </div>
 
                     </Col>

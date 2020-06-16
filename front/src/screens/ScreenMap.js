@@ -28,7 +28,7 @@ function ScreenMap(props) {
   const [visible, setVisible] = useState(false) //modal
 
   function geo_success(position) {
-    //console.log('geoloc succes')
+    console.log('geoloc succes')
   
     setMyPos({lat: position.coords.latitude, lng: position.coords.longitude})
   
@@ -108,7 +108,7 @@ function ScreenMap(props) {
     var lien;
     //Si le user existe je l'autorise à allez sur la page fabricant
     if(props.user){
-      lien=`/fabricant/${item._id}`
+      lien=`/product/${item._id}`
     }else{
       lien=`/login`
     }

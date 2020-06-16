@@ -17,11 +17,11 @@ function FooterComp() {
           <Row justify='center' align='start' style={{marginTop: 10}}>
 
             <Col span={6}>
-                <Link to='/contact'><p style={{color: 'white'}}>Nous contacter</p></Link>
+                <Link to='/nous-contacter'><p style={{color: 'white'}}>Nous contacter</p></Link>
             </Col>
 
             <Col span={6}>
-                <Link to='/quisommesnous'><p style={{color: 'white'}}>Qui sommes nous ?</p></Link>
+                <Link to='/qui-sommes-nous'><p style={{color: 'white'}}>Qui sommes nous ?</p></Link>
             </Col>
       
             <Col span={6} style={{color : 'white'}}>

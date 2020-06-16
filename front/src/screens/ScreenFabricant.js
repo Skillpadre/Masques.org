@@ -6,7 +6,6 @@ import Nav from './Nav'
 import FooterComp from './Footer';
 
 import { Row, Col, Layout, Avatar, Form, Select, Input, InputNumber, Button } from 'antd';
-import { OrderedListOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -34,7 +33,7 @@ function ScreenFabricant(props) {
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
 
-    const [colorInscription, setColorInscription] = useState('black')
+    const [colorInscription, setColorInscription] = useState('')
 
     const [image, setImage] = useState('');
     const [imageDisplay, setImageDisplay] = useState('')
@@ -86,11 +85,10 @@ function ScreenFabricant(props) {
     const onChangeColorInscription = async (value) => {
         setColorInscription(value)
     };
-    console.log(colorInscription)
+    //console.log(colorInscription)
  
     // Envoie de l'odre au reducer
     let handleOrder = async (order) => {
-        console.log(order)
         order.colors = color
         order.quantity = quantity
         order.material = material
@@ -131,11 +129,17 @@ function ScreenFabricant(props) {
         });
 
         var response = await rawResponse.json();
-        console.log(response.url)
         setImage(response.url)
     }
     
-    var urlImg=`/assets/masques/masque-${color}.png`;
+    var urlImg=`/assets/masques/masque-${color}.png`;//lien image de fond masque
+
+    var colorTextDesign;
+    if(colorInscription!==''){
+        colorTextDesign={color: colorInscription};
+    }else{
+        colorTextDesign={color: 'black'}
+    }
 
     let inscriptionDisplay;
     let logoDisplay;
@@ -150,6 +154,19 @@ function ScreenFabricant(props) {
                 value={inscription}
                 onChange={e=>setInscription(e.target.value)} 
             />
+            <Select
+                    onChange={onChangeColorInscription}
+                    placeholder="Choisissez votre couleur"
+                    allowClear
+
+                >
+                    {
+                        colorsList.map((color, i) => {
+                            return <Option key={i} value={color}>{color}</Option>
+                        })
+                    }
+
+            </Select>
         </Form.Item> 
     }
 
@@ -191,7 +208,7 @@ function ScreenFabricant(props) {
                     <Col md={{span : 12}} sm={{span : 24}}>
 
                         <div className='masque' style={{backgroundImage: `url(${urlImg})`/* "url('http://localhost:3001/assets/masques/masque-noir.png')" */}}>
-                            <p style={{ marginTop: 90, fontSize: 25, color: colorInscription, maxWidth: '270px'}}>{inscription}</p>
+                            <p style={colorTextDesign,{ marginTop: 90, fontSize: 25, maxWidth: '270px'}}>{inscription}</p>
                             {imageDisplay!== ''?<img style={{ width: 150, height: 100}} src={imageDisplay} alt='image sur masque'/> :null}
                         </div>
 
@@ -284,7 +301,7 @@ function ScreenFabricant(props) {
                             </Form.Item>
 
                             <p style={{color: '#92D050'}}>Une partie reversée à nos ONG partenaires!</p>
-                            <Link to='/basket'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter à votre panier solidaire !</Button></Link>
+                            <Link to='/panier'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter à votre panier solidaire !</Button></Link>
                             
                         </Form>
 

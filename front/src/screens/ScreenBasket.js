@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import '../App.css';
 import { Row, Col, Layout, List, Divider, Radio, Button } from 'antd';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, CreditCardOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux'
@@ -20,16 +20,19 @@ function ScreenBasket(props) {
     const [articleList, setArticleList] = useState([])
 
     const [livraison, setLivraison] = useState('Retrait')
- 
 
+    const [isLogin, setIsLogin] = useState(true);
+ 
     //Récupération du panier dans localStorage
     var userPanier = JSON.parse(localStorage.getItem('panier'));
 
     useEffect(() => {
-        function readArticleList() {
-            
-            setArticleList(userPanier)
-
+        function readArticleList() {    
+            if(userPanier !== null){
+                setArticleList(userPanier)
+            }else{
+                setIsLogin(false)
+            }
         }
         readArticleList();
     }, []);
@@ -121,6 +124,9 @@ function ScreenBasket(props) {
         props.sendOrder(orders, quantity, total)
     }
 
+    if (!isLogin) {
+        return (<Redirect to='/' />)
+    }
 
     return (
 
@@ -137,10 +143,10 @@ function ScreenBasket(props) {
 
                 <Row style={{ marginTop: 40, textAlign: 'center' }} justify='center' align= 'top'>
                     <Col md={{ span: 14 }} sm={{ span: 24 }}>
-                        <h2>Produit(s) en attente</h2>
-                        <div id="dashboard-box">
+                        <h2 style={{color: '#E23D70'}}>Produit(s) en attente</h2>
+                        <div className="dashboard-box">
                             
-                            <List bordered
+                            <List
                                 locale={{emptyText : 'Votre panier est vide.'}}
                                 style={{ margin: "10px 15px 0 10px"}}
                                 dataSource={articleList}
@@ -200,7 +206,7 @@ function ScreenBasket(props) {
                     <Col md={{ span: 9 }} sm={{ span: 24 }}>
 
                         <div id="retrait">
-                            <h2>Moyen de retrait</h2>
+                            <h2 style={{color: '#E23D70'}}>Moyen de retrait</h2>
                             <Radio.Group onChange={onChange} value={livraison}>
                                 <Radio style={radioStyle} value={'Retrait'}>
                                     Retrait
@@ -214,7 +220,7 @@ function ScreenBasket(props) {
                                                       {/* <button role="link" onClick={() => {handleClick();majStock()}}>
                                 Checkout
                                 </button> */}
-                            <Button role="link" onClick={() => {handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal, livraison); confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                            <Button role="link" icon={<CreditCardOutlined />} onClick={() => {handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal, livraison); confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Paiement
                             </Button>
 

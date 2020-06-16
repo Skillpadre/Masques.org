@@ -8,7 +8,6 @@ import 'antd/dist/antd.css';
 
 import Nav from './Nav'
 import FooterComp from './Footer';
-import { PropertySafetyFilled } from '@ant-design/icons';
 
 const { Content } = Layout;
 

@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 import Nav from './Nav'
 import FooterComp from './Footer';
 import { connect } from 'react-redux'
+import moment from 'moment';
 
 const { Content } = Layout;
 
@@ -99,16 +100,6 @@ function ScreenDashboard(props) {
 
   listSale.map((article, i) => {
     if (!article.sellout) {
-      console.log('test' + i)
-      console.log(article.date_insert);
-      let date = new Date(article.date_insert);
-      console.log(date);
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-
-      article.date_insert = day + "/" + month + "/" + year;
-
       listPendingSale.push(article);
     }
   });
@@ -159,7 +150,7 @@ function ScreenDashboard(props) {
                   <List.Item style={{ marginLeft: 7 }}>
                     <List.Item.Meta
                       title={"Offre n° " + item._id}
-                      description={"Créé le " + item.date_insert}
+                      description={"Créé le " + moment(item.date_insert).format('L')}
                     />
                     {item.description}
                   </List.Item>

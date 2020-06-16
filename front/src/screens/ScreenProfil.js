@@ -132,19 +132,22 @@ function ScreenProfil(props) {
 
         let responseList = [];
 
-        response.features.map((item, i)=>{
-            let type;
-            if(item.properties.type === 'municipality'){
-                type = 'Commune'
-            } else if(item.properties.type === 'housenumber'){
-                type = 'Numéro'
-            } else if(item.properties.type === 'street'){
-                type = 'Rue'
-            } else if(item.properties.type === 'locality'){
-                type = 'Lieu-dit'
-            }
-            responseList.push(renderItem(item.properties.context, item.properties.label, type, item.geometry.coordinates, item.properties.city, item.properties.postcode ,i));
-        });
+        if(response.features){
+            response.features.map((item, i)=>{
+                let type;
+                if(item.properties.type === 'municipality'){
+                    type = 'Commune'
+                } else if(item.properties.type === 'housenumber'){
+                    type = 'Numéro'
+                } else if(item.properties.type === 'street'){
+                    type = 'Rue'
+                } else if(item.properties.type === 'locality'){
+                    type = 'Lieu-dit'
+                }
+                responseList.push(renderItem(item.properties.context, item.properties.label, type, item.geometry.coordinates, item.properties.city, item.properties.postcode ,i));
+            });
+        }
+        
         setOption(responseList);
     }
 

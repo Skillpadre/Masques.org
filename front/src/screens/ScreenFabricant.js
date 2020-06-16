@@ -33,7 +33,7 @@ function ScreenFabricant(props) {
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
 
-    const [colorInscription, setColorInscription] = useState('')
+    const [colorInscription, setColorInscription] = useState('black')
 
     const [image, setImage] = useState('');
     const [imageDisplay, setImageDisplay] = useState('')
@@ -82,9 +82,9 @@ function ScreenFabricant(props) {
         setModele(value);
     };
 
-    const onChangeColorInscription = async (value) => {
+    /* const onChangeColorInscription = async (value) => {
         setColorInscription(value)
-    };
+    }; */
     //console.log(colorInscription)
  
     // Envoie de l'odre au reducer
@@ -154,19 +154,6 @@ function ScreenFabricant(props) {
                 value={inscription}
                 onChange={e=>setInscription(e.target.value)} 
             />
-            <Select
-                    onChange={onChangeColorInscription}
-                    placeholder="Choisissez votre couleur"
-                    allowClear
-
-                >
-                    {
-                        colorsList.map((color, i) => {
-                            return <Option key={i} value={color}>{color}</Option>
-                        })
-                    }
-
-            </Select>
         </Form.Item> 
     }
 

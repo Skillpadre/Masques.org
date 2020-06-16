@@ -19,7 +19,7 @@ const { Content } = Layout;
 function ScreenMap(props) {
 
   const [center, setCenter] = useState({ lat: 11.0168, lng: 76.9558 });
-  const [zoom, setZoom] = useState(14);
+  const [zoom, setZoom] = useState(9);
   const [myPos, setMyPos] = useState({});
 
   const [articleList, setArticleList] = useState([]);
@@ -39,8 +39,9 @@ function ScreenMap(props) {
       let sellers = [];
       let articles = [];
   
+      // On affiche les vendeurs selon un certain rayon en Km
       response.sellers.map((seller, i) => {
-       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 100) { // Rayon de 100 Km
+       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 250) { // Rayon de 100 Km
         sellers.push(seller);
         articles.push(response.articles[i]);
        }

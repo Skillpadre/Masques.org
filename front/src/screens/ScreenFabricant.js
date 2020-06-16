@@ -154,7 +154,7 @@ function ScreenFabricant(props) {
                 value={inscription}
                 onChange={e=>setInscription(e.target.value)} 
             />
-            <Select
+            {/* <Select
                     onChange={onChangeColorInscription}
                     placeholder="Choisissez votre couleur"
                     allowClear
@@ -166,7 +166,7 @@ function ScreenFabricant(props) {
                         })
                     }
 
-            </Select>
+            </Select> */}
         </Form.Item> 
     }
 

@@ -29,6 +29,7 @@ function ScreenDashboard(props) {
   const [isLogin, setIsLogin] = useState(true);
 
   const [visible, setVisible] = useState(false)//modal
+  const [article, setArticle] = useState({});
 
 
   var user;
@@ -72,8 +73,9 @@ function ScreenDashboard(props) {
 
 
   //MODAL PERSONNALISATION
-  var showModal = () => {
-    setVisible(true)
+  var showModal = (article) => {
+    setVisible(true);
+    setArticle(article);
   };
 
   var handleOk = e => {
@@ -152,7 +154,11 @@ function ScreenDashboard(props) {
                       title={"Offre n° " + item._id}
                       description={"Créé le " + moment(item.date_insert).format('L')}
                     />
-                    {item.description}
+
+                    <List.Item.Meta
+                      title={item.description}
+                    />
+                    
                   </List.Item>
                   )} 
               />
@@ -172,8 +178,14 @@ function ScreenDashboard(props) {
                       <List.Item>
                       
                           <List.Item.Meta
-                              title={"Commande n° " + item._id}
-                              description={"Quantité commandée : " + item.quantity}
+                              title={"Numéro de commande : " + item._id}
+                              description={"Passée le " + moment(item.date_insert).format('L')}
+                          />
+
+                          <List.Item.Meta
+                              title={"Quantité commandée : "}
+                              description={item.quantity}
+                              
                           />
 
                           <List.Item.Meta
@@ -206,13 +218,19 @@ function ScreenDashboard(props) {
                       <List.Item>
                       
                           <List.Item.Meta
-                              title={"Commande n° " + item._id}
-                              description={"Quantité commandée : " + item.quantity}
+                              title={"Numéro de commande : " + item._id}
+                              description={"Passée le " + item.date_insert}
                           />
 
                           <List.Item.Meta
                               title={"Modèle : "}
                               description={item.articles.model}
+                          />
+
+                          <List.Item.Meta
+                              title={"Quantité commandée : "}
+                              description={item.quantity}
+                              
                           />
 
                           <List.Item.Meta
@@ -229,7 +247,7 @@ function ScreenDashboard(props) {
                               description={item.totalPrice + '€'}
                           />
                           <List.Item.Meta
-                            title={<Button style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type="primary" onClick={showModal}>Voir personnalisation</Button>}
+                            title={<Button style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type="primary" onClick={() => showModal(item.articles)}>Voir personnalisation</Button>}
                           />
           
                           <Modal style={{textAlign: 'center'}}
@@ -238,9 +256,9 @@ function ScreenDashboard(props) {
                                   onOk={handleOk}
                                   onCancel={handleCancel}
                             >
-                              <div className='masque' style={{backgroundImage: `url(${item.articles.urlImg})`}}>
-                                  <p style={{ marginTop: 90, fontSize: 25, color: 'black', maxWidth: '270px'}}>{item.articles.designText}</p>
-                                  {item.articles.designImg!== ''?<img style={{ width: 150, height: 100}} src={item.articles.designImg} alt='image sur masque'/> :null}
+                              <div className='masque' style={{backgroundImage: `url(${article.urlImg})`}}>
+                                  <p style={{ marginTop: 90, fontSize: 25, color: article.textColor, maxWidth: '270px'}}>{article.designText}</p>
+                                  {article.designImg!== ''?<img style={{ width: 150, height: 100}} src={article.designImg} alt='image sur masque'/> :null}
                               </div>
         
                             </Modal>

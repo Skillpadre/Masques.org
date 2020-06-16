@@ -18,7 +18,8 @@ const articleSchema = new mongoose.Schema({
     sellerId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     designText: String,
     designImg: String,
-    urlImg: String
+    urlImg: String,
+    textColor: String
 });
 
 const articleModel = new mongoose.model('articles', articleSchema);

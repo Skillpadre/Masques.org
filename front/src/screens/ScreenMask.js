@@ -65,7 +65,6 @@ function ScreenMasks(props) {
             body: articleData
         });
         let response = await data.json();
-        console.log(response);
 
         if(response.result){
             showModal();

@@ -19,18 +19,19 @@ const { Content } = Layout;
 function ScreenMap(props) {
 
   const [center, setCenter] = useState({ lat: 11.0168, lng: 76.9558 });
-  const [zoom, setZoom] = useState(14);
+  const [zoom, setZoom] = useState(9);
   const [myPos, setMyPos] = useState({});
 
   const [articleList, setArticleList] = useState([]);
   const [sellerList, setSellerList] = useState([]);
 
   const [visible, setVisible] = useState(false) //modal
+  const [descModal, setDescModal] = useState('');
 
   function geo_success(position) {
-    console.log('geoloc succes')
+    //console.log('geoloc succes')
   
-    setMyPos({lat: position.coords.latitude, lng: position.coords.longitude})
+    setCenter({lat: position.coords.latitude, lng: position.coords.longitude})
   
     async function loadData() {
       var rawResponse = await fetch('/article-list');
@@ -39,8 +40,9 @@ function ScreenMap(props) {
       let sellers = [];
       let articles = [];
   
+      // On affiche les vendeurs selon un certain rayon en Km
       response.sellers.map((seller, i) => {
-       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 100) { // Rayon de 100 Km
+       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 250) { // Rayon de 100 Km
         sellers.push(seller);
         articles.push(response.articles[i]);
        }
@@ -74,8 +76,9 @@ function ScreenMap(props) {
   }, []);
 
   //MODAL
-  let showModal = () => {
+  let showModal = (description) => {
     setVisible(true)
+    setDescModal(description);
   };
 
   let handleOk = () => {
@@ -123,7 +126,7 @@ function ScreenMap(props) {
 
         <Card.Meta title={username} avatar={<Avatar src={urlAvatar}/>}/>
 
-        <Button onClick={showModal} style={{color: '#E23D70', border: 'white'}}>Description</Button>
+        <Button onClick={()=>showModal(item.description)} style={{color: '#E23D70', border: 'white'}}>Description</Button>
 
         <Divider/>
         <Card.Meta description={"Prix unitaire: " + item.priceUnit + " €"}/>
@@ -139,7 +142,7 @@ function ScreenMap(props) {
               onOk={handleOk}
               onCancel={handleCancel}
       >
-        <p>{item.description}</p>
+        <p>{descModal}</p>
       
       </Modal>
     </List.Item>
@@ -209,7 +212,6 @@ function ScreenMap(props) {
               bootstrapURLKeys={{ key: 'AIzaSyA7dxkypDmi6PUAA5D5tCx0mQ_s_UiwimM' }}
               defaultCenter={center}
               defaultZoom={zoom}
-              center={myPos}
               >
                 {markers}
             </GoogleMapReact>

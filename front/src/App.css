@@ -85,7 +85,7 @@ header{
 
 .dashboard-box{
   border: solid #e6eaee ;
-  border-width: 2px 4px 4px 2px;
+  border-width: 2px 4px px 2px;
   border-radius: 6px;
   width: auto;
   height: auto;

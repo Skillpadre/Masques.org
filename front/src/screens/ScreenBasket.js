@@ -17,9 +17,7 @@ const { Content } = Layout;
 
 function ScreenBasket(props) {
 
-    const [infoUsername, setInfoUsername] = useState();
     const [articleList, setArticleList] = useState([])
-    const [userToken, setUserToken] = useState('')
 
     const [livraison, setLivraison] = useState('Retrait')
  
@@ -52,7 +50,7 @@ function ScreenBasket(props) {
         totalQuantity += articleList[i].quantity
     }
    
-    if (totalCommande == NaN) {
+    if (totalCommande === NaN) {
         totalCommande = 0
     }
    
@@ -64,7 +62,6 @@ function ScreenBasket(props) {
 
     var onChange = e => {
         setLivraison(e.target.value);
-        console.log(e.target.value)
     };
     
     //supression article panier
@@ -101,9 +98,8 @@ function ScreenBasket(props) {
 
     const majStock = async () => {
 
-        const rawResponse = await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
-        const response = await rawResponse.json();
-        console.log(response)
+        /*const rawResponse =*/ await fetch(`/valid-order?id=${idCommande}&quantity=${totalQuantity}`);
+        //const response = await rawResponse.json();
 
     };
 // Route pour add panier en sous doc
@@ -112,12 +108,12 @@ function ScreenBasket(props) {
         const body = {orders : orders, quantity : quantity, total : total, livraison : livraison}
         const bodyString = JSON.stringify(body)
         
-        let data = await fetch('/add-order/' + props.token, {
+        /*let data =*/ await fetch('/add-order/' + props.token, {
             method: 'POST',
             headers: {'Content-Type':'application/Json'},
             body: bodyString
         });
-        let response = await data.json();
+        // let response = await data.json();
         localStorage.setItem("panier", JSON.stringify([])); //je renvoi le panier vide dans le local storage
     }
 
@@ -197,7 +193,7 @@ function ScreenBasket(props) {
 
                         </div>
 
-                        { props.order.length !== 0? <Link to={`/fabricant/${idCommande}`}><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>: null}
+                        { props.order.length !== 0? <Link to={`/product/${idCommande}`}><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Continuer la commande chez ce fabricant </Button></Link>: null}
                         <Link to="/map"><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', margin: '20px 10px' }} type="primary">Retourner à la liste des fabricants</Button></Link>
                     </Col>
 
@@ -222,7 +218,7 @@ function ScreenBasket(props) {
                                 Paiement
                             </Button>
 
-                         <Link to="/confirm"><Button role="link" onClick={() => {confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                         <Link to="/validation-commande"><Button role="link" onClick={() => {confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Test
                             </Button></Link>   
 

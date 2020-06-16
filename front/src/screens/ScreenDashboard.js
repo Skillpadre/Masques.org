@@ -60,7 +60,6 @@ function ScreenDashboard(props) {
           setListOrders(response.user.orders)
           setListSale(response.user.articles);
           
-          console.log(response.user.orders)
         }
 
       } else {
@@ -93,7 +92,7 @@ function ScreenDashboard(props) {
 
   let finaliserCompte;
   if (!infoFN || !infoLN || !infoAddress || !infoCity || !infoZip || !infoTel || avatar === '') {
-    finaliserCompte = <p style={{ fontSize: 15 }}>Pour vendre des articles, veuillez finalisez votre compte <Link to='/profil'>ICI</Link> !</p>;
+    finaliserCompte = <p style={{ fontSize: 15 }}>Pour vendre des articles, veuillez finalisez votre compte <Link to='/mon-profil'>ICI</Link> !</p>;
   }
 
   let listPendingSale = [];
@@ -131,9 +130,9 @@ function ScreenDashboard(props) {
           </Col>
 
           <Col md={{ span: 3 }} sm={{ span: 12 }} xs={{ span: 24 }} style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button disabled={finaliserCompte ? true : false} style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary"><Link to='/mask'>Vendre des articles</Link></Button>
+            <Button disabled={finaliserCompte ? true : false} style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary"><Link to='/creation-vente'>Vendre des articles</Link></Button>
             <Button style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary"><Link to='/map'>Passer une commande</Link></Button>
-            <Button style={{ marginTop: 20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black' }} type='primary'><Link to='/profil'>Modifier mes infos</Link></Button>
+            <Button style={{ marginTop: 20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black' }} type='primary'><Link to='/mon-profil'>Modifier mes infos</Link></Button>
           </Col>
 
         </Row>

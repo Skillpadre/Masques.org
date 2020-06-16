@@ -14,8 +14,6 @@ const { Content } = Layout;
 
 function ScreenProfil(props) {
 
-    const [value, setValue] = useState('');
-
     const [infoLN, setInfoLN] = useState('');
     const [infoFN, setInfoFN] = useState('');
     const [infoAddress, setInfoAddress] = useState('');
@@ -37,7 +35,6 @@ function ScreenProfil(props) {
 
     useEffect(() => {
         // On charge les info pour les afficher
-        console.log(props.user);
         async function loadInfo() {
             if(props.user){
                 const rawResponse = await fetch(`/users/loadinfo/${props.user.token}`);
@@ -132,7 +129,6 @@ function ScreenProfil(props) {
     async function search(text) {
         let rawResponse = await fetch('https://api-adresse.data.gouv.fr/search/?q=' + text)
         let response = await rawResponse.json();
-        console.log(response.features);
 
         let responseList = [];
 
@@ -179,10 +175,6 @@ function ScreenProfil(props) {
 
       // Selection de la bonne adresse dans l'autocomplétion
       function handleClickAutoComplet(e, label, coord, city, zipcode, i) {
-        console.log('click')
-        
-        console.log(label);
-        console.log(coord)
         setInfoAddress(label);
         setInfoCoord(coord)  
         setInfoCity(city)

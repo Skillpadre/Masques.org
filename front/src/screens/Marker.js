@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ const Marker = (props) => {
     const content = (
         
         <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
-            <img style={{width: 50, height: 50, borderRadius: '50%'}} src={urlAvatar} />
+            <img alt="avatar" style={{width: 50, height: 50, borderRadius: '50%'}} src={urlAvatar} />
             {articlesDisplay}
         </div>
       );

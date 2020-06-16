@@ -26,6 +26,7 @@ function ScreenMap(props) {
   const [sellerList, setSellerList] = useState([]);
 
   const [visible, setVisible] = useState(false) //modal
+  const [descModal, setDescModal] = useState('');
 
   function geo_success(position) {
     console.log('geoloc succes')
@@ -75,8 +76,9 @@ function ScreenMap(props) {
   }, []);
 
   //MODAL
-  let showModal = () => {
+  let showModal = (description) => {
     setVisible(true)
+    setDescModal(description);
   };
 
   let handleOk = () => {
@@ -124,7 +126,7 @@ function ScreenMap(props) {
 
         <Card.Meta title={username} avatar={<Avatar src={urlAvatar}/>}/>
 
-        <Button onClick={showModal} style={{color: '#E23D70', border: 'white'}}>Description</Button>
+        <Button onClick={()=>showModal(item.description)} style={{color: '#E23D70', border: 'white'}}>Description</Button>
 
         <Divider/>
         <Card.Meta description={"Prix unitaire: " + item.priceUnit + " €"}/>
@@ -140,7 +142,7 @@ function ScreenMap(props) {
               onOk={handleOk}
               onCancel={handleCancel}
       >
-        <p>{item.description}</p>
+        <p>{descModal}</p>
       
       </Modal>
     </List.Item>

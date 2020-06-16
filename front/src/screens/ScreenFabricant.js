@@ -33,7 +33,7 @@ function ScreenFabricant(props) {
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
 
-    const [colorInscription, setColorInscription] = useState('')
+    const [colorInscription, setColorInscription] = useState('black')
 
     const [image, setImage] = useState('');
     const [imageDisplay, setImageDisplay] = useState('')
@@ -83,7 +83,42 @@ function ScreenFabricant(props) {
     };
 
     const onChangeColorInscription = async (value) => {
-        setColorInscription(value)
+        console.log(value)
+        let color;
+        if(value === "Vert")
+            color = "#03C057"
+        else if(value === "Rouge")
+            color = "#B3071F"
+        else if(value === "Rose-Clair")
+            color =  "#f8a5c2"
+        else if(value === "Jaune")
+            color = "#E1EF11"
+        else if(value === "Gris")
+            color =  "#8C8F93"
+        else if(value === "Rose")
+            color = "#E23D70"
+        else if(value === "Jaune-Clair")
+            color =  "#EFFF9D"
+        else if(value === "Rouge-Fonce")
+            color = "#6A0C18"
+        else if(value === "Vert-Fonce")
+            color =  "#02622D"
+        else if(value === "Saumon")
+            color = "#F38F78"
+        else if(value === "Orange")
+            color =  "#F16545"
+        else if(value === "Bleu-Ciel")
+            color = "#49BBFB"
+        else if(value === "Gris-Fonce")
+            color =  "#3E4145"
+        else if(value === "Violet")
+            color = "#A349A4"
+        else if(value === "Bleu")
+            color =  "#0417F9"
+        else if(value === 'Blanc')
+            color = "white"
+
+        setColorInscription(color)
     };
     //console.log(colorInscription)
  
@@ -94,6 +129,7 @@ function ScreenFabricant(props) {
         order.material = material
         order.model = modele
         order.designText = inscription //HERE
+        order.textColor = colorInscription
         order.designImg = image //HERE
         order.urlImg = urlImg
         props.sendOrder(order)
@@ -134,12 +170,7 @@ function ScreenFabricant(props) {
     
     var urlImg=`/assets/masques/masque-${color}.png`;//lien image de fond masque
 
-    var colorTextDesign;
-    if(colorInscription!==''){
-        colorTextDesign={color: colorInscription};
-    }else{
-        colorTextDesign={color: 'black'}
-    }
+    
 
     let inscriptionDisplay;
     let logoDisplay;
@@ -154,7 +185,7 @@ function ScreenFabricant(props) {
                 value={inscription}
                 onChange={e=>setInscription(e.target.value)} 
             />
-            {/* <Select
+            <Select
                     onChange={onChangeColorInscription}
                     placeholder="Choisissez votre couleur"
                     allowClear
@@ -166,7 +197,7 @@ function ScreenFabricant(props) {
                         })
                     }
 
-            </Select> */}
+            </Select>
         </Form.Item> 
     }
 
@@ -186,6 +217,10 @@ function ScreenFabricant(props) {
             <Nav />
 
             <Content style={{ padding: '0 50px', margin: '40px 0' }}>
+                <Row justify="center">
+                    <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary">Personnalisez votre masque</Button>   
+                </Row>    
+
 
                 <Row justify='start'/* style={{display: 'flex', justify: 'start', marginTop: 25}} */>
                     {/* Profil fabricant */}
@@ -208,7 +243,7 @@ function ScreenFabricant(props) {
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
 
                         <div className='masque' style={{backgroundImage: `url(${urlImg})`/* "url('http://localhost:3001/assets/masques/masque-noir.png')" */}}>
-                            <p style={colorTextDesign,{ marginTop: 90, fontSize: 25, maxWidth: '270px'}}>{inscription}</p>
+                            <p style={{color: colorInscription, marginTop: 90, fontSize: 25, maxWidth: '270px'}}>{inscription}</p>
                             {imageDisplay!== ''?<img style={{ width: 150, height: 100}} src={imageDisplay} alt='image sur masque'/> :null}
                         </div>
 

@@ -45,7 +45,7 @@ function Nav(props) {
             <Menu.Item key="7" style={{float: 'right'}}>
                 
                 <Avatar style={{marginRight: 10}} size={30} src={avatar} />
-                <Link to='/dashboard'>Mon Compte</Link>
+                <Link to='/mon-compte'>Mon Compte</Link>
              
             </Menu.Item>
 
@@ -53,7 +53,7 @@ function Nav(props) {
             <Menu.Item key="6" style={{float: 'right'}}>
                 
                 <ShoppingFilled style={{fontSize:20}}/>
-                <Link to='/basket'>Panier</Link>
+                <Link to='/panier'>Panier</Link>
 
             </Menu.Item>
 
@@ -80,7 +80,7 @@ function Nav(props) {
             <Link to='/map'>Fabricants</Link>
         </Menu.Item>
         <Menu.Item key="4">
-            <Link to='/quisommesnous'>Qui sommes nous ?</Link>
+            <Link to='/qui-sommes-nous'>Qui sommes nous ?</Link>
         </Menu.Item>
         
         {items}

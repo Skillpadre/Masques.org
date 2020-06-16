@@ -6,7 +6,6 @@ import Nav from './Nav'
 import FooterComp from './Footer';
 
 import { Row, Col, Layout, Avatar, Form, Select, Input, InputNumber, Button } from 'antd';
-import { OrderedListOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -86,11 +85,10 @@ function ScreenFabricant(props) {
     const onChangeColorInscription = async (value) => {
         setColorInscription(value)
     };
-    console.log(colorInscription)
+    //console.log(colorInscription)
  
     // Envoie de l'odre au reducer
     let handleOrder = async (order) => {
-        console.log(order)
         order.colors = color
         order.quantity = quantity
         order.material = material
@@ -131,7 +129,6 @@ function ScreenFabricant(props) {
         });
 
         var response = await rawResponse.json();
-        console.log(response.url)
         setImage(response.url)
     }
     
@@ -304,7 +301,7 @@ function ScreenFabricant(props) {
                             </Form.Item>
 
                             <p style={{color: '#92D050'}}>Une partie reversée à nos ONG partenaires!</p>
-                            <Link to='/basket'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter à votre panier solidaire !</Button></Link>
+                            <Link to='/panier'><Button style={{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20 }} type="primary" onClick={() => handleOrder(articleId, quantity)} >Ajouter à votre panier solidaire !</Button></Link>
                             
                         </Form>
 

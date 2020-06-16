@@ -140,7 +140,7 @@ function ScreenDashboard(props) {
 
         <Row style={{ marginTop: 40 }} justify='center'>
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
-            <h2>Mes offres publiées</h2>
+            <h2 style={{color: '#E23D70'}}>Mes offres publiées</h2>
             <div className='dashboard-box'>
               
                <List 
@@ -162,7 +162,7 @@ function ScreenDashboard(props) {
           </Col>
          
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
-            <h2>Mes commandes passées</h2>
+            <h2 style={{color: '#E23D70'}}>Mes commandes passées</h2>
             <div className='dashboard-box'>
               
                <List 
@@ -196,7 +196,7 @@ function ScreenDashboard(props) {
           </Col>
         
           <Col md={{ span: 20 }} sm={{ span: 24 }}>
-            <h2>Commandes clients</h2>
+            <h2 style={{color: '#E23D70'}}>Commandes clients</h2>
             <div className='dashboard-box'>
               
                <List 

@@ -15,7 +15,7 @@ function Nav(props) {
     const [avatar, setAvatar] = useState("https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png")
     
     //Récupération du token dans localStorage
-    var user = localStorage.getItem('user', (err, value) => {console.log('value = ' + value)  });     
+    var user = localStorage.getItem('user');     
 
     useEffect(() => {   
         

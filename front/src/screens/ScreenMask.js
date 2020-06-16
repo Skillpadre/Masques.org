@@ -194,8 +194,6 @@ function ScreenMasks(props) {
                     >
 
                         <InputNumber min={1}
-                                    
-                                    style={{ margin: '0 16px' }}
                                     value={inputStock}
                                     onChange={setInputStock}
                         />
@@ -211,7 +209,6 @@ function ScreenMasks(props) {
 
                         <InputNumber min={1}
                                     max={2000}
-                                    style={{ margin: '0 16px' }}
                                     value={inputPrice}
                                     onChange={setInputPrice}
                         />
@@ -441,17 +438,17 @@ function ScreenMasks(props) {
                                         Lin
                                     </Checkbox>
                                 </Col>
-                                <Col>
+                                <Col span={8}>
                                     <Checkbox
-                                        value="Autre matière organique/végétale"
+                                        value="Jean (upcycling)"
                                         style={{
                                             lineHeight: '32px',
                                         }}
                                     >
-                                        Autre matière organique/végétale
+                                        Jean (upcycling)
                                     </Checkbox>
                                 </Col>
-                                <Col>
+                                <Col span={8}>
                                     <Checkbox
                                         value="Cuir (upcycling)"
                                         style={{
@@ -461,14 +458,14 @@ function ScreenMasks(props) {
                                         Cuir (upcycling)
                                     </Checkbox>
                                 </Col>
-                                <Col>
+                                <Col span={12}>
                                     <Checkbox
-                                        value="Jean (upcycling)"
+                                        value="Autre matière organique/végétale"
                                         style={{
                                             lineHeight: '32px',
                                         }}
                                     >
-                                        Jean (upcycling)
+                                        Autre matière organique/végétale
                                     </Checkbox>
                                 </Col>
                             </Row>

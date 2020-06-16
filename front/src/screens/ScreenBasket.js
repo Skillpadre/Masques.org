@@ -21,7 +21,7 @@ function ScreenBasket(props) {
     const [articleList, setArticleList] = useState([])
     const [userToken, setUserToken] = useState('')
 
-    const [livraison, setLivraison] = useState('')
+    const [livraison, setLivraison] = useState('Retrait')
  
 
     //Récupération du panier dans localStorage
@@ -57,14 +57,14 @@ function ScreenBasket(props) {
     }
    
     const radioStyle = {
-        display: 'block',
-        height: '30px',
-        lineHeight: '30px',
+        display: 'flex',
+        margin: 10
     };
 
 
     var onChange = e => {
         setLivraison(e.target.value);
+        console.log(e.target.value)
     };
     
     //supression article panier

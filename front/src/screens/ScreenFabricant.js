@@ -187,7 +187,7 @@ function ScreenFabricant(props) {
             />
             <Select
                     onChange={onChangeColorInscription}
-                    placeholder="Choisissez votre couleur"
+                    placeholder="Choisissez la couleur de l'inscription"
                     allowClear
 
                 >
@@ -242,7 +242,7 @@ function ScreenFabricant(props) {
 
                     <Col md={{ span: 12 }} sm={{ span: 24 }}>
 
-                        <div className='masque' style={{backgroundImage: `url(${urlImg})`/* "url('http://localhost:3001/assets/masques/masque-noir.png')" */}}>
+                        <div className='masque' style={{backgroundImage: `url(${urlImg})` /* "url('http://localhost:3001/assets/masques/masque-noir.png')" */}}>
                             <p style={{color: colorInscription, marginTop: 90, fontSize: 25, maxWidth: '270px'}}>{inscription}</p>
                             {imageDisplay!== ''?<img style={{ width: 150, height: 100}} src={imageDisplay} alt='image sur masque'/> :null}
                         </div>

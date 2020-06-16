@@ -11,7 +11,8 @@ const commandeSchema = new mongoose.Schema({
     quantity: Number,
     totalPrice: Number,
     sellerId: String,
-    livraison: String
+    livraison: String,
+    date_insert: Date
 });
 
 //Commandes coté Vendeur
@@ -20,7 +21,8 @@ const orderSchema = new mongoose.Schema({
     quantity: Number,
     totalPrice: Number,
     sellerId: String,
-    livraison: String
+    livraison: String,
+    date_insert: Date
 });
 
 

@@ -179,8 +179,7 @@ function ScreenDashboard(props) {
                       
                           <List.Item.Meta
                               title={"Numéro de commande : " + item._id}
-                              // description={"pasée le : " + item.date_insert} date a ajouter dans les models
-                              
+                              description={"Passée le " + moment(item.date_insert).format('L')}
                           />
 
                           <List.Item.Meta
@@ -220,7 +219,7 @@ function ScreenDashboard(props) {
                       
                           <List.Item.Meta
                               title={"Numéro de commande : " + item._id}
-                              // description={"passée le : " + item.date_insert}  date a ajouter dans les models
+                              description={"Passée le " + item.date_insert}
                           />
 
                           <List.Item.Meta
@@ -258,7 +257,7 @@ function ScreenDashboard(props) {
                                   onCancel={handleCancel}
                             >
                               <div className='masque' style={{backgroundImage: `url(${article.urlImg})`}}>
-                                  <p style={{ marginTop: 90, fontSize: 25, color: 'black', maxWidth: '270px'}}>{article.designText}</p>
+                                  <p style={{ marginTop: 90, fontSize: 25, color: article.textColor, maxWidth: '270px'}}>{article.designText}</p>
                                   {article.designImg!== ''?<img style={{ width: 150, height: 100}} src={article.designImg} alt='image sur masque'/> :null}
                               </div>
         

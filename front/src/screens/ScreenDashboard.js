@@ -168,7 +168,7 @@ function ScreenDashboard(props) {
                     />
 
                     <List.Item.Meta
-                      description={"Prix total  : " + item.totalPrice}
+                      description={"Prix total  : " + item.totalPrice + "€"}
                     />
 
                   </List.Item>

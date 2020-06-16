@@ -59,8 +59,7 @@ function ScreenBasket(props) {
     const radioStyle = {
         display: 'block',
         height: '30px',
-        lineHeight: '30px',
-    };
+        lineHeight: '30px',    };
 
 
     var onChange = e => {
@@ -121,17 +120,9 @@ function ScreenBasket(props) {
         localStorage.setItem("panier", JSON.stringify([])); //je renvoi le panier vide dans le local storage
     }
 
-<<<<<<< HEAD
-   }
-   const confirmBasket = async (orders, quantity, total) => {
-       console.log("click" + orders, quantity, total)
-        props.sendOrder(orders, quantity, total)
-   }
-=======
     const confirmBasket = async (orders, quantity, total) => {
         props.sendOrder(orders, quantity, total)
     }
->>>>>>> ad2fd1ca1a3269c2902d323020660f59c65689f1
 
 
     return (

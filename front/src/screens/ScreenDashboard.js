@@ -181,15 +181,11 @@ function ScreenDashboard(props) {
                       title={"Commande n° " + item._id}
                       description={"Quantité commandée : " + item.quantity}
                     />
-<<<<<<< HEAD
 
                     <List.Item.Meta
                       description={"Prix total  : " + item.totalPrice + "€"}
                     />
 
-=======
-                    {" Prix total :" + item.totalPrice + '€'}
->>>>>>> ad2fd1ca1a3269c2902d323020660f59c65689f1
                   </List.Item>
                 )}
               />

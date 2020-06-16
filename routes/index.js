@@ -91,16 +91,30 @@ router.get('/new-basket', async function (req, res) {
 
 router.get('/valid-order', async function (req, res) {
 
+  var sellout = false
+
   var lessQuantity = req.query.quantity
 
   var article = await articleModel.findById(req.query.id)
 
   var stock = article.stock
 
+  var newStock = stock - lessQuantity
+  if(newStock <= 0){
+    sellout = true
+  }
+
   var updateStock = await article.updateOne(
-    { stock: newStock },
+    { stock: newStock,
+      sellout : sellout
+    }
+    
+
   );
-  res.json({ stock, newStock })
+  article = await articleModel.findById(req.query.id)
+
+console.log(article)
+  res.json({ updateStock})
 })
 
 router.post('/add-image', async function(req, res){

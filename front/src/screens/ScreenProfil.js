@@ -173,10 +173,7 @@ function ScreenProfil(props) {
 
       // Selection de la bonne adresse dans l'autocomplétion
       function handleClickAutoComplet(e, label, coord, city, zipcode, i) {
-        console.log('click')
-        
-        console.log(label);
-        console.log(coord)
+
         setInfoAddress(label);
         setInfoCoord(coord)  
         setInfoCity(city)

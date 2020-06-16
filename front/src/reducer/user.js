@@ -1,8 +1,9 @@
-export default function(user = {}, action){
-    
-    if(action.type === 'addUser'){
-        console.log(action.user)
+export default function (user = {}, action) {
+
+    if (action.type === 'addUser') {
+
         return action.user;
+
     } else if (action.type === 'deleteUser') {
         let resetUser = {};
         return resetUser;

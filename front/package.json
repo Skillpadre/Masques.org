@@ -20,6 +20,7 @@
     "google-map-react": "^1.1.7",
     "less": "^3.11.2",
     "less-loader": "^5.0.0",
+    "moment": "^2.26.0",
     "nodemon": "^2.0.4",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.6",

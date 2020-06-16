@@ -22,6 +22,8 @@ function ScreenMasks(props) {
     const [couleurs, setCouleurs] = useState([])
     const [matiere, setMatiere] = useState([])
     const [model, setModel] = useState([])
+    const [inscription, setInscription] = useState([]);
+    const [logo, setLogo] = useState([]);
 
     const [isVisible, setIsVisible] = useState(false)
     const [isCreated, setIsCreated] = useState(false);
@@ -48,6 +50,8 @@ function ScreenMasks(props) {
         setCouleurs(values.colors);
         setMatiere(values.matiere);
         setModel(values.model);
+        setInscription(values.inscription);
+        setLogo(values.logo);
     
         handleNewOrder(values); 
     }
@@ -107,7 +111,9 @@ function ScreenMasks(props) {
                         'priceUnit': 1,
                         'colors': ['bleu'],
                         'matiere': ['tissu'],
-                        'model': ['anatomique']
+                        'model': ['anatomique'],
+                        'inscription': [],
+                        'logo': []
                     }}
                 >
 
@@ -475,6 +481,62 @@ function ScreenMasks(props) {
                     >
                         <Input onChange={e => setQualité(e.target.value)} value={qualité} placeholder='moyenne, supérieure ...' />
                     </Form.Item>
+
+                    <p className='textMask'>Indiquez si vous pouvez mettre une inscription.</p>
+                    <Form.Item name="inscription" label="Inscription">
+                        <Checkbox.Group style= {{textAlign: 'left'}}>
+                            <Row> 
+                                <Col span={8}> 
+                                    <Checkbox
+                                        value="Flocage"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Flocage
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Brodure"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Brodure
+                                    </Checkbox>
+                                </Col>
+                            </Row>
+                        </Checkbox.Group>
+                    </Form.Item>
+
+                    <p className='textMask'>Indiquez si vous pouvez mettre un logo.</p>
+                    <Form.Item name="logo" label="Logo">
+                        <Checkbox.Group style= {{textAlign: 'left'}}>
+                            <Row> 
+                                <Col span={8}> 
+                                    <Checkbox
+                                        value="Flocage"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Flocage
+                                    </Checkbox>
+                                </Col>
+                                <Col span={8}>
+                                    <Checkbox
+                                        value="Brodure"
+                                        style={{
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        Brodure
+                                    </Checkbox>
+                                </Col>
+                            </Row>
+                        </Checkbox.Group>
+                    </Form.Item>
                       
                     <p className='textMask'>Vous pouvez ajouter la description que vous souhaitez.</p>
                     <Form.Item label="Description"
@@ -500,6 +562,8 @@ function ScreenMasks(props) {
                     <p>Couleurs disponibles : {couleurs.join(', ')}</p>
                     <p>Matières disponibles : {matiere.join(', ')}</p>
                     <p>Modèles disponibles : {model.join(', ')}</p>
+                    <p>Types d'inscription : {inscription.join(', ')} </p>
+                    <p>Types de logo : {logo.join(', ')} </p>
                     <p>Qualitée : {qualité}</p>
 
                 </Modal>

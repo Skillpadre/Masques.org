@@ -12,7 +12,7 @@ const Marker = (props) => {
 
     let articlesDisplay = [];
     articles.map((item, i)=>{
-        if(lien === '/fabricant/')
+        if(lien === '/product/')
             link = lien + item._id;
 
         articlesDisplay.push(

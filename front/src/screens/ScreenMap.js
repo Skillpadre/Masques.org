@@ -19,7 +19,8 @@ const { Content } = Layout;
 function ScreenMap(props) {
 
   const [center, setCenter] = useState({ lat: 11.0168, lng: 76.9558 });
-  const [zoom, setZoom] = useState(14);
+  const [zoom, setZoom] = useState(9);
+  const [myPos, setMyPos] = useState({});
 
   const [articleList, setArticleList] = useState([]);
   const [sellerList, setSellerList] = useState([]);
@@ -38,8 +39,9 @@ function ScreenMap(props) {
       let sellers = [];
       let articles = [];
   
+      // On affiche les vendeurs selon un certain rayon en Km
       response.sellers.map((seller, i) => {
-       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 100) { // Rayon de 100 Km
+       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 250) { // Rayon de 100 Km
         sellers.push(seller);
         articles.push(response.articles[i]);
        }
@@ -96,7 +98,8 @@ function ScreenMap(props) {
       
   }else{
 
-    buyingList = articleList.map((item, i) => {
+     buyingList = []
+   articleList.map((item, i) => {
       let urlAvatar = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png";
       let username;
       if(sellerList[i]){
@@ -112,35 +115,40 @@ function ScreenMap(props) {
       lien=`/login`
     }
 
-    return (
 
-      <List.Item key={i} style={{textAlign: 'center'}}>
-        <Card hoverable title={item.title} bodyStyle={{width: 300, height: 330}} style={{margin : '20px 10px'}}>
+ if(!item.sellout){
+  buyingList.push(
 
-          <Card.Meta title={username} avatar={<Avatar src={urlAvatar}/>}/>
+    <List.Item key={i} style={{textAlign: 'center'}}>
+      <Card hoverable title={item.title} bodyStyle={{width: 300, height: 330}} style={{margin : '20px 10px'}}>
 
-          <Button onClick={showModal} style={{color: '#E23D70', border: 'white'}}>Description</Button>
+        <Card.Meta title={username} avatar={<Avatar src={urlAvatar}/>}/>
 
-          <Divider/>
-          <Card.Meta description={"Prix unitaire: " + item.priceUnit + " €"}/>
-          <Card.Meta description={"Quantité dispo: " + item.stock}/>
-          <Card.Meta description={"Qualité: " + item.quality}/>
-          <Card.Meta description={"Couleurs: " + item.colors.join()}/>
-          <Card.Meta description={"Matières: " + item.material.join()}/>
+        <Button onClick={showModal} style={{color: '#E23D70', border: 'white'}}>Description</Button>
+
+        <Divider/>
+        <Card.Meta description={"Prix unitaire: " + item.priceUnit + " €"}/>
+        <Card.Meta description={"Quantité dispo: " + item.stock}/>
+        <Card.Meta description={"Qualité: " + item.quality}/>
+        <Card.Meta description={"Couleurs: " + item.colors.join()}/>
+        <Card.Meta description={"Matières: " + item.material.join()}/>
+    
+        <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={lien}>Personnaliser ICI</Link></Button>
+      </Card>
+      <Modal title="Description de l'offre :"
+              visible={visible}
+              onOk={handleOk}
+              onCancel={handleCancel}
+      >
+        <p>{item.description}</p>
       
-          <Button style= {{ borderRadius: 5, boxShadow: '0px 3px 3px 0px black', marginTop: 20}} type="primary"><Link to={lien}>Personnaliser ICI</Link></Button>
-        </Card>
-        <Modal title="Description de l'offre :"
-                visible={visible}
-                onOk={handleOk}
-                onCancel={handleCancel}
-        >
-          <p>{item.description}</p>
-        
-        </Modal>
-      </List.Item>
+      </Modal>
+    </List.Item>
 
-    )
+  )
+
+ }
+    
   });
 
   // Markers 
@@ -161,7 +169,7 @@ function ScreenMap(props) {
     var lien;
     //Si le user existe je l'autorise à allez sur la page fabricant
     if(props.user){
-      lien=`/fabricant/`
+      lien=`/product/`
     }else{
       lien=`/login`
     }

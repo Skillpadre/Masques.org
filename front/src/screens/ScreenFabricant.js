@@ -63,10 +63,10 @@ function ScreenFabricant(props) {
     //Disposition form
     const layout = {
         labelCol: {
-        span: 4,
+            span: 4,
         },
         wrapperCol: {
-        span: 20,
+            span: 20,
         },
     };
 
@@ -93,18 +93,18 @@ function ScreenFabricant(props) {
         order.quantity = quantity
         order.material = material
         order.model = modele
-        order.designText= inscription //HERE
+        order.designText = inscription //HERE
         order.designImg = image //HERE
-        order.urlImg= urlImg
+        order.urlImg = urlImg
         props.sendOrder(order)
 
-        
-        var panier=[];
-       //je récupère ce qu'il y a dans le local storage panier et je push le nouveau produit
-        panier=JSON.parse(localStorage.getItem('panier'));
+
+        var panier = [];
+        //je récupère ce qu'il y a dans le local storage panier et je push le nouveau produit
+        panier = JSON.parse(localStorage.getItem('panier'));
         panier.push(order);
         localStorage.setItem('panier', JSON.stringify(panier)); //envoi 
-        
+
     }
 
     //Téléchargement image/logo
@@ -118,7 +118,7 @@ function ScreenFabricant(props) {
         setImage(event.target.files[0])
     }
 
-    const handleClickImage = async () =>{
+    const handleClickImage = async () => {
 
         var data = new FormData();
         data.append('image', image);
@@ -157,12 +157,12 @@ function ScreenFabricant(props) {
         </Form.Item> 
     }
 
-    if(logoList[0]){
-        logoDisplay = 
-        <Form.Item label="Image" name="Image">
-            <Input type='file' accept="image/png, image/jpeg" onChange={fileSelectedHandler}/>
-             <Button style={{ borderRadius: 5, marginTop: 5 }} onClick={handleClickImage}>Télécharger</Button>
-        </Form.Item>
+    if (logoList[0]) {
+        logoDisplay =
+            <Form.Item label="Image" name="Image">
+                <Input type='file' accept="image/png, image/jpeg" onChange={fileSelectedHandler} />
+                <Button style={{ borderRadius: 5, marginTop: 5 }} onClick={handleClickImage}>Télécharger</Button>
+            </Form.Item>
     }
 
     return (
@@ -192,7 +192,7 @@ function ScreenFabricant(props) {
                 {/* images +  choix masques */}
                 <Row justify='center' align='start' >
 
-                    <Col md={{span : 12}} sm={{span : 24}}>
+                    <Col md={{ span: 12 }} sm={{ span: 24 }}>
 
                         <div className='masque' style={{backgroundImage: `url(${urlImg})`/* "url('http://localhost:3001/assets/masques/masque-noir.png')" */}}>
                             <p style={colorTextDesign,{ marginTop: 90, fontSize: 25, maxWidth: '270px'}}>{inscription}</p>
@@ -203,9 +203,9 @@ function ScreenFabricant(props) {
                     <Col md={{ span: 7 }} sm={{ span: 12 }}>
 
                         <Form {...layout} style={{ textAlign: 'center' }}>
-                    
-                    {/* Modele */}
-                        <Form.Item name="model" label="Modèle" rules={[{ required: true }]}>
+
+                            {/* Modele */}
+                            <Form.Item name="model" label="Modèle" rules={[{ required: true }]}>
                                 <Select
                                     onChange={onChangeModel}
                                     placeholder="Choisissez votre modèle"
@@ -258,9 +258,9 @@ function ScreenFabricant(props) {
                                 </Select>
                             </Form.Item>
 
-                            
 
-                             {inscriptionDisplay}
+
+                            {inscriptionDisplay}
 
                             {logoDisplay}
 
@@ -271,10 +271,10 @@ function ScreenFabricant(props) {
                                     min={1}
                                     max={articleId.stock}
                                     placeholder={`Max. ${articleId.stock}`}
-                                    style={{width: 100}}
+                                    style={{ width: 100 }}
                                     value={quantity}
                                     onChange={setQuantity}
-                                    
+
                                 />
 
                             </Form.Item>
@@ -312,9 +312,9 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-function mapStateToProps(state){
-    return { user: state.user}
-  }
+function mapStateToProps(state) {
+    return { user: state.user }
+}
 
 export default connect(
     mapStateToProps,

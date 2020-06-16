@@ -25,7 +25,7 @@ function ScreenBasket(props) {
  
     //Récupération du panier dans localStorage
     var userPanier = JSON.parse(localStorage.getItem('panier'));
-
+  
     useEffect(() => {
         function readArticleList() {    
             if(userPanier !== null){
@@ -91,8 +91,8 @@ function ScreenBasket(props) {
                 { price: priceId, quantity: 1 }
             ],
             mode: 'payment',
-            successUrl: `http://localhost:3001/confirm`,
-            cancelUrl: 'http://localhost:3001/basket',
+            successUrl: `http://localhost:3001/validation-commande`,
+            cancelUrl: 'http://localhost:3001/panier',
         })
             .then(async function (result) {
                 console.log(result.error.message)
@@ -105,6 +105,7 @@ function ScreenBasket(props) {
         //const response = await rawResponse.json();
 
     };
+    console.log(totalQuantity)
 // Route pour add panier en sous doc
     const addOrder = async (orders, quantity, total) => {
 
@@ -217,17 +218,9 @@ function ScreenBasket(props) {
                             </Radio.Group>
                             <h2>Procéder au paiement</h2>
 
-                                                      {/* <button role="link" onClick={() => {handleClick();majStock()}}>
-                                Checkout
-                                </button> */}
-                            <Button role="link" icon={<CreditCardOutlined />} onClick={() => {handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal, livraison); confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                            <Button role="link" onClick={() => {confirmBasket(articleList, totalQuantity, totalFinal);handleClick();majStock();addOrder(articleList, totalQuantity, totalFinal, livraison)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
                                 Paiement
                             </Button>
-
-                         <Link to="/validation-commande"><Button role="link" onClick={() => {confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
-                                Test
-                            </Button></Link>   
-
 
                         </div>
 
@@ -254,7 +247,7 @@ function mapDispatchToProps(dispatch) {
             dispatch({ type: 'sendQuantity', userQuantity: quantity })
         } ,
         
-        sendOrder:function(orders, quantity, total) {
+        sendOrder: function(orders, quantity, total) {
             var order = {
                 orders: orders,
                 quantity: quantity,

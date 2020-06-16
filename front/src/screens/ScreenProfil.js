@@ -27,6 +27,7 @@ function ScreenProfil(props) {
     const [changementOk, setChangementOk] = useState();
 
     const [avatar, setAvatar] = useState('');
+    const [avatarDisplay, setAvatarDisplay] = useState('')
     const [changAvatar, setChangAvatar] = useState();
 
     const [option, setOption] = useState([]);
@@ -49,7 +50,7 @@ function ScreenProfil(props) {
                     setInfoZip(response.user.zip_code);
                     setInfoCity(response.user.city);
                     setInfoTel(response.user.tel);
-                    setAvatar(response.user.avatar);
+                    setAvatarDisplay(response.user.avatar);
 
                     if(response.user.coordinates){
                         setInfoCoord(response.user.coordinates);
@@ -90,8 +91,13 @@ function ScreenProfil(props) {
     };
 
     var fileSelectedHandler= event =>{
-        console.log(event.target.files[0]);
-        setAvatar(event.target.files[0])
+            event.preventDefault();
+            const reader = new FileReader();
+            reader.onload = () => {
+              setAvatarDisplay(reader.result)
+            };
+            reader.readAsDataURL(event.target.files[0])
+            setAvatar(event.target.files[0])
       }
 
     const handleClickAvatar = async () =>{
@@ -186,10 +192,10 @@ function ScreenProfil(props) {
 
     let urlImg;
 
-    if(avatar === ''){
+    if(avatarDisplay === ''){
         urlImg = "https://res.cloudinary.com/dmvudxnlz/image/upload/v1591715224/noavatar_wceh4i.png"
     } else {
-        urlImg = avatar;
+        urlImg = avatarDisplay;
     }
     
     if(!isLogin){

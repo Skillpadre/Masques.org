@@ -15,55 +15,57 @@ const { Content } = Layout;
 function ScreenConfirm (props){
 
     const [infoUsername, setInfoUsername] = useState();
-    const [quantity, setQuantity] = useState()
-    const [order, setOrder] = useState([])
+
+    const dataSource = []
+   let position = 0
+      
+    for(var i = 0; i< props.myConfirm[0].orders.length; i++) {
+          position ++
+         var thisCommande = {
+              key : props.myConfirm[0].orders[i],
+              id: position,
+              couleur :props.myConfirm[0].orders[i].colors,
+              qualité: props.myConfirm[0].orders[i].quality,
+              quantité: props.myConfirm[0].orders[i].quantity,
+              prixUnitaire: props.myConfirm[0].orders[i].quantity
+              }
+        dataSource.push(thisCommande)
+        }
+      
+      console.log(dataSource)
 
     //Tableau Récapitulatif
     //Titre Colonne
     const columns = [
         {
-          title: 'Titre',
-          dataIndex: 'Titre',
-          key: 'Titre',
+          title: 'Id',
+          dataIndex: 'id',
+          key: 'id',
         },
         {
           title: 'Couleur',
-          dataIndex: 'Couleur',
-          key: 'Couleur',
+          dataIndex: 'couleur',
+          key: 'couleur',
         },
         {
           title: 'Qualité',
-          dataIndex: 'Qualité',
-          key: 'Qualité',
+          dataIndex: 'qualité',
+          key: 'qualité',
         },
         {
           title: 'Quantité',
-          dataIndex: 'Quantité',
-          key: 'Quantité',
+          dataIndex: 'quantité',
+          key: 'quantité',
         
         },
         {
-            title: 'Total',
-            dataIndex: 'Total',
-            key: 'Total',
-          
-          }
+          title: 'Prix Unitaire',
+          dataIndex: 'prixUnitaire',
+          key: 'prixUnitaire',
+        
+        }
        
       ];
-
-    
-    //Data Colonne
-    const dataSource = [
-        {
-        key: '1',
-        Titre: 'Masque personnalisé',
-        Couleur: 'Bleu',
-        Qualité: 'Supérieure',
-        Quantité: 18,
-        Total: 24 + '€'
-
-        },
-    ];
 
     
     var user;
@@ -78,16 +80,11 @@ function ScreenConfirm (props){
     
             const rawResponse = await fetch(`/users/loadinfo/${user.token}`);
             const response = await rawResponse.json();
-    
-            console.log(response.user)
-    
+   
             if (response.user){ 
     
               setInfoUsername(response.user.username)
-              setOrder(order)
-              setQuantity(quantity)
             }
-    
           }else{
             return <Redirect to='/' />
           }
@@ -95,9 +92,6 @@ function ScreenConfirm (props){
         loadUser();
       }, [user]);
 
-console.log(quantity)
-console.log(order)
-      
     return(
             
 
@@ -115,8 +109,8 @@ console.log(order)
 
 
                 <CheckCircleFilled style={{color: '#92D050', fontSize: 100}}/>
-                <p style={{fontWeight : 700, margin: '10px 30px 50px'}}>Votre commande à bien été prise en compte !</p>
-                <p style={{color: '#92D050'}}>Merci votre achat responsable et solidaire !</p>
+                <p style={{fontWeight : 700, margin: '10px 30px 50px'}}>Votre commande de {props.myConfirm[0].quantity} masques pour un total de {props.myConfirm[0].total} € a bien été prise en compte !</p>
+                <p style={{color: '#92D050'}}>Merci pour votre achat responsable et solidaire !</p>
 
                 
                 <p>Récapitulatif</p>
@@ -144,8 +138,7 @@ console.log(order)
 
 function mapStateToProps(state) {
   return {
-       quantity: state.quantityFromBasket,
-       order: state.basketList
+    myConfirm : state.confirm
   }
 }
 export default connect(mapStateToProps, null)(ScreenConfirm)

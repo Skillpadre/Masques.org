@@ -239,24 +239,21 @@ function ScreenDashboard(props) {
                               description={item.totalPrice + '€'}
                           />
                           <List.Item.Meta
-                           title={<Button style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type="primary" onClick={showModal}>Voir personnalisation</Button>}
-                            description={<Modal style={{textAlign: 'center'}}
-                            title="Personnalisation client"
-                            visible={visible}
-                            onOk={handleOk}
-                            onCancel={handleCancel}
-                      >
-                        <div className='masque' style={{backgroundImage: `url(${item.articles.urlImg})`}}>
-                            <p style={{ marginTop: 90, fontSize: 25, color: 'black', maxWidth: '270px'}}>{item.articles.designText}</p>
-                            {item.articles.designImg!== ''?<img style={{ width: 150, height: 100}} src={item.articles.designImg} alt='image sur masque'/> :null}
-                        </div>
-  
-                      </Modal>}
-                          >
-                             
-                            
-                           </List.Item.Meta>
-                         
+                            title={<Button style={{ width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}} type="primary" onClick={showModal}>Voir personnalisation</Button>}
+                          />
+          
+                          <Modal style={{textAlign: 'center'}}
+                                  title="Personnalisation client"
+                                  visible={visible}
+                                  onOk={handleOk}
+                                  onCancel={handleCancel}
+                            >
+                              <div className='masque' style={{backgroundImage: `url(${item.articles.urlImg})`}}>
+                                  <p style={{ marginTop: 90, fontSize: 25, color: 'black', maxWidth: '270px'}}>{item.articles.designText}</p>
+                                  {item.articles.designImg!== ''?<img style={{ width: 150, height: 100}} src={item.articles.designImg} alt='image sur masque'/> :null}
+                              </div>
+        
+                            </Modal>
                       </List.Item>
                   )}
                   

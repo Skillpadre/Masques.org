@@ -38,8 +38,8 @@ function ScreenBasket(props) {
    
 
 
-    let idCommande;
-    if(props.order.length !== 0){
+     let idCommande;
+     if(props.order.length !== 0){
         idCommande = props.order[0]._id
     }
     
@@ -222,6 +222,10 @@ function ScreenBasket(props) {
                                 Paiement
                             </Button>
 
+                         <Link to="/confirm"><Button role="link" onClick={() => {confirmBasket(articleList, totalQuantity, totalFinal)}} type='primary' style={{marginTop:20, width: 150, borderRadius: 5, boxShadow: '0px 3px 3px 0px black'}}>
+                                Test
+                            </Button></Link>   
+
 
                         </div>
 
@@ -238,7 +242,7 @@ function ScreenBasket(props) {
 function mapStateToProps(state) {
     return {
         token: state.user.token,
-        order: state.basketList
+        order: state.basket
     }
 }
 
@@ -246,9 +250,15 @@ function mapDispatchToProps(dispatch) {
     return {
         sendQuantity: function (quantity) {
             dispatch({ type: 'sendQuantity', userQuantity: quantity })
-        },
+        } ,
+        
         sendOrder:function(orders, quantity, total) {
-            dispatch({type: "addBasket", userOrder: orders, userQuantity : quantity, userTotal : total})
+            var order = {
+                orders: orders,
+                quantity: quantity,
+                total: total
+            }
+            dispatch({type: "addConfirm", newOrder: order})
         }
     }
 }

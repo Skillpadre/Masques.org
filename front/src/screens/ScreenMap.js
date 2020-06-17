@@ -18,7 +18,7 @@ const { Content } = Layout;
 
 function ScreenMap(props) {
 
-  const [center, setCenter] = useState({ lat: 45.75, lng: 4.85  });
+  const [center, setCenter] = useState({ lat: 45.75 , lng: 4.85 });
   const [zoom, setZoom] = useState(9);
   const [myPos, setMyPos] = useState({});
 
@@ -31,7 +31,7 @@ function ScreenMap(props) {
   function geo_success(position) {
     //console.log('geoloc succes')
   
-    setCenter({lat: position.coords.latitude, lng: position.coords.longitude})
+    setMyPos({lat: position.coords.latitude, lng: position.coords.longitude})
   
     async function loadData() {
       var rawResponse = await fetch('/article-list');
@@ -212,6 +212,7 @@ function ScreenMap(props) {
               bootstrapURLKeys={{ key: 'AIzaSyA7dxkypDmi6PUAA5D5tCx0mQ_s_UiwimM' }}
               defaultCenter={center}
               defaultZoom={zoom}
+              center={myPos}
               >
                 {markers}
             </GoogleMapReact>

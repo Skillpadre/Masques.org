@@ -91,8 +91,8 @@ function ScreenBasket(props) {
                 { price: priceId, quantity: 1 }
             ],
             mode: 'payment',
-            successUrl: `http://localhost:3001/validation-commande`,
-            cancelUrl: 'http://localhost:3001/panier',
+            successUrl: `https://warm-plateau-63366.herokuapp.com/validation-commande`,
+            cancelUrl: 'https://warm-plateau-63366.herokuapp.com/panier',
         })
             .then(async function (result) {
                 console.log(result.error.message)

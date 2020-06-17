@@ -119,7 +119,7 @@ function ScreenLogin(props) {
       <Nav/>
 
       <Content style={{padding: '0 50px', display: 'flex', flexDirection:'column', alignItems: 'center', margin: '40px 0'}}>
-        <h1>Rejoingnez-nous!</h1>
+        <h1>Rejoignez-nous!</h1>
 
           {/* SIGN-IN */}
           <Row className="Sign Login-page">

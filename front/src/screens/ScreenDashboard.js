@@ -219,7 +219,7 @@ function ScreenDashboard(props) {
                       
                           <List.Item.Meta
                               title={"Numéro de commande : " + item._id}
-                              description={"Passée le " + item.date_insert}
+                              description={"Passée le " + moment(item.date_insert).format('L')}
                           />
 
                           <List.Item.Meta

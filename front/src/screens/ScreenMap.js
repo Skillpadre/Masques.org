@@ -42,7 +42,7 @@ function ScreenMap(props) {
   
       // On affiche les vendeurs selon un certain rayon en Km
       response.sellers.map((seller, i) => {
-       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 250) { // Rayon de 100 Km
+       if(calculDistance(position.coords.latitude, position.coords.longitude, seller.coordinates[1], seller.coordinates[0]) < 100) { // Rayon de 100 Km
         sellers.push(seller);
         articles.push(response.articles[i]);
        }

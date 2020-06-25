@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const username = ''
+const password = ''
 
 // --------------------- BDD -----------------------------------------------------
 // useNewUrlParser ;)
@@ -8,7 +10,7 @@ var options = {
     useUnifiedTopology: true
    };
 
-mongoose.connect('mongodb+srv://masquesOrgAdmin:TPM5VxvksdKqNzIj@cluster0-4gyky.mongodb.net/masquesOrg?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://' + username + ':' + password + '@cluster0-4gyky.mongodb.net/masquesOrg?retryWrites=true&w=majority',
    options,
    function(err) {
     if (err) {
